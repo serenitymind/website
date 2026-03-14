@@ -1,7 +1,8 @@
+import Image from "next/image";
+
 /**
  * DoctorBio — doctor photo + credentials section.
  * Split layout: image left, bio content right.
- * Placeholder image until real photo is provided.
  */
 
 /* Credentials shown as badges below the bio */
@@ -17,11 +18,17 @@ export default function DoctorBio() {
     <section className="bg-bg-secondary">
       <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20 items-center">
 
-        {/* Left — doctor photo placeholder */}
+        {/* Left — doctor headshot */}
         <div className="w-full lg:w-[400px] shrink-0">
-          <div className="w-full aspect-[3/4] rounded-2xl bg-bg-card flex items-end justify-center overflow-hidden">
-            {/* Placeholder silhouette — replace with actual photo */}
-            <div className="w-3/4 h-4/5 bg-gradient-to-t from-gray-300 to-gray-200 rounded-t-full" />
+          <div className="w-full aspect-[3/4] rounded-2xl overflow-hidden relative">
+            <Image
+              src="/doctor-headshot.jpeg"
+              alt="Dr. Sarah Mitchell"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 400px"
+              priority
+            />
           </div>
         </div>
 

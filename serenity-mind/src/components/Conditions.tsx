@@ -1,10 +1,35 @@
 /**
- * Conditions Treated — dark glassmorphism section.
- * Massive "Conditions" h1 behind cards with backdrop-blur.
+ * Expertise — unified dark glassmorphism section.
+ * Merges services + conditions into one grid (3 rows of 4).
+ * Massive "Expertise" h1 behind cards with backdrop-blur.
  * Tag label sits above the h1.
  */
 
-/* Condition data — matches common psychiatric practice offerings */
+/* Services — how we deliver care (first row) */
+const services = [
+  {
+    title: "Psychiatric Evaluation",
+    description:
+      "Thorough diagnostic assessments to understand your mental health needs and develop a personalized treatment plan.",
+  },
+  {
+    title: "Medication Management",
+    description:
+      "Careful prescribing and monitoring of psychiatric medications with regular follow-ups to optimize your treatment.",
+  },
+  {
+    title: "Individual Therapy",
+    description:
+      "One-on-one sessions using CBT, DBT, and other proven approaches to help you navigate life's challenges.",
+  },
+  {
+    title: "Telepsychiatry",
+    description:
+      "Convenient virtual appointments from the comfort of your home. Same quality care, accessible anywhere.",
+  },
+];
+
+/* Conditions — what we treat (rows 2-3) */
 const conditions = [
   {
     title: "Anxiety & Panic",
@@ -57,28 +82,54 @@ export default function Conditions() {
         <div className="relative z-[3] flex items-center justify-center gap-4 mb-40">
           <div className="h-px w-16 bg-white/20" />
           <span className="text-[13px] font-semibold text-white/40 tracking-[2px]">
-            AREAS OF EXPERTISE
+            WHAT WE OFFER
           </span>
           <div className="h-px w-16 bg-white/20" />
         </div>
 
         {/* Massive h1 — pure white, behind cards */}
         <h1 className="absolute left-1/2 -translate-x-1/2 top-[100px] font-heading text-[clamp(140px,16vw,260px)] font-bold text-white whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal">
-          Conditions
+          Expertise
         </h1>
 
-        {/* Card grid — z-[2], dark glass cards blur the h1 behind them */}
+        {/* Services row — z-[2], first row of cards */}
         <div className="relative z-[2] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {conditions.map((condition) => (
+          {services.map((item) => (
             <div
-              key={condition.title}
+              key={item.title}
               className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08]"
             >
               <h3 className="font-heading text-lg font-semibold text-white">
-                {condition.title}
+                {item.title}
               </h3>
               <p className="text-sm text-white/50 leading-relaxed">
-                {condition.description}
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Subsection divider — tag between services and conditions */}
+        <div className="relative z-[3] flex items-center justify-center gap-4 my-6">
+          <div className="h-px flex-1 bg-white/10" />
+          <span className="text-[11px] font-semibold text-white/30 tracking-[2px]">
+            CONDITIONS WE TREAT
+          </span>
+          <div className="h-px flex-1 bg-white/10" />
+        </div>
+
+        {/* Conditions rows — z-[2], rows 2-3 of cards */}
+        <div className="relative z-[2] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {conditions.map((item) => (
+            <div
+              key={item.title}
+              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08]"
+            >
+              <h3 className="font-heading text-lg font-semibold text-white">
+                {item.title}
+              </h3>
+              <p className="text-sm text-white/50 leading-relaxed">
+                {item.description}
               </p>
             </div>
           ))}

@@ -1,6 +1,5 @@
 import Header from "@/components/Header";
 import ScrollStopHero from "@/components/ScrollStopHero";
-import Services from "@/components/Services";
 import About from "@/components/About";
 import Conditions from "@/components/Conditions";
 import Process from "@/components/Process";
@@ -16,13 +15,12 @@ import Footer from "@/components/Footer";
  * Section order (optimized for trust-first conversion):
  * 1. Hero (scroll-stop video) — emotional hook
  * 2. Doctor Bio — face + trust early
- * 3. Services — what we offer
- * 4. About / Why Us — differentiator
- * 5. Conditions — SEO value, self-identification
- * 6. How It Works — reduce anxiety with clear steps
- * 7. FAQ — objection handling
- * 8. Contact — convert
- * 9. Footer
+ * 3. About / Why Us — differentiator
+ * 4. Expertise (services + conditions merged) — what we offer + treat
+ * 5. How It Works — reduce anxiety with clear steps
+ * 6. FAQ — objection handling
+ * 7. Contact — convert
+ * 8. Footer
  */
 export default function Home() {
   return (
@@ -36,13 +34,10 @@ export default function Home() {
       {/* Doctor credentials — trust signal immediately */}
       <DoctorBio />
 
-      {/* Core offerings */}
-      <Services />
-
       {/* Why choose us — 3-card layout */}
       <About />
 
-      {/* Conditions we specialize in — SEO + self-identification */}
+      {/* Services + conditions merged — dark glassmorphism grid */}
       <Conditions />
 
       {/* How to get started — reduces friction */}

@@ -38,15 +38,17 @@ export default function About() {
         {/* Bottom row — 3-card grid: 1 featured (wide) + 2 standard */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
-          {/* Featured card — spans 2 columns */}
-          <div className="lg:col-span-2 rounded-2xl bg-bg-card p-8 flex flex-col justify-end min-h-[280px]">
-            <h3 className="font-heading text-xl font-semibold text-text-primary mb-2">
-              Evidence-based treatment
-            </h3>
-            <p className="text-sm text-text-secondary leading-relaxed max-w-[360px]">
-              Every treatment plan is grounded in peer-reviewed research and
-              adapted to your unique history, goals, and lifestyle.
-            </p>
+          {/* Featured card — spans 2 columns, looping video */}
+          {/* Scale up ~10% to crop Veo watermark from bottom edge */}
+          <div className="lg:col-span-2 rounded-2xl overflow-hidden min-h-[280px] relative">
+            <video
+              src="/patient-growth.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover scale-110 origin-top"
+            />
           </div>
 
           {/* Card 2 — standard size */}
@@ -60,14 +62,14 @@ export default function About() {
             </p>
           </div>
 
-          {/* Card 3 — standard size */}
+          {/* Card 3 — evidence-based + whole-person merged */}
           <div className="rounded-2xl bg-bg-card p-8 flex flex-col justify-end min-h-[280px]">
             <h3 className="font-heading text-xl font-semibold text-text-primary mb-2">
-              Whole-person care
+              Whole-person, evidence-based care
             </h3>
             <p className="text-sm text-text-secondary leading-relaxed">
-              We treat the full picture — medication, therapy, and lifestyle —
-              so progress lasts beyond the session.
+              Every plan is grounded in research and treats the full picture —
+              medication, therapy, and lifestyle — adapted to your unique goals.
             </p>
           </div>
         </div>
