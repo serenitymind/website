@@ -21,7 +21,7 @@ export default function Header() {
   return (
     /* Fixed header — sits above the sticky scroll-stop hero */
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-border">
-      <div className="max-w-[1440px] mx-auto flex items-center justify-between px-12 py-2.5">
+      <div className="flex items-center justify-between px-8 py-2.5">
         {/* Logo — brain icon + name */}
         <Link href="/" className="flex items-center gap-2">
           <Brain className="w-5 h-5 text-text-primary" />

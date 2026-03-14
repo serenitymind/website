@@ -41,7 +41,7 @@ const BREAKPOINTS = [
   {
     start: 0.63,
     end: 1.0,
-    headline: "Start Your Journey\nToday",
+    headline: "Start Your Journey Today",
     subline: "Book a confidential consultation and take the first step.",
     showCTA: true,
   },
@@ -313,29 +313,21 @@ export default function ScrollStopHero() {
             style={{ opacity: i === 0 ? 1 : 0 }}
           >
             <div className="flex flex-col items-center">
-              <div className="max-w-[580px] flex flex-col gap-6 items-center text-center">
-                <h1 className="font-heading text-[56px] md:text-[62px] font-bold text-white leading-[1.05] tracking-[-2px] whitespace-pre-line drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] text-center">
+              <div className="max-w-[720px] flex flex-col gap-5 items-center text-center">
+                <h1 className="font-heading text-[44px] md:text-[52px] font-bold text-text-primary leading-[1.1] tracking-[-1.5px] whitespace-pre-line text-center">
                   {bp.headline}
                 </h1>
-                <p className="text-lg text-white/80 leading-relaxed max-w-[480px] drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] text-center">
+                <p className="text-lg text-text-secondary leading-relaxed max-w-[480px] text-center">
                   {bp.subline}
                 </p>
                 {bp.showCTA && (
-                  <div className="flex items-center gap-4 mt-2 pointer-events-auto">
-                    <a
-                      href="#contact"
-                      className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-accent text-text-on-dark text-[15px] font-medium hover:bg-accent-hover transition-colors"
-                    >
-                      Book Consultation
-                      <ArrowRight className="w-4 h-4" />
-                    </a>
-                    <a
-                      href="#services"
-                      className="inline-flex items-center px-8 py-4 rounded-lg border border-white/30 text-white text-[15px] font-medium hover:bg-white/10 transition-colors"
-                    >
-                      Learn More
-                    </a>
-                  </div>
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-2 px-8 py-4 mt-2 rounded-lg bg-text-primary text-white text-[15px] font-medium hover:bg-gray-800 transition-colors pointer-events-auto"
+                  >
+                    Book Consultation
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
                 )}
               </div>
             </div>

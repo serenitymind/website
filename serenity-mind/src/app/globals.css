@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Import Google Fonts — Space Grotesk (headings) + Inter (body) */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap");
 
 /* ============================================
    Global styles — V2 white/purple theme

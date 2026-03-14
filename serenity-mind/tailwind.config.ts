@@ -39,7 +39,7 @@ const config: Config = {
       },
       /* Font families — same as V1 */
       fontFamily: {
-        heading: ['"Space Grotesk"', "sans-serif"],
+        heading: ['"Sora"', "sans-serif"],
         body: ['"Inter"', "sans-serif"],
       },
     },
