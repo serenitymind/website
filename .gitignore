@@ -1,0 +1,130 @@
+# Dildo - Enhanced AI Workflow System
+# Git ignore patterns
+
+# Test files and debugging scripts
+test-*.sh
+check-*.sh
+debug-*.sh
+simple-*.sh
+*-test-*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Poetry
+poetry.lock
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+.cache/
+.pytest_cache/
+
+# User-specific template customizations
+.dildo-templates/user/
+.dildo-templates/*.local
+.dildo-templates/**/*.local
+
+# AI model outputs and session files
+.dildo-sessions/
+*.claude-session
+*.gemini-session
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Test outputs
+test-results/
+coverage/
+.coverage
+.nyc_output/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+
+# Archive and compression files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Local configuration overrides
+config.local
+.env.local
+secrets.env
+
+# tmux session files
+.tmux-session-*
+
+# Temporary dildo working files
+.dildo-temp/
+.dildo-debug/
+
+# Temporary extraction outputs
+tmp/
+
+# Status dashboard temp workspace
+.workflow/.tmp/
+
+# Daemon runtime files (PIDs, logs, state)
+.workflow/daemon/
+
+# AI logs (optional - uncomment to ignore)
+# .workflow/ai-logs/

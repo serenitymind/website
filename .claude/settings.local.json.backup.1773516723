@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "*",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import json, sys, os; data=json.load(sys.stdin); path=data.get('tool_input',{}).get('file_path') or data.get('tool_input',{}).get('cwd') or os.getcwd(); is_worktree='-wt-' in os.path.abspath(path); print('❌ BLOCKED: Operations must be performed in git worktrees only. This project requires worktree isolation. Create a worktree first: dildo worktree-create', file=sys.stderr) if not is_worktree else None; sys.exit(2 if not is_worktree else 0)\""
+          },
+          {
+            "type": "command",
+            "command": "python3 -c \"import json, sys; data=json.load(sys.stdin); path=data.get('tool_input',{}).get('file_path',''); cmd=data.get('tool_input',{}).get('command',''); combined=path+' '+cmd; should_block='/activity/' in combined; print('❌ BLOCKED: activity/ folder is system-managed by ACTIVITY_MONITOR.sh. Do not create or edit any files in activity/', file=sys.stderr) if should_block else None; sys.exit(2 if should_block else 0)\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import json, sys, re; data=json.load(sys.stdin); cmd=data.get('tool_input',{}).get('command',''); dangerous_cmds=['sed -i', 'vim', 'nano', 'emacs']; has_dangerous_cmd=any(p in cmd for p in dangerous_cmds); redir_pattern=r'(?<![-=<])\\s*>{1,2}\\s*[^>]'; has_redirect=bool(re.search(redir_pattern, cmd)) and 'git commit' not in cmd; has_tee='| tee ' in cmd or '|tee ' in cmd; safe='-wt-' in cmd; should_block=(has_dangerous_cmd or has_redirect or has_tee) and (not safe or '../' in cmd); print('❌ BLOCKED: File editing via Bash (sed -i, redirects, tee, etc.) must target worktree paths only. Command must contain \\'-wt-\\' pattern and cannot use ../ escapes.', file=sys.stderr) if should_block else None; sys.exit(2 if should_block else 0)\""
+          },
+          {
+            "type": "command",
+            "command": "python3 -c \"import json,sys,re;data=json.load(sys.stdin);cmd=data.get('tool_input',{}).get('command','');is_cp=cmd.strip().startswith('cp ') or ' && cp ' in cmd or '; cp ' in cmd;abs_paths=re.findall(r'(?:^|\\s)([~/][^\\s]+)',cmd) if is_cp else [];bad_cp=any('-wt-' not in p.replace('~','/home') for p in abs_paths if p.replace('~','/home').startswith('/'));print('❌ BLOCKED: cp command targets path outside worktree. All cp destinations must contain \\'-wt-\\' pattern to ensure worktree isolation.',file=sys.stderr) if bad_cp else None;sys.exit(2 if bad_cp else 0)\""
+          }
+        ]
+      }
+    ]
+  }
+}
