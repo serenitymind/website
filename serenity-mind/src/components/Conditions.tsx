@@ -1,8 +1,13 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 /**
  * Expertise — unified dark glassmorphism section.
  * Merges services + conditions into one grid (3 rows of 4).
  * Massive "Expertise" h1 behind cards with backdrop-blur.
  * Tag label sits above the h1.
+ * H1 uses a scroll-driven lilac gradient that shifts on scroll.
  */
 
 /* Services — how we deliver care (first row) */
@@ -74,6 +79,20 @@ const conditions = [
 ];
 
 export default function Conditions() {
+  /* Ref for the h1 — we shift its gradient background-position on scroll */
+  const h1Ref = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!h1Ref.current) return;
+      /* Map scroll position to diagonal gradient shift (0-200%) */
+      const pos = (window.scrollY * 0.15) % 200;
+      h1Ref.current.style.backgroundPosition = `${pos}% ${pos}%`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <section className="bg-gradient-to-b from-[#0a0a0a] to-[#141414] overflow-hidden">
       <div className="max-w-[1440px] mx-auto relative px-16 pt-16 pb-24">
@@ -87,8 +106,15 @@ export default function Conditions() {
           <div className="h-px w-16 bg-[#C4B5FD]/30" />
         </div>
 
-        {/* Massive h1 — purple to match hero video tone, behind cards */}
-        <h1 className="absolute left-1/2 -translate-x-1/2 top-[100px] font-heading text-[clamp(140px,16vw,260px)] font-bold text-[#C4B5FD] whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal">
+        {/* Massive h1 — lilac gradient that shifts on scroll */}
+        <h1
+          ref={h1Ref}
+          style={{
+            backgroundImage: "linear-gradient(135deg, #8B5CF6, #C4B5FD, #E9D5FF, #A78BFA, #8B5CF6, #C4B5FD, #E9D5FF)",
+            backgroundSize: "200% 200%",
+          }}
+          className="absolute left-1/2 -translate-x-1/2 top-[100px] font-heading text-[clamp(140px,16vw,260px)] font-bold whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal bg-clip-text text-transparent"
+        >
           Expertise
         </h1>
 

@@ -41,6 +41,15 @@ html {
    Placeholder gradient — shown before video loads
    Remove this once you have the actual Veo3 video
    ============================================ */
+/* Gentle bounce animation — triggered on button hover */
+@keyframes gentle-bounce {
+  0%, 100% { transform: translateY(-4px); }
+  50% { transform: translateY(-8px); }
+}
+.hover-bounce:hover {
+  animation: gentle-bounce 0.6s ease-in-out infinite;
+}
+
 .video-placeholder {
   background: linear-gradient(
     135deg,
