@@ -21,26 +21,26 @@ export default function Header() {
   return (
     /* Fixed header — sits above the sticky scroll-stop hero */
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-border">
-      <div className="max-w-[1440px] mx-auto flex items-center justify-between px-16 py-5">
+      <div className="max-w-[1440px] mx-auto flex items-center justify-between px-12 py-2.5">
         {/* Logo — brain icon + name */}
-        <Link href="/" className="flex items-center gap-2.5">
-          <Brain className="w-[26px] h-[26px] text-accent" />
-          <span className="font-heading text-xl font-semibold text-text-primary">
+        <Link href="/" className="flex items-center gap-2">
+          <Brain className="w-5 h-5 text-text-primary" />
+          <span className="font-heading text-[15px] font-semibold text-text-primary">
             Serenity Mind
           </span>
         </Link>
 
         {/* Navigation links */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((link, i) => (
             <a
               key={link.label}
               href={link.href}
-              className={`text-sm ${
-                /* First link = active state in purple */
+              className={`text-[13px] ${
+                /* First link = active state in black */
                 i === 0
-                  ? "font-medium text-accent"
-                  : "text-text-muted hover:text-text-secondary transition-colors"
+                  ? "font-medium text-text-primary"
+                  : "text-text-muted hover:text-text-primary transition-colors"
               }`}
             >
               {link.label}
@@ -51,7 +51,7 @@ export default function Header() {
         {/* CTA button — pill-shaped purple */}
         <a
           href="#contact"
-          className="hidden md:inline-flex items-center px-7 py-3 rounded-full bg-accent text-text-on-dark text-[13px] font-medium hover:bg-accent-hover transition-colors"
+          className="hidden md:inline-flex items-center px-5 py-1.5 rounded-full bg-text-primary text-white text-[12px] font-medium hover:bg-gray-800 transition-colors"
         >
           Book Appointment
         </a>
