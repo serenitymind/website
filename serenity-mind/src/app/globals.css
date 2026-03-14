@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Google Fonts — Space Grotesk (headings) + Inter (body) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+
+/* ============================================
+   Global styles — V2 white/purple theme
+   ============================================ */
+
+body {
+  font-family: "Inter", sans-serif;
+  color: #111827;
+  background: #FFFFFF;
+}
+
+/* ============================================
+   Scroll-stop hero — critical styles
+   GSAP handles scroll behavior, not CSS
+   ============================================ */
+
+/* Disable smooth scroll — GSAP ScrollTrigger needs native scroll */
+html {
+  scroll-behavior: auto;
+}
+
+/* The scroll-stop video must fill its container */
+.scroll-stop-video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/* Text overlay transitions — GSAP controls opacity via inline styles */
+.scroll-text-overlay {
+  transition: opacity 0.1s ease-out;
+}
+
+/* ============================================
+   Placeholder gradient — shown before video loads
+   Remove this once you have the actual Veo3 video
+   ============================================ */
+.video-placeholder {
+  background: linear-gradient(
+    135deg,
+    #F9F7FE 0%,
+    #EDE9F6 30%,
+    #DDD6FE 60%,
+    #C4B5FD 100%
+  );
+}
