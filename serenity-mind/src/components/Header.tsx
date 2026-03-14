@@ -4,8 +4,8 @@ import { Brain } from "lucide-react";
 import Link from "next/link";
 
 /**
- * Header — sticky navigation bar (V2 white/purple theme)
- * Logo + nav links + pill-shaped purple CTA
+ * Header — sticky navigation bar (monochrome theme)
+ * Logo + nav links + pill-shaped black CTA
  */
 
 /* Navigation links for the top bar */
@@ -48,7 +48,7 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* CTA button — pill-shaped purple */}
+        {/* CTA button — pill-shaped black */}
         <a
           href="#contact"
           className="hidden md:inline-flex items-center px-5 py-1.5 rounded-full bg-text-primary text-white text-[12px] font-medium hover:bg-gray-800 transition-colors"

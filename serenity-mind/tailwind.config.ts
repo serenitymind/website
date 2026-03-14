@@ -1,8 +1,8 @@
 import type { Config } from "tailwindcss";
 
 /**
- * Tailwind config — V2 purple/lilac palette
- * Matches the Serenity Mind V2 Pencil design
+ * Tailwind config — neutral monochrome palette
+ * Clean grays + charcoal accents
  */
 const config: Config = {
   content: [
@@ -12,29 +12,29 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      /* V2 color palette — purple/lilac + clean whites */
+      /* Neutral monochrome palette — true blacks + warm grays */
       colors: {
         bg: {
           primary: "#FFFFFF",
-          secondary: "#F9F7FE",     /* soft lavender tint */
-          card: "#F5F0FF",          /* light purple card bg */
-          dark: "#5B21B6",          /* deep purple for CTA */
+          secondary: "#F5F5F5",     /* light warm gray */
+          card: "#F0F0F0",          /* neutral card bg */
+          dark: "#171717",          /* true dark — no blue tint */
         },
         text: {
-          primary: "#111827",
-          secondary: "#4B5563",
-          muted: "#9CA3AF",
+          primary: "#0A0A0A",       /* near-black — no blue tint */
+          secondary: "#525252",     /* neutral gray */
+          muted: "#A3A3A3",         /* neutral mid-gray */
           "on-dark": "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#7C3AED",       /* primary purple */
-          hover: "#6D28D9",
-          soft: "#F5F0FF",
-          light: "#E9D5FF",         /* lighter purple for subtle fills */
+          DEFAULT: "#0A0A0A",       /* near-black — monochrome accent */
+          hover: "#333333",
+          soft: "#F5F5F5",
+          light: "#E5E5E5",         /* neutral light gray */
         },
         border: {
-          DEFAULT: "#E5E7EB",
-          purple: "#EDE9F6",        /* subtle purple border */
+          DEFAULT: "#E5E5E5",
+          subtle: "#EBEBEB",        /* soft neutral border */
         },
       },
       /* Font families — same as V1 */

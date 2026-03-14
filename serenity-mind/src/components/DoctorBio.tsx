@@ -1,0 +1,65 @@
+/**
+ * DoctorBio — doctor photo + credentials section.
+ * Split layout: image left, bio content right.
+ * Placeholder image until real photo is provided.
+ */
+
+/* Credentials shown as badges below the bio */
+const credentials = [
+  "Board Certified Psychiatrist",
+  "Adult & Adolescent Care",
+  "15+ Years Experience",
+  "Telehealth Available",
+];
+
+export default function DoctorBio() {
+  return (
+    <section className="bg-bg-secondary">
+      <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20 items-center">
+
+        {/* Left — doctor photo placeholder */}
+        <div className="w-full lg:w-[400px] shrink-0">
+          <div className="w-full aspect-[3/4] rounded-2xl bg-bg-card flex items-end justify-center overflow-hidden">
+            {/* Placeholder silhouette — replace with actual photo */}
+            <div className="w-3/4 h-4/5 bg-gradient-to-t from-gray-300 to-gray-200 rounded-t-full" />
+          </div>
+        </div>
+
+        {/* Right — bio content */}
+        <div className="flex flex-col gap-6">
+          <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
+            MEET YOUR DOCTOR
+          </span>
+          <h2 className="font-heading text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
+            Dr. Sarah Mitchell, M.D.
+          </h2>
+          <p className="text-[17px] text-text-secondary leading-relaxed max-w-[520px]">
+            Dr. Mitchell is a double board-certified psychiatrist specializing
+            in adult and adolescent mental health. With over 15 years of
+            clinical experience, she takes a comprehensive, patient-centered
+            approach — combining evidence-based treatments with genuine
+            empathy to help patients achieve lasting wellness.
+          </p>
+          <p className="text-[17px] text-text-secondary leading-relaxed max-w-[520px]">
+            She completed her residency at Johns Hopkins and fellowship at
+            UCLA, bringing world-class training to every patient interaction.
+            Dr. Mitchell believes that mental health care should be
+            accessible, stigma-free, and tailored to the individual.
+          </p>
+
+          {/* Credential badges */}
+          <div className="flex flex-wrap gap-3 mt-2">
+            {credentials.map((cred) => (
+              <span
+                key={cred}
+                className="px-4 py-2 rounded-full bg-bg-card text-[13px] font-medium text-text-primary"
+              >
+                {cred}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

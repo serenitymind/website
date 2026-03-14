@@ -6,7 +6,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap");
 
 /* ============================================
-   Global styles — V2 white/purple theme
+   Global styles — neutral monochrome theme
    ============================================ */
 
 body {
@@ -44,9 +44,9 @@ html {
 .video-placeholder {
   background: linear-gradient(
     135deg,
-    #F9F7FE 0%,
-    #EDE9F6 30%,
-    #DDD6FE 60%,
-    #C4B5FD 100%
+    #F5F5F5 0%,
+    #EBEBEB 30%,
+    #E0E0E0 60%,
+    #D4D4D4 100%
   );
 }
