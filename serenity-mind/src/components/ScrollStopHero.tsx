@@ -52,6 +52,10 @@ const SCROLL_MULTIPLIER = 5;
 /* Fade duration for text transitions (fraction of timeline) */
 const FADE_DURATION = 0.04;
 
+/* Snap positions as scroll progress values (0-1) */
+/* 0 = start, midpoints of BP1/BP2, 1.0 = exit hero into Services */
+const SNAP_POINTS = [0, 0.455, 0.815, 1.0];
+
 export default function ScrollStopHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -65,6 +69,11 @@ export default function ScrollStopHero() {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const activeIndexRef = useRef(0);
+
+  /* Wheel-based snap state */
+  const currentSectionRef = useRef(0);
+  const scrollTweenRef = useRef<gsap.core.Tween | null>(null);
+  const cooldownRef = useRef(false);
 
   const setActiveDot = useCallback((idx: number) => {
     if (idx !== activeIndexRef.current) {
@@ -114,10 +123,11 @@ export default function ScrollStopHero() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    /* Set canvas to match frame dimensions */
+    /* Set canvas size — crop bottom 50px to hide Veo3 watermark */
     const firstImg = imagesRef.current[0];
+    const WATERMARK_CROP = 50;
     canvas.width = firstImg.naturalWidth;
-    canvas.height = firstImg.naturalHeight;
+    canvas.height = firstImg.naturalHeight - WATERMARK_CROP;
 
     /* Draw the first frame immediately */
     ctx.drawImage(firstImg, 0, 0);
@@ -146,7 +156,7 @@ export default function ScrollStopHero() {
           trigger: container,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.3,
+          scrub: true, /* instant — no smoothing lag */
           onUpdate: (self) => {
             const progress = self.progress;
 
@@ -156,6 +166,17 @@ export default function ScrollStopHero() {
               Math.floor(progress * TOTAL_FRAMES)
             );
             drawFrame(frameIndex);
+
+            /* Sync section tracker when not mid-animation */
+            if (!cooldownRef.current) {
+              let nearest = 0;
+              let minDist = Infinity;
+              SNAP_POINTS.forEach((p, i) => {
+                const dist = Math.abs(progress - p);
+                if (dist < minDist) { minDist = dist; nearest = i; }
+              });
+              currentSectionRef.current = nearest;
+            }
 
             /* Update active dot */
             const idx = BREAKPOINTS.findIndex(
@@ -186,6 +207,66 @@ export default function ScrollStopHero() {
 
     return () => gsapCtx.revert();
   }, [loaded, setActiveDot]);
+
+  /* ============================================
+     STEP 3: Wheel hijack — instant section snapping
+     Intercepts scroll events inside the hero and
+     forces an animated jump to the next/prev section.
+     One scroll tick = one section jump, always.
+     ============================================ */
+  useEffect(() => {
+    if (!loaded) return;
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      const containerTop = container.offsetTop;
+      const totalScroll = container.offsetHeight - window.innerHeight;
+      const scrollY = window.scrollY;
+
+      /* Only hijack wheel events when inside the hero scroll range */
+      if (scrollY < containerTop - 5 || scrollY > containerTop + totalScroll + 5) return;
+
+      /* Determine next section based on scroll direction */
+      const direction = e.deltaY > 0 ? 1 : -1;
+      const nextIndex = currentSectionRef.current + direction;
+
+      /* Past boundaries — let native scroll take over (exit hero) */
+      if (nextIndex < 0 || nextIndex >= SNAP_POINTS.length) return;
+
+      /* Block native scroll — we handle it */
+      e.preventDefault();
+
+      /* Cooldown active — ignore (prevents trackpad rapid-fire) */
+      if (cooldownRef.current) return;
+
+      currentSectionRef.current = nextIndex;
+      cooldownRef.current = true;
+
+      /* Calculate target scroll position in pixels */
+      const targetY = containerTop + SNAP_POINTS[nextIndex] * totalScroll;
+
+      /* Kill any in-progress animation — override immediately */
+      if (scrollTweenRef.current) scrollTweenRef.current.kill();
+
+      /* Animate scroll to target section */
+      scrollTweenRef.current = gsap.to({ y: scrollY }, {
+        y: targetY,
+        duration: 0.5,
+        ease: "power2.out",
+        onUpdate: function () {
+          window.scrollTo(0, this.targets()[0].y);
+        },
+        onComplete: () => {
+          cooldownRef.current = false;
+        },
+      });
+    };
+
+    /* passive: false required to call preventDefault */
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [loaded]);
 
   return (
     <div
