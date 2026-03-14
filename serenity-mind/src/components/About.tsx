@@ -51,9 +51,9 @@ export default function About() {
             />
           </div>
 
-          {/* Card 2 — standard size, inverted */}
-          <div className="rounded-2xl bg-text-primary p-8 flex flex-col justify-start min-h-[280px]">
-            <h3 className="font-heading text-xl font-semibold text-white mb-2">
+          {/* Card 2 — standard size, dark lilac */}
+          <div className="rounded-2xl bg-[#2D1F3D] p-8 flex flex-col justify-between min-h-[280px]">
+            <h3 className="font-heading text-xl font-semibold text-white">
               Flexible scheduling
             </h3>
             <p className="text-sm text-white/60 leading-relaxed">
@@ -62,9 +62,9 @@ export default function About() {
             </p>
           </div>
 
-          {/* Card 3 — evidence-based, inverted */}
-          <div className="rounded-2xl bg-text-primary p-8 flex flex-col justify-start min-h-[280px]">
-            <h3 className="font-heading text-xl font-semibold text-white mb-2">
+          {/* Card 3 — evidence-based, dark lilac */}
+          <div className="rounded-2xl bg-[#2D1F3D] p-8 flex flex-col justify-between min-h-[280px]">
+            <h3 className="font-heading text-xl font-semibold text-white">
               Evidence-based care
             </h3>
             <p className="text-sm text-white/60 leading-relaxed">

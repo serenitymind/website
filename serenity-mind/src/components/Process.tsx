@@ -37,7 +37,7 @@ export default function Process() {
     <section className="bg-white">
       <div className="max-w-[1440px] mx-auto flex flex-col gap-12 px-16 py-20">
         {/* Section header — centered */}
-        <div className="flex flex-col items-center gap-3 max-w-[600px] mx-auto text-center mb-4">
+        <div className="flex flex-col items-center gap-5 max-w-[600px] mx-auto text-center mb-4">
           {/* Tag with left/right lines — matches Expertise section style */}
           <div className="flex items-center gap-4">
             <div className="h-px w-16 bg-text-muted/30" />

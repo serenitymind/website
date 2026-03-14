@@ -80,15 +80,15 @@ export default function Conditions() {
 
         {/* Tag — above the h1 title with large gap */}
         <div className="relative z-[3] flex items-center justify-center gap-4 mb-40">
-          <div className="h-px w-16 bg-white/20" />
-          <span className="text-[13px] font-semibold text-white/40 tracking-[2px]">
+          <div className="h-px w-16 bg-[#C4B5FD]/30" />
+          <span className="text-[13px] font-semibold text-[#C4B5FD] tracking-[2px]">
             WHAT WE OFFER
           </span>
-          <div className="h-px w-16 bg-white/20" />
+          <div className="h-px w-16 bg-[#C4B5FD]/30" />
         </div>
 
-        {/* Massive h1 — pure white, behind cards */}
-        <h1 className="absolute left-1/2 -translate-x-1/2 top-[100px] font-heading text-[clamp(140px,16vw,260px)] font-bold text-white whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal">
+        {/* Massive h1 — purple to match hero video tone, behind cards */}
+        <h1 className="absolute left-1/2 -translate-x-1/2 top-[100px] font-heading text-[clamp(140px,16vw,260px)] font-bold text-[#C4B5FD] whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal">
           Expertise
         </h1>
 
@@ -111,11 +111,11 @@ export default function Conditions() {
 
         {/* Subsection divider — tag between services and conditions */}
         <div className="relative z-[3] flex items-center justify-center gap-4 my-6">
-          <div className="h-px flex-1 bg-white/10" />
-          <span className="text-[11px] font-semibold text-white/30 tracking-[2px]">
+          <div className="h-px flex-1 bg-[#C4B5FD]/20" />
+          <span className="text-[11px] font-semibold text-[#C4B5FD] tracking-[2px]">
             CONDITIONS WE TREAT
           </span>
-          <div className="h-px flex-1 bg-white/10" />
+          <div className="h-px flex-1 bg-[#C4B5FD]/20" />
         </div>
 
         {/* Conditions rows — z-[2], rows 2-3 of cards */}
