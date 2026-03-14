@@ -59,7 +59,7 @@ export default function DoctorBio() {
             {credentials.map((cred) => (
               <span
                 key={cred}
-                className="px-4 py-2 rounded-full bg-bg-card text-[13px] font-medium text-text-primary"
+                className="px-4 py-2 rounded-full bg-text-primary text-[13px] font-medium text-white hover:-translate-y-1 transition-all duration-200 cursor-default"
               >
                 {cred}
               </span>

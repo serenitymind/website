@@ -83,14 +83,19 @@ export default function Conditions() {
   const h1Ref = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    const onScroll = () => {
-      if (!h1Ref.current) return;
-      /* Map scroll position to diagonal gradient shift (0-200%) */
-      const pos = (window.scrollY * 0.15) % 200;
-      h1Ref.current.style.backgroundPosition = `${pos}% ${pos}%`;
+    let rafId: number;
+    /* Use rAF loop + getBoundingClientRect so it works even with scroll hijack */
+    const tick = () => {
+      if (h1Ref.current) {
+        const rect = h1Ref.current.getBoundingClientRect();
+        /* Map element's viewport position to gradient shift */
+        const pos = ((window.innerHeight - rect.top) * 0.25) % 200;
+        h1Ref.current.style.backgroundPosition = `${pos}% ${pos}%`;
+      }
+      rafId = requestAnimationFrame(tick);
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
   }, []);
 
   return (
@@ -112,6 +117,7 @@ export default function Conditions() {
           style={{
             backgroundImage: "linear-gradient(135deg, #8B5CF6, #C4B5FD, #E9D5FF, #A78BFA, #8B5CF6, #C4B5FD, #E9D5FF)",
             backgroundSize: "200% 200%",
+            backgroundPosition: "0% 0%",
           }}
           className="absolute left-1/2 -translate-x-1/2 top-[100px] font-heading text-[clamp(140px,16vw,260px)] font-bold whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal bg-clip-text text-transparent"
         >
