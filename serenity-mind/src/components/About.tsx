@@ -9,7 +9,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function About() {
   return (
-    <section id="about" className="bg-white">
+    <section className="bg-white">
       <div className="max-w-[1440px] mx-auto flex flex-col gap-10 px-16 py-20">
 
         {/* Top row — split header: title left, description right */}

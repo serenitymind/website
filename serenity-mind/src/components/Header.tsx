@@ -1,23 +1,67 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Brain } from "lucide-react";
 import Link from "next/link";
 
 /**
  * Header — sticky navigation bar (monochrome theme)
  * Logo + nav links + pill-shaped black CTA
+ * Active link highlights based on which section is in view.
  */
 
-/* Navigation links for the top bar */
+/* Navigation links — match actual page sections */
 const navLinks = [
   { label: "Home", href: "#" },
-  { label: "Services", href: "#services" },
   { label: "About", href: "#about" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "Expertise", href: "#expertise" },
+  { label: "How It Works", href: "#process" },
+  { label: "FAQ", href: "#faq" },
 ];
 
+/* Section IDs to observe (excludes "Home" which is the fallback) */
+const sectionIds = navLinks
+  .filter((l) => l.href !== "#")
+  .map((l) => l.href.slice(1));
+
 export default function Header() {
+  /* Track which nav link is active — defaults to Home */
+  const [activeHref, setActiveHref] = useState("#");
+
+  useEffect(() => {
+    /* Observe each section — when it enters the viewport, mark it active */
+    const observer = new IntersectionObserver(
+      (entries) => {
+        /* Find the first entry that is intersecting (top-down priority) */
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveHref(`#${entry.target.id}`);
+            return;
+          }
+        }
+      },
+      /* rootMargin: offset for fixed header (~48px), trigger at 30% visible */
+      { rootMargin: "-48px 0px -60% 0px", threshold: 0 },
+    );
+
+    /* Observe all section elements */
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    /* Fallback: if scrolled to top, set Home active */
+    const handleScroll = () => {
+      if (window.scrollY < 100) setActiveHref("#");
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     /* Fixed header — sits above the sticky scroll-stop hero */
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-border">
@@ -30,17 +74,16 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Navigation links */}
+        {/* Navigation links — active link shown in bold black */}
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link, i) => (
+          {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className={`text-[13px] ${
-                /* First link = active state in black */
-                i === 0
+              className={`text-[13px] transition-colors ${
+                activeHref === link.href
                   ? "font-medium text-text-primary"
-                  : "text-text-muted hover:text-text-primary transition-colors"
+                  : "text-text-muted hover:text-text-primary"
               }`}
             >
               {link.label}

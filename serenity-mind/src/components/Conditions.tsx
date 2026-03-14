@@ -99,7 +99,7 @@ export default function Conditions() {
   }, []);
 
   return (
-    <section className="bg-gradient-to-b from-[#0a0a0a] to-[#141414] overflow-hidden">
+    <section id="expertise" className="bg-gradient-to-b from-[#0a0a0a] to-[#141414] overflow-hidden">
       <div className="max-w-[1440px] mx-auto relative px-16 pt-16 pb-24">
 
         {/* Tag — above the h1 title with large gap */}

@@ -52,7 +52,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="bg-bg-secondary">
+    <section id="faq" className="bg-bg-secondary">
       <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20">
 
         {/* Left — section header (sticky on desktop) */}

@@ -34,8 +34,8 @@ const steps = [
 
 export default function Process() {
   return (
-    <section className="bg-white">
-      <div className="max-w-[1440px] mx-auto flex flex-col gap-12 px-16 py-20">
+    <section id="process" className="bg-white relative overflow-hidden">
+      <div className="max-w-[1440px] mx-auto flex flex-col gap-12 px-16 py-20 relative z-10">
         {/* Section header — centered */}
         <div className="flex flex-col items-center gap-5 max-w-[600px] mx-auto text-center mb-4">
           {/* Tag with left/right lines — matches Expertise section style */}
@@ -51,12 +51,12 @@ export default function Process() {
           </h2>
         </div>
 
-        {/* 4-step grid — cards with lilac left accent border */}
+        {/* 4-step grid — white glass cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {steps.map((step) => (
             <div
               key={step.number}
-              className="flex flex-col gap-4 p-7 rounded-2xl bg-bg-card border-l-4 border-[#C4B5FD]"
+              className="flex flex-col gap-4 p-7 rounded-2xl bg-white/70 backdrop-blur-sm border border-[#C4B5FD]/20 shadow-[0_4px_24px_rgba(196,181,253,0.1)]"
             >
               {/* Step number — lilac */}
               <span className="font-heading text-[48px] font-bold text-[#C4B5FD] leading-none">
@@ -71,6 +71,25 @@ export default function Process() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Space gradient — curved lilac horizon glow on white */}
+      <div className="absolute bottom-0 left-0 right-0 h-[220px] z-0">
+        {/* Arc shape — large ellipse with only top edge visible */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 -bottom-[350px] w-[130%] h-[500px] rounded-[50%]"
+          style={{
+            boxShadow: "0 -25px 50px rgba(139,92,246,0.25), 0 -8px 20px rgba(196,181,253,0.35), 0 -60px 120px rgba(196,181,253,0.12)",
+            border: "1px solid rgba(196,181,253,0.3)",
+          }}
+        />
+        {/* Inner glow — tighter, more saturated purple bloom */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 -bottom-[360px] w-[110%] h-[500px] rounded-[50%]"
+          style={{
+            boxShadow: "0 -15px 40px rgba(167,139,250,0.2), 0 -40px 80px rgba(196,181,253,0.08)",
+          }}
+        />
       </div>
     </section>
   );
