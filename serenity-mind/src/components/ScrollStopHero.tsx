@@ -187,6 +187,9 @@ export default function ScrollStopHero() {
         },
       });
 
+      /* Force timeline to span full 0→1 so scroll progress maps 1:1 */
+      tl.set({}, {}, 1.0);
+
       /* Text fade transitions via GSAP timeline */
       BREAKPOINTS.forEach((bp, i) => {
         const el = textRefs.current[i];
@@ -301,20 +304,20 @@ export default function ScrollStopHero() {
           </div>
         )}
 
-        {/* Text overlays — GSAP controls opacity */}
+        {/* Text overlays — GSAP controls opacity, all centered */}
         {BREAKPOINTS.map((bp, i) => (
           <div
             key={i}
             ref={(el) => { textRefs.current[i] = el; }}
-            className="absolute inset-0 z-20 flex items-center pointer-events-none"
+            className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
             style={{ opacity: i === 0 ? 1 : 0 }}
           >
-            <div className="max-w-[1440px] mx-auto w-full px-16">
-              <div className="max-w-[580px] flex flex-col gap-6">
-                <h1 className="font-heading text-[56px] md:text-[62px] font-bold text-white leading-[1.05] tracking-[-2px] whitespace-pre-line drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]">
+            <div className="flex flex-col items-center">
+              <div className="max-w-[580px] flex flex-col gap-6 items-center text-center">
+                <h1 className="font-heading text-[56px] md:text-[62px] font-bold text-white leading-[1.05] tracking-[-2px] whitespace-pre-line drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] text-center">
                   {bp.headline}
                 </h1>
-                <p className="text-lg text-white/80 leading-relaxed max-w-[480px] drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)]">
+                <p className="text-lg text-white/80 leading-relaxed max-w-[480px] drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] text-center">
                   {bp.subline}
                 </p>
                 {bp.showCTA && (
