@@ -13,7 +13,7 @@ export default function About() {
       <div className="max-w-[1440px] mx-auto flex flex-col gap-10 px-16 py-20">
 
         {/* Top row — split header: title left, description right */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
           {/* Left: heading + CTA pill */}
           <div className="flex flex-col gap-4">
             <h2 className="font-heading text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
@@ -21,7 +21,7 @@ export default function About() {
             </h2>
             <a
               href="#contact"
-              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full border border-border text-[13px] font-medium text-text-primary hover:bg-gray-50 transition-colors w-fit"
+              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-text-primary text-white text-[13px] font-medium hover:bg-accent-hover transition-colors w-fit"
             >
               Get started
               <ArrowRight className="w-3.5 h-3.5" />
@@ -51,25 +51,25 @@ export default function About() {
             />
           </div>
 
-          {/* Card 2 — standard size */}
-          <div className="rounded-2xl bg-bg-card p-8 flex flex-col justify-end min-h-[280px]">
-            <h3 className="font-heading text-xl font-semibold text-text-primary mb-2">
+          {/* Card 2 — standard size, inverted */}
+          <div className="rounded-2xl bg-text-primary p-8 flex flex-col justify-start min-h-[280px]">
+            <h3 className="font-heading text-xl font-semibold text-white mb-2">
               Flexible scheduling
             </h3>
-            <p className="text-sm text-text-secondary leading-relaxed">
+            <p className="text-sm text-white/60 leading-relaxed">
               In-person and virtual appointments available evenings and weekends.
               No long wait times.
             </p>
           </div>
 
-          {/* Card 3 — evidence-based + whole-person merged */}
-          <div className="rounded-2xl bg-bg-card p-8 flex flex-col justify-end min-h-[280px]">
-            <h3 className="font-heading text-xl font-semibold text-text-primary mb-2">
-              Whole-person, evidence-based care
+          {/* Card 3 — evidence-based, inverted */}
+          <div className="rounded-2xl bg-text-primary p-8 flex flex-col justify-start min-h-[280px]">
+            <h3 className="font-heading text-xl font-semibold text-white mb-2">
+              Evidence-based care
             </h3>
-            <p className="text-sm text-text-secondary leading-relaxed">
-              Every plan is grounded in research and treats the full picture —
-              medication, therapy, and lifestyle — adapted to your unique goals.
+            <p className="text-sm text-white/60 leading-relaxed">
+              Every plan is grounded in research and treats the full picture:
+              medication, therapy, and lifestyle, adapted to your unique goals.
             </p>
           </div>
         </div>

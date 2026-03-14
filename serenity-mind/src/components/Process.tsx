@@ -37,10 +37,15 @@ export default function Process() {
     <section className="bg-white">
       <div className="max-w-[1440px] mx-auto flex flex-col gap-12 px-16 py-20">
         {/* Section header — centered */}
-        <div className="flex flex-col items-center gap-3 max-w-[600px] mx-auto text-center">
-          <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
-            HOW IT WORKS
-          </span>
+        <div className="flex flex-col items-center gap-3 max-w-[600px] mx-auto text-center mb-4">
+          {/* Tag with left/right lines — matches Expertise section style */}
+          <div className="flex items-center gap-4">
+            <div className="h-px w-16 bg-text-muted/30" />
+            <span className="text-[13px] font-semibold text-text-muted tracking-[2px]">
+              HOW IT WORKS
+            </span>
+            <div className="h-px w-16 bg-text-muted/30" />
+          </div>
           <h2 className="font-heading text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
             Your Path to Better Mental Health
           </h2>
