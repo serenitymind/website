@@ -51,12 +51,15 @@ export default function Process() {
           </h2>
         </div>
 
-        {/* 4-step grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 4-step grid — cards with lilac left accent border */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {steps.map((step) => (
-            <div key={step.number} className="flex flex-col gap-4">
-              {/* Step number */}
-              <span className="font-heading text-[48px] font-bold text-text-muted/40 leading-none">
+            <div
+              key={step.number}
+              className="flex flex-col gap-4 p-7 rounded-2xl bg-bg-card border-l-4 border-[#C4B5FD]"
+            >
+              {/* Step number — lilac */}
+              <span className="font-heading text-[48px] font-bold text-[#C4B5FD] leading-none">
                 {step.number}
               </span>
               <h3 className="font-heading text-xl font-semibold text-text-primary">
