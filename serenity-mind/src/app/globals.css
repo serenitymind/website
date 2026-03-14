@@ -50,6 +50,11 @@ html {
   animation: gentle-bounce 0.6s ease-in-out infinite;
 }
 
+/* Purple gradient hover — subtle angled shift */
+.hover-purple:hover {
+  background: linear-gradient(135deg, #7C3AED, #A855F7) !important;
+}
+
 .video-placeholder {
   background: linear-gradient(
     135deg,

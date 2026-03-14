@@ -51,7 +51,7 @@ export default function Header() {
         {/* CTA button — pill-shaped black */}
         <a
           href="#contact"
-          className="hidden md:inline-flex items-center px-5 py-1.5 rounded-full bg-text-primary text-white text-[12px] font-medium hover:bg-[#7C3AED] hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 hover-bounce"
+          className="hidden md:inline-flex items-center px-5 py-1.5 rounded-full bg-text-primary text-white text-[12px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 hover-bounce"
         >
           Book Appointment
         </a>

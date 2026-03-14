@@ -21,7 +21,7 @@ export default function About() {
             </h2>
             <a
               href="#contact"
-              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-text-primary text-white text-[13px] font-medium hover:bg-[#7C3AED] hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 w-fit hover-bounce"
+              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-text-primary text-white text-[13px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 w-fit hover-bounce"
             >
               Get started
               <ArrowRight className="w-3.5 h-3.5" />

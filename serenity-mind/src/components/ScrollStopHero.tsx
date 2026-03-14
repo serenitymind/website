@@ -323,7 +323,7 @@ export default function ScrollStopHero() {
                 {bp.showCTA && (
                   <a
                     href="#contact"
-                    className="inline-flex items-center gap-2 px-8 py-4 mt-2 rounded-lg bg-text-primary text-white text-[15px] font-medium hover:bg-[#7C3AED] hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 pointer-events-auto hover-bounce"
+                    className="inline-flex items-center gap-2 px-8 py-4 mt-2 rounded-lg bg-text-primary text-white text-[15px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 pointer-events-auto hover-bounce"
                   >
                     Book Consultation
                     <ArrowRight className="w-4 h-4" />

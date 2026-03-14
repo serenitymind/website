@@ -89,7 +89,7 @@ export default function Conditions() {
       if (h1Ref.current) {
         const rect = h1Ref.current.getBoundingClientRect();
         /* Map element's viewport position to gradient shift */
-        const pos = ((window.innerHeight - rect.top) * 0.25) % 200;
+        const pos = ((window.innerHeight - rect.top) * 0.5) % 300;
         h1Ref.current.style.backgroundPosition = `${pos}% ${pos}%`;
       }
       rafId = requestAnimationFrame(tick);
@@ -115,8 +115,8 @@ export default function Conditions() {
         <h1
           ref={h1Ref}
           style={{
-            backgroundImage: "linear-gradient(135deg, #8B5CF6, #C4B5FD, #E9D5FF, #A78BFA, #8B5CF6, #C4B5FD, #E9D5FF)",
-            backgroundSize: "200% 200%",
+            backgroundImage: "linear-gradient(135deg, #A78BFA, #C4B5FD, #DDD6FE, #B4A0FB, #C4B5FD, #A78BFA, #D4CAFE)",
+            backgroundSize: "300% 300%",
             backgroundPosition: "0% 0%",
           }}
           className="absolute left-1/2 -translate-x-1/2 top-[100px] font-heading text-[clamp(140px,16vw,260px)] font-bold whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal bg-clip-text text-transparent"
