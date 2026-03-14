@@ -97,7 +97,7 @@ export default function Conditions() {
           {services.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08]"
+              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08] transition-shadow duration-300 hover:shadow-[0_0_25px_rgba(196,181,253,0.15)]"
             >
               <h3 className="font-heading text-lg font-semibold text-white">
                 {item.title}
@@ -123,7 +123,7 @@ export default function Conditions() {
           {conditions.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08]"
+              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08] transition-shadow duration-300 hover:shadow-[0_0_25px_rgba(196,181,253,0.15)]"
             >
               <h3 className="font-heading text-lg font-semibold text-white">
                 {item.title}
