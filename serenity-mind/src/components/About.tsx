@@ -51,8 +51,8 @@ export default function About() {
             />
           </div>
 
-          {/* Card 2 — standard size, dark lilac */}
-          <div className="rounded-2xl bg-[#2D1F3D] p-8 flex flex-col justify-between min-h-[280px]">
+          {/* Card 2 — standard size, dark lilac gradient */}
+          <div className="rounded-2xl bg-gradient-to-br from-[#2D1F3D] to-[#3D2A5C] p-8 flex flex-col justify-between min-h-[280px]">
             <h3 className="font-heading text-xl font-semibold text-white">
               Flexible scheduling
             </h3>
@@ -62,8 +62,8 @@ export default function About() {
             </p>
           </div>
 
-          {/* Card 3 — evidence-based, dark lilac */}
-          <div className="rounded-2xl bg-[#2D1F3D] p-8 flex flex-col justify-between min-h-[280px]">
+          {/* Card 3 — evidence-based, dark lilac gradient */}
+          <div className="rounded-2xl bg-gradient-to-br from-[#2D1F3D] to-[#3D2A5C] p-8 flex flex-col justify-between min-h-[280px]">
             <h3 className="font-heading text-xl font-semibold text-white">
               Evidence-based care
             </h3>

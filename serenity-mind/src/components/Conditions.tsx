@@ -129,7 +129,7 @@ export default function Conditions() {
           {services.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(167,139,250,0.45)] hover:border-[#A78BFA]/25 hover:-translate-y-1"
+              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(167,139,250,0.45),0_4px_14px_rgba(196,181,253,0.5),0_2px_5px_rgba(237,233,254,0.45)] hover:border-[#A78BFA]/25 hover:-translate-y-1"
             >
               <h3 className="font-heading text-lg font-semibold text-white">
                 {item.title}
@@ -155,7 +155,7 @@ export default function Conditions() {
           {conditions.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(167,139,250,0.45)] hover:border-[#A78BFA]/25 hover:-translate-y-1"
+              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(167,139,250,0.45),0_4px_14px_rgba(196,181,253,0.5),0_2px_5px_rgba(237,233,254,0.45)] hover:border-[#A78BFA]/25 hover:-translate-y-1"
             >
               <h3 className="font-heading text-lg font-semibold text-white">
                 {item.title}
