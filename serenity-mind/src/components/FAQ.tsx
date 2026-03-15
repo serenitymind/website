@@ -117,7 +117,7 @@ const faqs = [
   {
     question: "What is your cancellation policy?",
     answer: (
-      <p>I understand that life can be unpredictable, and sometimes you may need to reschedule or cancel an appointment. Please provide at least 24+ hours notice if you need to make changes. Each situation is handled on a case-by-case basis, and late cancellations or missed appointments may incur a fee. I appreciate your understanding, which helps keep the schedule running smoothly for all patients.</p>
+      <p>I understand that life can be unpredictable, and sometimes you may need to reschedule or cancel an appointment. Please provide at least 48 hours notice if you need to make changes. Each situation is handled on a case-by-case basis, and late cancellations or missed appointments may incur a fee. I appreciate your understanding, which helps keep the schedule running smoothly for all patients.</p>
     ),
   },
 ];

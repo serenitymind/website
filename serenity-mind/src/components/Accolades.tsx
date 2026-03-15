@@ -44,7 +44,7 @@ export default function Accolades() {
               />
               {/* Ranking badge — award ribbon with text inside */}
               {"badge" in logo && logo.badge && (
-                <svg width="24" height="40" viewBox="4 0 24 40" fill="none" className="absolute -bottom-5 -right-3">
+                <svg width="24" height="40" viewBox="4 0 24 40" fill="none" className="absolute -bottom-1 -right-3">
                   {/* Medal circle — gold gradient */}
                   <circle cx="16" cy="14" r="12" fill="#FBBF24" />
                   <circle cx="16" cy="14" r="10" fill="#F59E0B" />
