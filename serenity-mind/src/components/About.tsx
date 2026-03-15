@@ -46,20 +46,17 @@ export default function About() {
           {/* Featured card — spans 2 columns, looping video */}
           {/* Scale up ~10% to crop Veo watermark from bottom edge */}
           <div className="lg:col-span-2 rounded-2xl overflow-hidden min-h-[280px] relative scroll-reveal-child">
-            <video
-              src="/child-interaction.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover scale-110 origin-top"
+            <img
+              src="/child-interaction.jpeg"
+              alt="Doctor interacting with child patient"
+              className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
 
           {/* Card 2 — standard size, dark lilac gradient */}
-          <div className="rounded-2xl bg-gradient-to-br from-[#2D1F3D] to-[#3D2A5C] p-8 flex flex-col justify-between min-h-[280px] scroll-reveal-child">
+          <div className="rounded-2xl bg-gradient-to-br from-[#4A3560] to-[#5E4480] p-8 flex flex-col justify-between min-h-[280px] scroll-reveal-child">
             <h3 className="font-heading text-xl font-semibold text-white">
-              Flexible scheduling
+              Flexible schedule & Evening slots
             </h3>
             <p className="text-sm text-white/60 leading-relaxed">
               Virtual appointments across California, including evening slots,
@@ -68,7 +65,7 @@ export default function About() {
           </div>
 
           {/* Card 3 — evidence-based, dark lilac gradient */}
-          <div className="rounded-2xl bg-gradient-to-br from-[#2D1F3D] to-[#3D2A5C] p-8 flex flex-col justify-between min-h-[280px] scroll-reveal-child">
+          <div className="rounded-2xl bg-gradient-to-br from-[#4A3560] to-[#5E4480] p-8 flex flex-col justify-between min-h-[280px] scroll-reveal-child">
             <h3 className="font-heading text-xl font-semibold text-white">
               Evidence-based, compassionate care
             </h3>
