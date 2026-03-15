@@ -56,13 +56,13 @@ export default function Process() {
         {/* Section header — white text over video */}
         <div className="flex flex-col items-center gap-5 max-w-[600px] mx-auto text-center mb-4">
           <div className="flex items-center gap-4">
-            <div className="h-px w-16 bg-white/40" />
-            <span className="text-[13px] font-semibold text-white/80 tracking-[2px]">
+            <div className="h-px w-16 bg-text-primary/30" />
+            <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
               HOW IT WORKS
             </span>
-            <div className="h-px w-16 bg-white/40" />
+            <div className="h-px w-16 bg-text-primary/30" />
           </div>
-          <h2 className="font-heading text-[40px] font-bold text-white tracking-tight leading-[1.1]">
+          <h2 className="font-heading text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
             Your Path to Better Mental Health
           </h2>
         </div>
