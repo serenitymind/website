@@ -12,7 +12,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const credentials = [
   "Board Certified Psychiatrist",
   "Adult & Adolescent Care",
-  "15+ Years Experience",
+  "TFCBT Certified",
+  "BCBA Certified",
   "Telehealth Available",
 ];
 
