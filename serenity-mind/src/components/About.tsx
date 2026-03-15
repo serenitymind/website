@@ -47,7 +47,7 @@ export default function About() {
           {/* Scale up ~10% to crop Veo watermark from bottom edge */}
           <div className="lg:col-span-2 rounded-2xl overflow-hidden min-h-[280px] relative scroll-reveal-child">
             <video
-              src="/patient-growth.mp4"
+              src="/child-interaction.mp4"
               autoPlay
               loop
               muted
