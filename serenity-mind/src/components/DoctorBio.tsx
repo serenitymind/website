@@ -57,7 +57,7 @@ export default function DoctorBio() {
             adolescents, young adults, and adults.
           </p>
           <p className="text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
-            Dr. Chen takes a thoughtful and collaborative approach to care,
+            Dr. Eugenia Chen takes a thoughtful and collaborative approach to care,
             integrating evidence-based treatment, psychotherapy, and an understanding
             of each patient&apos;s environment and life experiences to support meaningful
             and lasting mental wellness. Her work has been shaped by research,
