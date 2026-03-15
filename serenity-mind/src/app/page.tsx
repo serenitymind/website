@@ -4,6 +4,7 @@ import About from "@/components/About";
 import Conditions from "@/components/Conditions";
 import Process from "@/components/Process";
 import DoctorBio from "@/components/DoctorBio";
+import Accolades from "@/components/Accolades";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -32,6 +33,9 @@ export default function Home() {
 
       {/* Doctor credentials — trust signal immediately */}
       <DoctorBio />
+
+      {/* Affiliation logos — trust reinforcement */}
+      <Accolades />
 
       {/* Why choose us — 3-card layout */}
       <About />

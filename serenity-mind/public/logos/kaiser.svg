@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 70" fill="#111827">
+  <!-- Kaiser Permanente — horizontal: sunburst+figures icon left, text right -->
+
+  <g transform="translate(35, 35)">
+    <!-- Sunburst rays — thin wedges fanning from bottom center in a half-circle -->
+    <!-- ~11 rays spread evenly from ~170° to ~10° (left to right arc) -->
+    <line x1="0" y1="0" x2="-28" y2="-4" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="-26" y2="-10" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="-23" y2="-16" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="-18" y2="-21" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="-13" y2="-25" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="-7" y2="-27" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="0" y2="-28" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="7" y2="-27" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="13" y2="-25" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="18" y2="-21" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="23" y2="-16" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="26" y2="-10" stroke="#111827" stroke-width="1.8"/>
+    <line x1="0" y1="0" x2="28" y2="-4" stroke="#111827" stroke-width="1.8"/>
+
+    <!-- Three human figures sitting on top of the sunburst -->
+    <!-- Center figure (tallest) -->
+    <circle cx="0" cy="-30" r="4"/>
+    <rect x="-3" y="-25" width="6" height="14" rx="2.5"/>
+
+    <!-- Left figure -->
+    <circle cx="-11" cy="-26" r="3.5"/>
+    <rect x="-13.5" y="-22" width="5" height="12" rx="2"/>
+
+    <!-- Right figure -->
+    <circle cx="11" cy="-26" r="3.5"/>
+    <rect x="8.5" y="-22" width="5" height="12" rx="2"/>
+  </g>
+
+  <!-- Text — right side, two lines -->
+  <text x="80" y="30" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="2">KAISER</text>
+  <text x="80" y="50" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="2">PERMANENTE</text>
+</svg>
