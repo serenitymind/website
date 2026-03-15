@@ -11,8 +11,8 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /* Affiliation logos — SVG files in /public/logos/ */
 const logos = [
-  { src: "/logos/baylor.svg", alt: "Baylor College of Medicine", badge: "Top 20" },
-  { src: "/logos/ucla-health.svg", alt: "UCLA Health", badge: "Top 5" },
+  { src: "/logos/baylor.svg", alt: "Baylor College of Medicine", badge: "Top 20", badgeClass: "absolute -bottom-5 right-4" },
+  { src: "/logos/ucla-health.svg", alt: "UCLA Health", badge: "Top 5", badgeClass: "absolute -bottom-5 -right-3" },
   { src: "/logos/ncrp.svg", alt: "NCRP Training" },
   { src: "/logos/kaiser.svg", alt: "Kaiser Permanente" },
   { src: "/logos/psychology-today.svg", alt: "Psychology Today" },
@@ -44,7 +44,7 @@ export default function Accolades() {
               />
               {/* Ranking badge — award ribbon with text inside */}
               {"badge" in logo && logo.badge && (
-                <svg width="24" height="40" viewBox="4 0 24 40" fill="none" className="absolute -bottom-1 -right-3">
+                <svg width="24" height="40" viewBox="4 0 24 40" fill="none" className={logo.badgeClass || "absolute -bottom-1 -right-3"}>
                   {/* Medal circle — gold gradient */}
                   <circle cx="16" cy="14" r="12" fill="#FBBF24" />
                   <circle cx="16" cy="14" r="10" fill="#F59E0B" />
