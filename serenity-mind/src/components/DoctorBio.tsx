@@ -31,7 +31,7 @@ export default function DoctorBio() {
               src="/doctor-headshot.jpeg"
               alt="Dr. Eugenia Chen"
               fill
-              className="object-cover"
+              className="object-cover object-[center_15%]"
               sizes="(max-width: 1024px) 100vw, 400px"
               priority
             />
