@@ -97,6 +97,13 @@ html {
 .visible .scroll-reveal-child:nth-child(7) { transition-delay: 0.58s; }
 .visible .scroll-reveal-child:nth-child(8) { transition-delay: 0.66s; }
 
+/* After reveal completes, reset to fast transition for hover interactions.
+   The .revealed class is added by the hook after entrance animation finishes. */
+.revealed .scroll-reveal-child {
+  transition: all 0.3s ease;
+  transition-delay: 0s !important;
+}
+
 .video-placeholder {
   background: linear-gradient(
     135deg,

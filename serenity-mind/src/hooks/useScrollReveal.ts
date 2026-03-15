@@ -18,6 +18,10 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>() {
         if (entry.isIntersecting) {
           el.classList.add("visible");
           observer.disconnect(); /* one-time — don't re-trigger */
+
+          /* After entrance animation finishes (~1s), switch children
+             to fast hover-friendly transitions (removes stagger delay) */
+          setTimeout(() => el.classList.add("revealed"), 1000);
         }
       },
       { threshold: 0.1, rootMargin: "-48px 0px 0px 0px" },
