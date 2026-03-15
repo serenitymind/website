@@ -21,7 +21,7 @@ export default function DoctorBio() {
 
   return (
     <section id="about" className="bg-bg-secondary">
-      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20 items-center">
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 pt-20 pb-8 items-center">
 
         {/* Left — doctor headshot */}
         <div className="w-full lg:w-[400px] shrink-0 scroll-reveal-child">

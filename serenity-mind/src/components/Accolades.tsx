@@ -32,7 +32,7 @@ export default function Accolades() {
           {logos.map((logo) => (
             <div
               key={logo.alt}
-              className="scroll-reveal-child opacity-40 hover:opacity-70 transition-opacity duration-300"
+              className="scroll-reveal-child opacity-70 hover:opacity-100 transition-opacity duration-300"
             >
               {/* Each logo sized to ~120px wide, height auto */}
               <Image
