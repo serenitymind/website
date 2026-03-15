@@ -46,18 +46,28 @@ export default function DoctorBio() {
           <h2 className="font-heading text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
             Dr. Eugenia Chen, M.D.
           </h2>
-          <p className="text-[17px] text-text-secondary leading-relaxed max-w-[520px]">
-            Dr. Chen is a double board-certified psychiatrist specializing
-            in adult and adolescent mental health. With over 15 years of
-            clinical experience, she takes a comprehensive, patient-centered
-            approach — combining evidence-based treatments with genuine
-            empathy to help patients achieve lasting wellness.
+          <p className="text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
+            Dr. Eugenia Chen is a board-certified adult psychiatrist who completed
+            her medical degree at Baylor College of Medicine, followed by psychiatry
+            residency training with Kaiser Permanente. She went on to complete
+            specialized fellowship training in Child and Adolescent Psychiatry at
+            the University of California, Los Angeles (UCLA), where she also served
+            as Fellowship Wellness Chief. Dr. Chen has additional focus in parent
+            and infant mental health, and her clinical work includes children,
+            adolescents, young adults, and adults.
           </p>
-          <p className="text-[17px] text-text-secondary leading-relaxed max-w-[520px]">
-            She completed her residency at Johns Hopkins and fellowship at
-            UCLA, bringing world-class training to every patient interaction.
-            Dr. Chen believes that mental health care should be
-            accessible, stigma-free, and tailored to the individual.
+          <p className="text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
+            Dr. Chen takes a thoughtful and collaborative approach to care,
+            integrating evidence-based treatment, psychotherapy, and an understanding
+            of each patient&apos;s environment and life experiences to support meaningful
+            and lasting mental wellness. Her work has been shaped by research,
+            community advocacy, and trauma-informed care, with multiple publications
+            and national presentations focused on youth mental health and complex
+            psychiatric conditions. Outside of work, Dr. Chen enjoys spending time
+            with her dog, traveling, scuba diving, cooking, and exploring new
+            restaurants. She values wellness, curiosity, and connection with family
+            and community, and brings this same sense of warmth and balance into the
+            care she provides for her patients.
           </p>
 
           {/* Credential badges */}
