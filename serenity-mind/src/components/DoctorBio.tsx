@@ -28,7 +28,7 @@ export default function DoctorBio() {
           <div className="w-full aspect-[3/4] rounded-2xl overflow-hidden relative">
             <Image
               src="/doctor-headshot.jpeg"
-              alt="Dr. Sarah Mitchell"
+              alt="Dr. Eugenia Chen"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 400px"
@@ -43,10 +43,10 @@ export default function DoctorBio() {
             MEET YOUR DOCTOR
           </span>
           <h2 className="font-heading text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
-            Dr. Sarah Mitchell, M.D.
+            Dr. Eugenia Chen, M.D.
           </h2>
           <p className="text-[17px] text-text-secondary leading-relaxed max-w-[520px]">
-            Dr. Mitchell is a double board-certified psychiatrist specializing
+            Dr. Chen is a double board-certified psychiatrist specializing
             in adult and adolescent mental health. With over 15 years of
             clinical experience, she takes a comprehensive, patient-centered
             approach — combining evidence-based treatments with genuine
@@ -55,7 +55,7 @@ export default function DoctorBio() {
           <p className="text-[17px] text-text-secondary leading-relaxed max-w-[520px]">
             She completed her residency at Johns Hopkins and fellowship at
             UCLA, bringing world-class training to every patient interaction.
-            Dr. Mitchell believes that mental health care should be
+            Dr. Chen believes that mental health care should be
             accessible, stigma-free, and tailored to the individual.
           </p>
 

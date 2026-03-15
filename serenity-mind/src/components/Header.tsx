@@ -13,7 +13,7 @@ import Link from "next/link";
 /* Navigation links — match actual page sections */
 const navLinks = [
   { label: "Home", href: "#" },
-  { label: "About", href: "#about" },
+  { label: "Meet the Doctor", href: "#about" },
   { label: "Expertise", href: "#expertise" },
   { label: "How It Works", href: "#process" },
   { label: "FAQ", href: "#faq" },
@@ -63,14 +63,23 @@ export default function Header() {
   }, []);
 
   return (
-    /* Fixed header — sits above the sticky scroll-stop hero */
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-border">
+    <>
+    {/* Announcement banner — thin strip above the nav */}
+    <div className="fixed top-0 left-0 right-0 z-50 bg-text-primary text-white text-center text-[12px] py-1.5 font-medium tracking-wide">
+      Now accepting new patients — <a href="#contact" className="underline underline-offset-2 hover:text-white/80 transition-colors">book a free consultation</a>
+    </div>
+
+    {/* Fixed header — sits below the announcement banner */}
+    <header className="fixed top-[28px] left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-border">
       <div className="flex items-center justify-between px-8 py-2.5">
         {/* Logo — brain icon + name */}
         <Link href="/" className="flex items-center gap-2">
           <Brain className="w-5 h-5 text-text-primary" />
           <span className="font-heading text-[15px] font-semibold text-text-primary">
             Serenity Mind
+          </span>
+          <span className="text-[11px] text-text-muted hidden sm:inline">
+            by Eugenia Chen, M.D.
           </span>
         </Link>
 
@@ -100,5 +109,6 @@ export default function Header() {
         </a>
       </div>
     </header>
+    </>
   );
 }
