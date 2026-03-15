@@ -27,22 +27,22 @@ const BREAKPOINTS = [
   {
     start: 0,
     end: 0.28,
-    headline: "Your Mental Health\nDeserves Expert Care",
-    subline: "Compassionate, evidence-based psychiatric care for adults and adolescents.",
+    headline: "Eugenia Chen, M.D.",
+    subline: "Board-Certified Adult Psychiatrist | Child & Adolescent Trained\nCompassionate, evidence-based care for children, adolescents, and adults",
     showCTA: false,
   },
   {
     start: 0.33,
     end: 0.58,
-    headline: "Board-Certified\nPsychiatrists",
-    subline: "Decades of experience treating anxiety, depression, ADHD, PTSD & more.",
+    headline: "Holistic, Individualized Care\nfor Every Stage of Life",
+    subline: "Experienced in treating: anxiety, depression, ADHD, PTSD, trauma, and more",
     showCTA: false,
   },
   {
     start: 0.63,
     end: 1.0,
-    headline: "Start Your Journey Today",
-    subline: "Book a confidential consultation and take the first step.",
+    headline: "Take the First Step\nToward Mental Wellness",
+    subline: "Book a confidential consultation today",
     showCTA: true,
   },
 ];
@@ -317,7 +317,7 @@ export default function ScrollStopHero() {
                 <h1 className="font-heading text-[44px] md:text-[52px] font-bold text-text-primary leading-[1.1] tracking-[-1.5px] whitespace-pre-line text-center">
                   {bp.headline}
                 </h1>
-                <p className="text-lg text-text-secondary leading-relaxed max-w-[480px] text-center">
+                <p className="text-lg text-text-secondary leading-relaxed max-w-[580px] text-center whitespace-pre-line">
                   {bp.subline}
                 </p>
                 {bp.showCTA && (
