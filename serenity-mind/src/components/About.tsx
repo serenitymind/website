@@ -35,8 +35,8 @@ export default function About() {
 
           {/* Right: description paragraph */}
           <p className="text-[17px] text-text-secondary leading-relaxed max-w-[440px]">
-            We combine clinical expertise with genuine compassion to deliver
-            psychiatric care that fits your life — not the other way around.
+            I combine clinical expertise with compassionate care to provide
+            personalized psychiatric treatment.
           </p>
         </div>
 
@@ -62,8 +62,9 @@ export default function About() {
               Flexible scheduling
             </h3>
             <p className="text-sm text-white/60 leading-relaxed">
-              In-person and virtual appointments available evenings and weekends.
-              No long wait times.
+              Your time matters. Serenity Mind offers virtual appointments across
+              California and select evening slots, making it easy to fit mental
+              health care into your busy life — without long wait times.
             </p>
           </div>
 
@@ -73,8 +74,10 @@ export default function About() {
               Evidence-based care
             </h3>
             <p className="text-sm text-white/60 leading-relaxed">
-              Every plan is grounded in research and treats the full picture:
-              medication, therapy, and lifestyle, adapted to your unique goals.
+              Care at Serenity Mind blends proven, evidence-based treatments with
+              a compassionate understanding of your life, stressors, and goals.
+              We guide each patient through therapy, medication management, and
+              support for families every step of the way.
             </p>
           </div>
         </div>

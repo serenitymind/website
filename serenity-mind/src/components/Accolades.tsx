@@ -9,7 +9,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  * Placed after DoctorBio for immediate trust reinforcement.
  */
 
-/* Logo data — path, alt text, optional ranking badge */
+/* Affiliation logos — SVG files in /public/logos/ */
 const logos = [
   { src: "/logos/baylor.svg", alt: "Baylor College of Medicine", badge: "Top 20" },
   { src: "/logos/ucla-health.svg", alt: "UCLA Health", badge: "Top 5" },
@@ -27,14 +27,14 @@ export default function Accolades() {
         ref={ref}
         className="scroll-reveal max-w-[1440px] mx-auto px-16 py-6"
       >
-        {/* Logo row — evenly spaced, dark logos at 30% opacity */}
+        {/* Logo row — evenly spaced with hover effect */}
         <div className="flex items-center justify-center gap-12 flex-wrap">
           {logos.map((logo) => (
             <div
               key={logo.alt}
               className="scroll-reveal-child relative flex flex-col items-center opacity-70 hover:opacity-100 transition-opacity duration-300"
             >
-              {/* Each logo sized to ~120px wide, height auto */}
+              {/* Affiliation logo */}
               <Image
                 src={logo.src}
                 alt={logo.alt}
