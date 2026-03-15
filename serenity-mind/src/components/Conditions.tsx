@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
  * Expertise — unified dark glassmorphism section.
@@ -81,6 +82,7 @@ const conditions = [
 export default function Conditions() {
   /* Ref for the h1 — we shift its gradient background-position on scroll */
   const h1Ref = useRef<HTMLHeadingElement>(null);
+  const revealRef = useScrollReveal();
 
   useEffect(() => {
     let rafId: number;
@@ -100,7 +102,7 @@ export default function Conditions() {
 
   return (
     <section id="expertise" className="bg-gradient-to-b from-[#0a0a0a] to-[#141414] overflow-hidden">
-      <div className="max-w-[1440px] mx-auto relative px-16 pt-16 pb-24">
+      <div ref={revealRef} className="scroll-reveal max-w-[1440px] mx-auto relative px-16 pt-16 pb-24">
 
         {/* Tag — above the h1 title with large gap */}
         <div className="relative z-[3] flex items-center justify-center gap-4 mb-40">
@@ -129,7 +131,7 @@ export default function Conditions() {
           {services.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(167,139,250,0.45),0_4px_14px_rgba(196,181,253,0.5),0_2px_5px_rgba(237,233,254,0.45)] hover:border-[#A78BFA]/25 hover:-translate-y-1"
+              className="scroll-reveal-child flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(167,139,250,0.45),0_4px_14px_rgba(196,181,253,0.5),0_2px_5px_rgba(237,233,254,0.45)] hover:border-[#A78BFA]/25 hover:-translate-y-1"
             >
               <h3 className="font-heading text-lg font-semibold text-white">
                 {item.title}
@@ -155,7 +157,7 @@ export default function Conditions() {
           {conditions.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(167,139,250,0.45),0_4px_14px_rgba(196,181,253,0.5),0_2px_5px_rgba(237,233,254,0.45)] hover:border-[#A78BFA]/25 hover:-translate-y-1"
+              className="scroll-reveal-child flex flex-col gap-3 p-7 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(167,139,250,0.45),0_4px_14px_rgba(196,181,253,0.5),0_2px_5px_rgba(237,233,254,0.45)] hover:border-[#A78BFA]/25 hover:-translate-y-1"
             >
               <h3 className="font-heading text-lg font-semibold text-white">
                 {item.title}

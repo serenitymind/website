@@ -55,6 +55,48 @@ html {
   background: linear-gradient(135deg, #7C3AED, #A855F7) !important;
 }
 
+/* ============================================
+   Scroll-reveal entrance animations
+   Sections start hidden, fade+slide up on first view.
+   Child elements stagger in with nth-child delays.
+   ============================================ */
+
+/* Initial hidden state — applied to section containers */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+/* Revealed state — toggled by IntersectionObserver */
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children — each card delays slightly after parent reveals */
+.scroll-reveal-child {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* When parent is visible, children animate in with stagger */
+.visible .scroll-reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Auto-stagger delays via nth-child — 80ms apart */
+.visible .scroll-reveal-child:nth-child(1) { transition-delay: 0.1s; }
+.visible .scroll-reveal-child:nth-child(2) { transition-delay: 0.18s; }
+.visible .scroll-reveal-child:nth-child(3) { transition-delay: 0.26s; }
+.visible .scroll-reveal-child:nth-child(4) { transition-delay: 0.34s; }
+.visible .scroll-reveal-child:nth-child(5) { transition-delay: 0.42s; }
+.visible .scroll-reveal-child:nth-child(6) { transition-delay: 0.5s; }
+.visible .scroll-reveal-child:nth-child(7) { transition-delay: 0.58s; }
+.visible .scroll-reveal-child:nth-child(8) { transition-delay: 0.66s; }
+
 .video-placeholder {
   background: linear-gradient(
     135deg,

@@ -1,4 +1,7 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
  * About — "Why Serenity Mind?" section
@@ -8,9 +11,11 @@ import { ArrowRight } from "lucide-react";
  */
 
 export default function About() {
+  const ref = useScrollReveal();
+
   return (
     <section className="bg-white">
-      <div className="max-w-[1440px] mx-auto flex flex-col gap-10 px-16 py-20">
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col gap-10 px-16 py-20">
 
         {/* Top row — split header: title left, description right */}
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
@@ -40,7 +45,7 @@ export default function About() {
 
           {/* Featured card — spans 2 columns, looping video */}
           {/* Scale up ~10% to crop Veo watermark from bottom edge */}
-          <div className="lg:col-span-2 rounded-2xl overflow-hidden min-h-[280px] relative">
+          <div className="lg:col-span-2 rounded-2xl overflow-hidden min-h-[280px] relative scroll-reveal-child">
             <video
               src="/patient-growth.mp4"
               autoPlay
@@ -52,7 +57,7 @@ export default function About() {
           </div>
 
           {/* Card 2 — standard size, dark lilac gradient */}
-          <div className="rounded-2xl bg-gradient-to-br from-[#2D1F3D] to-[#3D2A5C] p-8 flex flex-col justify-between min-h-[280px]">
+          <div className="rounded-2xl bg-gradient-to-br from-[#2D1F3D] to-[#3D2A5C] p-8 flex flex-col justify-between min-h-[280px] scroll-reveal-child">
             <h3 className="font-heading text-xl font-semibold text-white">
               Flexible scheduling
             </h3>
@@ -63,7 +68,7 @@ export default function About() {
           </div>
 
           {/* Card 3 — evidence-based, dark lilac gradient */}
-          <div className="rounded-2xl bg-gradient-to-br from-[#2D1F3D] to-[#3D2A5C] p-8 flex flex-col justify-between min-h-[280px]">
+          <div className="rounded-2xl bg-gradient-to-br from-[#2D1F3D] to-[#3D2A5C] p-8 flex flex-col justify-between min-h-[280px] scroll-reveal-child">
             <h3 className="font-heading text-xl font-semibold text-white">
               Evidence-based care
             </h3>

@@ -1,3 +1,7 @@
+"use client";
+
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+
 /**
  * Process — "How It Works" section.
  * 4-step horizontal flow showing the patient journey.
@@ -33,9 +37,11 @@ const steps = [
 ];
 
 export default function Process() {
+  const ref = useScrollReveal();
+
   return (
     <section id="process" className="bg-white relative overflow-hidden">
-      <div className="max-w-[1440px] mx-auto flex flex-col gap-12 px-16 py-20 relative z-10">
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col gap-12 px-16 py-20 relative z-10">
         {/* Section header — centered */}
         <div className="flex flex-col items-center gap-5 max-w-[600px] mx-auto text-center mb-4">
           {/* Tag with left/right lines — matches Expertise section style */}
@@ -56,7 +62,7 @@ export default function Process() {
           {steps.map((step) => (
             <div
               key={step.number}
-              className="flex flex-col gap-4 p-7 rounded-2xl bg-white/70 backdrop-blur-sm border border-[#C4B5FD]/20 shadow-[0_4px_24px_rgba(196,181,253,0.1)]"
+              className="scroll-reveal-child flex flex-col gap-4 p-7 rounded-2xl bg-white/70 backdrop-blur-sm border border-[#C4B5FD]/20 shadow-[0_4px_24px_rgba(196,181,253,0.1)]"
             >
               {/* Step number — lilac */}
               <span className="font-heading text-[48px] font-bold text-[#C4B5FD] leading-none">
@@ -73,21 +79,51 @@ export default function Process() {
         </div>
       </div>
 
-      {/* Space gradient — curved lilac horizon glow on white */}
-      <div className="absolute bottom-0 left-0 right-0 h-[220px] z-0">
-        {/* Arc shape — large ellipse with only top edge visible */}
+      {/* Space gradient — stacked lilac arcs, reaching into cards */}
+      <div className="absolute bottom-0 left-0 right-0 h-[400px] z-0">
+
+        {/* Arc 1 — outermost wide curve */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 -bottom-[350px] w-[130%] h-[500px] rounded-[50%]"
+          className="absolute left-1/2 -translate-x-1/2 -bottom-[450px] w-[160%] h-[650px] rounded-[50%]"
           style={{
-            boxShadow: "0 -25px 50px rgba(139,92,246,0.25), 0 -8px 20px rgba(196,181,253,0.35), 0 -60px 120px rgba(196,181,253,0.12)",
-            border: "1px solid rgba(196,181,253,0.3)",
+            boxShadow: "0 -15px 50px rgba(196,181,253,0.1)",
+            border: "1px solid rgba(196,181,253,0.08)",
           }}
         />
-        {/* Inner glow — tighter, more saturated purple bloom */}
+
+        {/* Arc 2 — mid curve */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 -bottom-[360px] w-[110%] h-[500px] rounded-[50%]"
+          className="absolute left-1/2 -translate-x-1/2 -bottom-[380px] w-[130%] h-[550px] rounded-[50%]"
           style={{
-            boxShadow: "0 -15px 40px rgba(167,139,250,0.2), 0 -40px 80px rgba(196,181,253,0.08)",
+            boxShadow: "0 -18px 45px rgba(139,92,246,0.15)",
+            border: "1px solid rgba(196,181,253,0.15)",
+          }}
+        />
+
+        {/* Arc 3 — primary curve, most visible */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 -bottom-[320px] w-[105%] h-[480px] rounded-[50%]"
+          style={{
+            boxShadow: "0 -20px 40px rgba(139,92,246,0.22), 0 -6px 15px rgba(196,181,253,0.3)",
+            border: "1px solid rgba(196,181,253,0.25)",
+          }}
+        />
+
+        {/* Arc 4 — inner curve, narrower + taller for rounder shape */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 -bottom-[370px] w-[55%] h-[520px] rounded-[50%]"
+          style={{
+            boxShadow: "0 -12px 30px rgba(167,139,250,0.18)",
+            border: "1px solid rgba(196,181,253,0.18)",
+          }}
+        />
+
+        {/* Arc 5 — innermost core, most circular */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 -bottom-[330px] w-[35%] h-[480px] rounded-[50%]"
+          style={{
+            boxShadow: "0 -8px 20px rgba(139,92,246,0.15)",
+            border: "1px solid rgba(196,181,253,0.12)",
           }}
         />
       </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
  * FAQ — accordion-style frequently asked questions.
@@ -46,6 +47,7 @@ const faqs = [
 export default function FAQ() {
   /* Track which FAQ item is currently open (-1 = none) */
   const [openIndex, setOpenIndex] = useState(-1);
+  const ref = useScrollReveal();
 
   const toggle = (i: number) => {
     setOpenIndex(openIndex === i ? -1 : i);
@@ -53,10 +55,10 @@ export default function FAQ() {
 
   return (
     <section id="faq" className="bg-bg-secondary">
-      <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20">
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20">
 
         {/* Left — section header (sticky on desktop) */}
-        <div className="flex flex-col gap-3 lg:w-[360px] shrink-0 lg:sticky lg:top-24 lg:self-start">
+        <div className="scroll-reveal-child flex flex-col gap-3 lg:w-[360px] shrink-0 lg:sticky lg:top-24 lg:self-start">
           <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
             FAQ
           </span>
@@ -69,7 +71,7 @@ export default function FAQ() {
         </div>
 
         {/* Right — accordion list */}
-        <div className="flex-1 flex flex-col">
+        <div className="scroll-reveal-child flex-1 flex flex-col">
           {faqs.map((faq, i) => (
             <div key={i} className="border-b border-border">
               {/* Question — clickable toggle */}

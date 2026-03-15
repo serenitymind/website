@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, Phone, Mail, MapPin, Clock } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
  * Contact — final CTA section with contact form + info.
@@ -17,12 +18,14 @@ const contactInfo = [
 ];
 
 export default function Contact() {
+  const ref = useScrollReveal();
+
   return (
     <section id="contact" className="bg-white">
-      <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20">
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20">
 
         {/* Left — form */}
-        <div className="flex-1 flex flex-col gap-8">
+        <div className="flex-1 flex flex-col gap-8 scroll-reveal-child">
           <div className="flex flex-col gap-3">
             <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
               GET IN TOUCH
@@ -86,7 +89,7 @@ export default function Contact() {
         </div>
 
         {/* Right — contact details */}
-        <div className="lg:w-[360px] shrink-0 flex flex-col gap-8">
+        <div className="lg:w-[360px] shrink-0 flex flex-col gap-8 scroll-reveal-child">
           {/* Contact info cards */}
           <div className="flex flex-col gap-5 p-8 rounded-2xl bg-bg-card">
             <h3 className="font-heading text-lg font-semibold text-text-primary">

@@ -4,7 +4,6 @@ import About from "@/components/About";
 import Conditions from "@/components/Conditions";
 import Process from "@/components/Process";
 import DoctorBio from "@/components/DoctorBio";
-import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";

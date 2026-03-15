@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
  * DoctorBio — doctor photo + credentials section.
@@ -14,12 +17,14 @@ const credentials = [
 ];
 
 export default function DoctorBio() {
+  const ref = useScrollReveal();
+
   return (
     <section id="about" className="bg-bg-secondary">
-      <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20 items-center">
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20 items-center">
 
         {/* Left — doctor headshot */}
-        <div className="w-full lg:w-[400px] shrink-0">
+        <div className="w-full lg:w-[400px] shrink-0 scroll-reveal-child">
           <div className="w-full aspect-[3/4] rounded-2xl overflow-hidden relative">
             <Image
               src="/doctor-headshot.jpeg"
@@ -33,7 +38,7 @@ export default function DoctorBio() {
         </div>
 
         {/* Right — bio content */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 scroll-reveal-child">
           <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
             MEET YOUR DOCTOR
           </span>
