@@ -28,7 +28,7 @@ const BREAKPOINTS = [
     start: 0,
     end: 0.28,
     headline: "Eugenia Chen, M.D.",
-    subline: "Board-Certified Adult Psychiatrist | Child & Adolescent Trained\nCompassionate, evidence-based care for children, adolescents, and adults",
+    subline: "Board-Certified Adult Psychiatrist | Child & Adolescent Trained\nCompassionate, evidence-based care for all ages",
     showCTA: false,
   },
   {
