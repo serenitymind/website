@@ -38,44 +38,44 @@ const services = [
 /* Conditions — what we treat (rows 2-3) */
 const conditions = [
   {
-    title: "Anxiety & Panic",
+    title: "Anxiety Disorders",
     description:
-      "Generalized anxiety, social anxiety, panic attacks, and phobias that interfere with daily life.",
+      "Generalized anxiety, social anxiety, panic disorder, phobias.",
   },
   {
-    title: "Depression",
+    title: "Mood Disorders",
     description:
-      "Persistent sadness, low motivation, and emotional numbness treated with therapy and medication.",
+      "Depression, bipolar disorder, mood dysregulation.",
   },
   {
-    title: "ADHD",
+    title: "Attention & Focus Disorders",
     description:
-      "Attention and focus challenges in adults and adolescents — diagnosis, medication, and coping strategies.",
+      "ADHD, executive function difficulties.",
   },
   {
-    title: "PTSD & Trauma",
+    title: "Trauma & Stress-Related Disorders",
     description:
-      "Processing traumatic experiences through evidence-based approaches like EMDR and trauma-focused CBT.",
+      "PTSD, acute stress, adjustment difficulties.",
   },
   {
-    title: "Bipolar Disorder",
+    title: "Behavioral & Emotional Challenges in Children",
     description:
-      "Mood stabilization for manic and depressive episodes with ongoing medication management.",
+      "Irritability, aggression, defiance, school difficulties.",
   },
   {
-    title: "OCD",
+    title: "Developmental & Neurodiverse Conditions",
     description:
-      "Breaking cycles of intrusive thoughts and compulsive behaviors with specialized treatment.",
+      "Autism spectrum, learning differences, social communication challenges.",
   },
   {
-    title: "Insomnia & Sleep",
+    title: "Family & Parent Guidance Needs",
     description:
-      "Addressing sleep disturbances at their root — not just symptoms — for lasting improvement.",
+      "Parent support, family dynamics, relational challenges.",
   },
   {
-    title: "Substance Use",
+    title: "Maternal & Infant Mental Health",
     description:
-      "Compassionate support for addiction and dependency, including medication-assisted treatment.",
+      "Perinatal depression, anxiety, bonding challenges.",
   },
 ];
 

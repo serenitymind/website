@@ -74,7 +74,7 @@ const faqs = [
     question: "What are your fees?",
     answer: (
       /* Fee schedule — responsive table */
-      <div className="overflow-x-auto -mx-1">
+      <div className="overflow-x-auto">
         <table className="w-full text-left text-[14px]">
           <thead>
             <tr className="border-b border-border">
@@ -90,7 +90,7 @@ const faqs = [
               <td className="py-2.5">$750–850</td>
             </tr>
             <tr className="border-b border-border/50">
-              <td className="py-2.5 pr-4">Child/teen intake (comprehensive, 2–3 sessions)</td>
+              <td className="py-2.5 pr-4">Child/teen initial consultation (comprehensive, 2–3 sessions)</td>
               <td className="py-2.5 pr-4">60 min each; total 120–180 min</td>
               <td className="py-2.5">$800 per session</td>
             </tr>
@@ -117,7 +117,7 @@ const faqs = [
   {
     question: "What is your cancellation policy?",
     answer: (
-      <p>I understand that life can be unpredictable, and sometimes you may need to reschedule or cancel an appointment. Please provide at least 24–48 hours notice if you need to make changes. Each situation is handled on a case-by-case basis, and late cancellations or missed appointments may incur a fee. I appreciate your understanding, which helps keep the schedule running smoothly for all patients.</p>
+      <p>I understand that life can be unpredictable, and sometimes you may need to reschedule or cancel an appointment. Please provide at least 24+ hours notice if you need to make changes. Each situation is handled on a case-by-case basis, and late cancellations or missed appointments may incur a fee. I appreciate your understanding, which helps keep the schedule running smoothly for all patients.</p>
     ),
   },
 ];
