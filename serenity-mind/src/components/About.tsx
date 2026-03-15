@@ -62,22 +62,19 @@ export default function About() {
               Flexible scheduling
             </h3>
             <p className="text-sm text-white/60 leading-relaxed">
-              Your time matters. Serenity Mind offers virtual appointments across
-              California and select evening slots, making it easy to fit mental
-              health care into your busy life — without long wait times.
+              Virtual appointments across California, including evening slots,
+              with minimal wait times to start care when you need it.
             </p>
           </div>
 
           {/* Card 3 — evidence-based, dark lilac gradient */}
           <div className="rounded-2xl bg-gradient-to-br from-[#2D1F3D] to-[#3D2A5C] p-8 flex flex-col justify-between min-h-[280px] scroll-reveal-child">
             <h3 className="font-heading text-xl font-semibold text-white">
-              Evidence-based care
+              Evidence-based, compassionate care
             </h3>
             <p className="text-sm text-white/60 leading-relaxed">
-              Care at Serenity Mind blends proven, evidence-based treatments with
-              a compassionate understanding of your life, stressors, and goals.
-              We guide each patient through therapy, medication management, and
-              support for families every step of the way.
+              Personalized treatment combining therapy, medication management,
+              and family support, guided by the latest evidence-based practices.
             </p>
           </div>
         </div>
