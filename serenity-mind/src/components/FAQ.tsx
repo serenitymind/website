@@ -132,18 +132,18 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="bg-bg-secondary">
-      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20">
+    <section id="faq" className="bg-bg-secondary scroll-mt-[88px] md:scroll-mt-0">
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-20 px-5 md:px-16 py-12 md:py-20">
 
         {/* Left — section header (sticky on desktop) */}
         <div className="scroll-reveal-child flex flex-col gap-3 lg:w-[360px] shrink-0 lg:sticky lg:top-24 lg:self-start">
           <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
             FAQ
           </span>
-          <h2 className="font-heading text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
+          <h2 className="font-heading text-[28px] md:text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
             Frequently Asked Questions
           </h2>
-          <p className="text-[17px] text-text-secondary leading-relaxed">
+          <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed">
             Everything you need to know before your first appointment.
           </p>
         </div>

@@ -113,3 +113,16 @@ html {
     #D4D4D4 100%
   );
 }
+
+/* ============================================
+   Accolades marquee — mobile-only horizontal scroll
+   The logo row is duplicated in the DOM so a -50%
+   translate produces a seamless infinite loop.
+   ============================================ */
+@keyframes accolades-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-accolades-marquee {
+  animation: accolades-marquee 22s linear infinite;
+}

@@ -8,7 +8,7 @@ import { Brain } from "lucide-react";
 export default function Footer() {
   return (
     <footer className="bg-text-primary text-white">
-      <div className="max-w-[1440px] mx-auto px-16 py-8">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-16 py-8">
         {/* Single row — logo left, legal right */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Logo + copyright */}

@@ -21,8 +21,8 @@ export default function Contact() {
   const ref = useScrollReveal();
 
   return (
-    <section id="contact" className="bg-white">
-      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 py-20">
+    <section id="contact" className="bg-white scroll-mt-[88px] md:scroll-mt-0">
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-20 px-5 md:px-16 py-12 md:py-20">
 
         {/* Left — form */}
         <div className="flex-1 flex flex-col gap-8 scroll-reveal-child">
@@ -30,10 +30,10 @@ export default function Contact() {
             <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
               GET IN TOUCH
             </span>
-            <h2 className="font-heading text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
+            <h2 className="font-heading text-[28px] md:text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
               Book Your Free Consultation
             </h2>
-            <p className="text-[17px] text-text-secondary leading-relaxed">
+            <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed">
               Take the first step. Fill out the form below and we&apos;ll
               reach out within 24 hours.
             </p>
@@ -91,7 +91,7 @@ export default function Contact() {
         {/* Right — contact details */}
         <div className="lg:w-[360px] shrink-0 flex flex-col gap-8 scroll-reveal-child">
           {/* Contact info cards */}
-          <div className="flex flex-col gap-5 p-8 rounded-2xl bg-bg-card">
+          <div className="flex flex-col gap-5 p-6 md:p-8 rounded-2xl bg-bg-card">
             <h3 className="font-heading text-lg font-semibold text-text-primary">
               Contact Information
             </h3>
@@ -108,7 +108,7 @@ export default function Contact() {
           </div>
 
           {/* Quick note about consultations */}
-          <div className="p-8 rounded-2xl bg-text-primary text-white">
+          <div className="p-6 md:p-8 rounded-2xl bg-text-primary text-white">
             <h3 className="font-heading text-lg font-semibold mb-3">
               Free Confidential Consultation
             </h3>

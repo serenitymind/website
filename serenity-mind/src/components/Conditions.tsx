@@ -102,11 +102,12 @@ export default function Conditions() {
   }, []);
 
   return (
-    <section id="expertise" className="bg-bg-secondary overflow-hidden">
-      <div ref={revealRef} className="scroll-reveal max-w-[1440px] mx-auto relative px-16 pt-16 pb-24">
+    <section id="expertise" className="bg-bg-secondary overflow-hidden scroll-mt-[88px] md:scroll-mt-0">
+      <div ref={revealRef} className="scroll-reveal max-w-[1440px] mx-auto relative px-5 md:px-16 pt-12 md:pt-16 pb-16 md:pb-24">
 
         {/* Tag — above the h1 title with large gap */}
-        <div className="relative z-[3] flex items-center justify-center gap-4 mb-40">
+        {/* mb shrinks on mobile so the absolute h1 doesn't crash into the cards */}
+        <div className="relative z-[3] flex items-center justify-center gap-4 mb-20 md:mb-40">
           <div className="h-px w-16 bg-text-muted/30" />
           <span className="text-[13px] font-semibold text-text-muted tracking-[2px]">
             WHAT WE OFFER
@@ -115,6 +116,7 @@ export default function Conditions() {
         </div>
 
         {/* Massive h1 — lilac gradient that shifts on scroll */}
+        {/* On mobile we sit it higher (top-[60px]) and shrink the min size so it doesn't overflow the viewport width */}
         <h1
           ref={h1Ref}
           style={{
@@ -122,7 +124,7 @@ export default function Conditions() {
             backgroundSize: "200% 100%",
             backgroundPosition: "0% 0%",
           }}
-          className="absolute left-1/2 -translate-x-1/2 top-[100px] font-heading text-[clamp(140px,16vw,260px)] font-bold whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal bg-clip-text text-transparent"
+          className="absolute left-1/2 -translate-x-1/2 top-[60px] md:top-[100px] font-heading text-[clamp(72px,16vw,260px)] font-bold whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal bg-clip-text text-transparent"
         >
           Expertise
         </h1>
@@ -132,7 +134,7 @@ export default function Conditions() {
           {services.map((item) => (
             <div
               key={item.title}
-              className="scroll-reveal-child flex flex-col gap-3 p-7 rounded-2xl bg-white/40 backdrop-blur-sm border border-[#C4B5FD]/30 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(167,139,250,0.25)] hover:border-[#A78BFA]/60 hover:-translate-y-1"
+              className="scroll-reveal-child flex flex-col gap-3 p-5 md:p-7 rounded-2xl bg-white/40 backdrop-blur-sm border border-[#C4B5FD]/30 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(167,139,250,0.25)] hover:border-[#A78BFA]/60 hover:-translate-y-1"
             >
               <h3 className="font-heading text-lg font-semibold text-text-primary">
                 {item.title}
@@ -158,7 +160,7 @@ export default function Conditions() {
           {conditions.map((item) => (
             <div
               key={item.title}
-              className="scroll-reveal-child flex flex-col gap-3 p-7 rounded-2xl bg-white/40 backdrop-blur-sm border border-[#C4B5FD]/30 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(167,139,250,0.25)] hover:border-[#A78BFA]/60 hover:-translate-y-1"
+              className="scroll-reveal-child flex flex-col gap-3 p-5 md:p-7 rounded-2xl bg-white/40 backdrop-blur-sm border border-[#C4B5FD]/30 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(167,139,250,0.25)] hover:border-[#A78BFA]/60 hover:-translate-y-1"
             >
               <h3 className="font-heading text-lg font-semibold text-text-primary">
                 {item.title}

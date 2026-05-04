@@ -12,9 +12,21 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>() {
     const el = ref.current;
     if (!el) return;
 
-    /* Observe element — trigger when 50% of the section is in view.
+    /* Observe element — trigger when enough of the section is in view.
        rootMargin shrinks the observer box: -48px top (header), -20% bottom
-       so the section must scroll well into the viewport before firing. */
+       so the section must scroll well into the viewport before firing.
+
+       Mobile note: tall sections (e.g. Expertise with 12 cards) have heights
+       that far exceed the viewport, so a 0.35 ratio means the user has to
+       scroll an unreasonable distance before reveal fires. We use a much
+       lower threshold on small viewports so the reveal triggers as soon as
+       the section meaningfully enters the screen. */
+    const isMobile =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 767px)").matches;
+    const threshold = isMobile ? 0.05 : 0.35;
+    const rootMargin = isMobile ? "-48px 0px -5% 0px" : "-48px 0px -15% 0px";
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -26,7 +38,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>() {
           setTimeout(() => el.classList.add("revealed"), 1000);
         }
       },
-      { threshold: 0.35, rootMargin: "-48px 0px -15% 0px" },
+      { threshold, rootMargin },
     );
 
     observer.observe(el);

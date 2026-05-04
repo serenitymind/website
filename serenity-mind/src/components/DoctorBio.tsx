@@ -21,10 +21,10 @@ export default function DoctorBio() {
   const ref = useScrollReveal();
 
   return (
-    <section id="about" className="bg-bg-secondary">
-      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 px-16 pt-20 pb-8 items-center">
+    <section id="about" className="bg-bg-secondary scroll-mt-[88px] md:scroll-mt-0">
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-20 px-5 md:px-16 pt-12 md:pt-20 pb-8 items-center">
 
-        {/* Left — doctor headshot */}
+        {/* Left — doctor headshot — full width on mobile to match the bio text width */}
         <div className="w-full lg:w-[400px] shrink-0 scroll-reveal-child">
           <div className="w-full aspect-[3/4] rounded-2xl overflow-hidden relative">
             <Image
@@ -43,10 +43,10 @@ export default function DoctorBio() {
           <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
             MEET YOUR DOCTOR
           </span>
-          <h2 className="font-heading text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
+          <h2 className="font-heading text-[28px] md:text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
             Dr. Eugenia Chen, M.D.
           </h2>
-          <p className="text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
+          <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
             Dr. Eugenia Chen is a board-certified adult psychiatrist who completed
             her medical degree at Baylor College of Medicine, followed by psychiatry
             residency training with Kaiser Permanente. She went on to complete
@@ -56,7 +56,7 @@ export default function DoctorBio() {
             and infant mental health, and her clinical work includes children,
             adolescents, young adults, and adults.
           </p>
-          <p className="text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
+          <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
             Dr. Eugenia Chen takes a thoughtful and collaborative approach to care,
             integrating evidence-based treatment, psychotherapy, and an understanding
             of each patient&apos;s environment and life experiences to support meaningful

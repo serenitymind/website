@@ -40,7 +40,7 @@ export default function Process() {
   const ref = useScrollReveal();
 
   return (
-    <section id="process" className="relative overflow-hidden">
+    <section id="process" className="relative overflow-hidden scroll-mt-[88px] md:scroll-mt-0">
 
       {/* Video background — pre-baked ping-pong (forward+reversed) for smooth looping */}
       <video
@@ -52,7 +52,7 @@ export default function Process() {
         className="absolute inset-0 w-full h-full object-cover z-0"
       />
 
-      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col gap-12 px-16 py-20 relative z-10">
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col gap-8 md:gap-12 px-5 md:px-16 py-12 md:py-20 relative z-10">
         {/* Section header — white text over video */}
         <div className="flex flex-col items-center gap-5 max-w-[600px] mx-auto text-center mb-4">
           <div className="flex items-center gap-4">
@@ -62,7 +62,7 @@ export default function Process() {
             </span>
             <div className="h-px w-16 bg-text-primary/30" />
           </div>
-          <h2 className="font-heading text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
+          <h2 className="font-heading text-[28px] md:text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
             Your Path to Better Mental Health
           </h2>
         </div>
@@ -72,7 +72,7 @@ export default function Process() {
           {steps.map((step) => (
             <div
               key={step.number}
-              className="scroll-reveal-child flex flex-col gap-4 p-7 rounded-2xl bg-black/50 backdrop-blur-md border border-white/10"
+              className="scroll-reveal-child flex flex-col gap-4 p-5 md:p-7 rounded-2xl bg-black/50 backdrop-blur-md border border-white/10"
             >
               {/* Step number — lilac */}
               <span className="font-heading text-[48px] font-bold text-[#C4B5FD] leading-none">

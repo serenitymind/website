@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Brain } from "lucide-react";
+import { Brain, Menu, X } from "lucide-react";
 import Link from "next/link";
 
 /**
@@ -27,6 +27,8 @@ const sectionIds = navLinks
 export default function Header() {
   /* Track which nav link is active — defaults to Home */
   const [activeHref, setActiveHref] = useState("#");
+  /* Mobile menu open/closed — drawer slides down below the header */
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     /* Observe each section — when it enters the viewport, mark it active */
@@ -71,7 +73,7 @@ export default function Header() {
 
     {/* Fixed header — sits below the announcement banner */}
     <header className="fixed top-[28px] left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-border">
-      <div className="flex items-center justify-between px-8 py-2.5">
+      <div className="flex items-center justify-between px-4 md:px-8 py-2.5">
         {/* Logo — brain icon + name */}
         <Link href="/" className="flex items-center gap-2">
           <Brain className="w-5 h-5 text-text-primary" />
@@ -107,6 +109,51 @@ export default function Header() {
         >
           Book Appointment
         </a>
+
+        {/* Mobile hamburger button — visible below md breakpoint */}
+        {/* Toggles the slide-down drawer below the header */}
+        <button
+          type="button"
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+          className="md:hidden inline-flex items-center justify-center w-10 h-10 -mr-2 rounded-md text-text-primary hover:bg-bg-secondary transition-colors"
+        >
+          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
+      {/* Mobile drawer — slides down when hamburger toggled */}
+      {/* Hidden at md+ since the inline nav handles desktop */}
+      <div
+        className={`md:hidden overflow-hidden border-t border-border transition-[max-height] duration-200 ease-out ${
+          mobileOpen ? "max-h-[400px]" : "max-h-0"
+        }`}
+      >
+        <nav className="flex flex-col px-4 py-3 gap-1 bg-white">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={() => setMobileOpen(false)}
+              className={`px-3 py-3 rounded-md text-[15px] transition-colors ${
+                activeHref === link.href
+                  ? "font-medium text-text-primary bg-bg-secondary"
+                  : "text-text-secondary hover:bg-bg-secondary"
+              }`}
+            >
+              {link.label}
+            </a>
+          ))}
+          {/* Pill CTA inside drawer — full width on mobile */}
+          <a
+            href="#contact"
+            onClick={() => setMobileOpen(false)}
+            className="mt-2 inline-flex items-center justify-center px-5 py-3 rounded-full bg-text-primary text-white text-[14px] font-medium"
+          >
+            Book Appointment
+          </a>
+        </nav>
       </div>
     </header>
     </>

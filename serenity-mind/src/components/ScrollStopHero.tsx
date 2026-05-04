@@ -216,11 +216,21 @@ export default function ScrollStopHero() {
      Intercepts scroll events inside the hero and
      forces an animated jump to the next/prev section.
      One scroll tick = one section jump, always.
+     Disabled on touch devices — touch scroll has its own
+     momentum/inertia behavior that doesn't fit a wheel-based
+     snap model. Mobile users get native scroll through the
+     hero, which still scrubs the canvas via ScrollTrigger.
      ============================================ */
   useEffect(() => {
     if (!loaded) return;
     const container = containerRef.current;
     if (!container) return;
+
+    /* Skip wheel hijack on touch-primary devices (phones, tablets) */
+    /* matchMedia "(pointer: coarse)" is the standard touch detection */
+    if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
+      return;
+    }
 
     const handleWheel = (e: WheelEvent) => {
       const containerTop = container.offsetTop;
@@ -282,9 +292,11 @@ export default function ScrollStopHero() {
 
         {/* Canvas — replaces the <video> element */}
         {/* object-fit:cover behavior done via CSS on the canvas */}
+        {/* Mobile: object-position 85% — pulled in 15% from full right edge */}
+        {/* Desktop: object-center keeps the original framing */}
         <canvas
           ref={canvasRef}
-          className="absolute inset-0 w-full h-full object-cover z-0"
+          className="absolute inset-0 w-full h-full object-cover object-[85%_center] md:object-center z-0"
         />
 
         {/* Loading indicator — shown while frames preload */}
@@ -312,18 +324,19 @@ export default function ScrollStopHero() {
             className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
             style={{ opacity: i === 0 ? 1 : 0 }}
           >
-            <div className="flex flex-col items-center">
-              <div className="max-w-[720px] flex flex-col gap-5 items-center text-center">
-                <h1 className="font-heading text-[44px] md:text-[52px] font-bold text-text-primary leading-[1.1] tracking-[-1.5px] whitespace-pre-line text-center">
+            <div className="flex flex-col items-center w-full px-10 md:px-0">
+              <div className="max-w-[720px] flex flex-col gap-4 md:gap-5 items-center text-center">
+                <h1 className="font-heading text-[32px] md:text-[44px] lg:text-[52px] font-bold text-text-primary leading-[1.1] tracking-[-1px] md:tracking-[-1.5px] whitespace-pre-line text-center">
                   {bp.headline}
                 </h1>
-                <p className="text-lg text-text-secondary leading-relaxed max-w-[580px] text-center whitespace-pre-line">
+                {/* Subline — narrower max-w on mobile so it doesn't stretch edge-to-edge */}
+                <p className="text-[14px] md:text-lg text-text-secondary leading-relaxed max-w-[280px] md:max-w-[580px] text-center whitespace-pre-line">
                   {bp.subline}
                 </p>
                 {bp.showCTA && (
                   <a
                     href="#contact"
-                    className="inline-flex items-center gap-2 px-8 py-4 mt-2 rounded-lg bg-text-primary text-white text-[15px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 pointer-events-auto hover-bounce"
+                    className="inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 mt-2 rounded-lg bg-text-primary text-white text-[14px] md:text-[15px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 pointer-events-auto hover-bounce"
                   >
                     Book Consultation
                     <ArrowRight className="w-4 h-4" />
@@ -334,8 +347,8 @@ export default function ScrollStopHero() {
           </div>
         ))}
 
-        {/* Scroll dot indicators */}
-        <div className="absolute bottom-12 left-16 z-30 flex flex-col gap-3">
+        {/* Scroll dot indicators — pulled in tighter on mobile */}
+        <div className="absolute bottom-8 md:bottom-12 left-5 md:left-16 z-30 flex flex-col gap-3">
           <div className="flex items-center gap-2">
             {BREAKPOINTS.map((_, i) => (
               <div
