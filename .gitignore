@@ -128,3 +128,7 @@ tmp/
 
 # AI logs (optional - uncomment to ignore)
 # .workflow/ai-logs/
+
+# Local-only — not for public repo
+notes
+.claude-flow/
