@@ -264,57 +264,42 @@ export default function ScrollStopHero() {
   }, [loaded, isMobile, setActiveDot]);
 
   /* ============================================
-     STEP 3: Wheel hijack — instant section snapping
-     Intercepts scroll events inside the hero and
-     forces an animated jump to the next/prev section.
-     One scroll tick = one section jump, always.
-     Disabled on touch devices — touch scroll has its own
-     momentum/inertia behavior that doesn't fit a wheel-based
-     snap model. Mobile users get native scroll through the
-     hero, which still scrubs the canvas via ScrollTrigger.
+     STEP 3: Scroll hijack — section snapping
+     Wheel (desktop) and touch (mobile) both feed
+     the same snap helper so behavior is identical:
+     one input gesture = one section jump.
      ============================================ */
   useEffect(() => {
     if (!loaded) return;
     const container = containerRef.current;
     if (!container) return;
 
-    /* Skip wheel hijack on touch-primary devices (phones, tablets) */
-    /* matchMedia "(pointer: coarse)" is the standard touch detection */
-    if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
-      return;
-    }
-
-    const handleWheel = (e: WheelEvent) => {
+    /* Shared snap helper — returns true if a snap was triggered,
+       false if the gesture should fall through to native scroll
+       (i.e. user is past the hero boundaries). */
+    const snap = (direction: 1 | -1): boolean => {
       const containerTop = container.offsetTop;
       const totalScroll = container.offsetHeight - window.innerHeight;
       const scrollY = window.scrollY;
 
-      /* Only hijack wheel events when inside the hero scroll range */
-      if (scrollY < containerTop - 5 || scrollY > containerTop + totalScroll + 5) return;
+      /* Bail if not inside hero scroll range */
+      if (scrollY < containerTop - 5 || scrollY > containerTop + totalScroll + 5) {
+        return false;
+      }
 
-      /* Determine next section based on scroll direction */
-      const direction = e.deltaY > 0 ? 1 : -1;
       const nextIndex = currentSectionRef.current + direction;
-
       /* Past boundaries — let native scroll take over (exit hero) */
-      if (nextIndex < 0 || nextIndex >= SNAP_POINTS.length) return;
+      if (nextIndex < 0 || nextIndex >= SNAP_POINTS.length) return false;
 
-      /* Block native scroll — we handle it */
-      e.preventDefault();
-
-      /* Cooldown active — ignore (prevents trackpad rapid-fire) */
-      if (cooldownRef.current) return;
+      /* Cooldown — we consumed the gesture but don't fire a new tween */
+      if (cooldownRef.current) return true;
 
       currentSectionRef.current = nextIndex;
       cooldownRef.current = true;
 
-      /* Calculate target scroll position in pixels */
       const targetY = containerTop + SNAP_POINTS[nextIndex] * totalScroll;
-
-      /* Kill any in-progress animation — override immediately */
       if (scrollTweenRef.current) scrollTweenRef.current.kill();
 
-      /* Animate scroll to target section */
       scrollTweenRef.current = gsap.to({ y: scrollY }, {
         y: targetY,
         duration: 0.5,
@@ -326,11 +311,72 @@ export default function ScrollStopHero() {
           cooldownRef.current = false;
         },
       });
+      return true;
     };
 
-    /* passive: false required to call preventDefault */
+    /* --- Desktop: wheel events ----------------------------------- */
+    const handleWheel = (e: WheelEvent) => {
+      const direction: 1 | -1 = e.deltaY > 0 ? 1 : -1;
+      /* Peek at boundary state without committing — same check as snap() */
+      const containerTop = container.offsetTop;
+      const totalScroll = container.offsetHeight - window.innerHeight;
+      const scrollY = window.scrollY;
+      if (scrollY < containerTop - 5 || scrollY > containerTop + totalScroll + 5) return;
+      const peekNext = currentSectionRef.current + direction;
+      if (peekNext < 0 || peekNext >= SNAP_POINTS.length) return;
+
+      /* Block native scroll, then attempt snap (no-op if cooling down) */
+      e.preventDefault();
+      snap(direction);
+    };
+
+    /* --- Mobile: touch events ------------------------------------ */
+    /* Strategy: block touchmove while inside the hero (so the page
+       doesn't scroll freely), then on touchend translate the swipe
+       distance into a single section jump. This mirrors the wheel
+       behavior — one swipe = one section. */
+    let touchStartY = 0;
+    let touchInsideHero = false;
+    const SWIPE_THRESHOLD = 20; /* pixels — ignore taps & tiny drags */
+
+    const handleTouchStart = (e: TouchEvent) => {
+      const containerTop = container.offsetTop;
+      const totalScroll = container.offsetHeight - window.innerHeight;
+      const scrollY = window.scrollY;
+      touchInsideHero =
+        scrollY >= containerTop - 5 && scrollY <= containerTop + totalScroll + 5;
+      if (touchInsideHero) {
+        touchStartY = e.touches[0].clientY;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      /* Block native scroll inside the hero so the page stays put
+         until we decide which section to snap to on touchend */
+      if (touchInsideHero) e.preventDefault();
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (!touchInsideHero) return;
+      const touchEndY = e.changedTouches[0].clientY;
+      const delta = touchStartY - touchEndY; /* >0 = swiped up = next section */
+      if (Math.abs(delta) < SWIPE_THRESHOLD) return;
+      const direction: 1 | -1 = delta > 0 ? 1 : -1;
+      snap(direction);
+    };
+
+    /* passive: false required so we can preventDefault */
     window.addEventListener("wheel", handleWheel, { passive: false });
-    return () => window.removeEventListener("wheel", handleWheel);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
   }, [loaded]);
 
   return (
@@ -355,11 +401,14 @@ export default function ScrollStopHero() {
         )}
         {isMobile === true && (
           <video
+            ref={videoRef}
             src="/hero-mobile-video.mp4"
-            autoPlay
-            loop
             muted
             playsInline
+            preload="auto"
+            /* No autoPlay / loop — scroll drives currentTime instead.
+               muted + playsInline are required so iOS Safari will load
+               and decode the video without a user-gesture restriction. */
             className="absolute inset-0 w-full h-full object-cover object-center z-0"
           />
         )}
