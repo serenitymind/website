@@ -11,10 +11,10 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /* Contact details shown on the right side */
 const contactInfo = [
-  { icon: Phone, label: "(424) 555-0192" },
+  { icon: Phone, label: "(424) 226-2323" },
   { icon: Mail, label: "hello@serenitymind.com" },
-  { icon: MapPin, label: "9461 Charleville Blvd, Beverly Hills, CA 90212" },
-  { icon: Clock, label: "Mon–Fri 8:00 AM – 5:30 PM" },
+  { icon: MapPin, label: "11340 W Olympic Blvd # 203, Los Angeles, CA 90064" },
+  { icon: Clock, label: "I offer structured weekday availability, including select evening appointments." },
 ];
 
 export default function Contact() {
@@ -34,8 +34,8 @@ export default function Contact() {
               Book Your Free Consultation
             </h2>
             <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed">
-              Take the first step. Fill out the form below and we&apos;ll
-              reach out within 24 hours.
+              Complete the form below to request a brief consultation and
+              discuss whether the practice may be a good fit for your needs.
             </p>
           </div>
 
@@ -113,9 +113,10 @@ export default function Contact() {
               Free Confidential Consultation
             </h3>
             <p className="text-[15px] text-white/70 leading-relaxed">
-              Not sure where to start? Book a free 15-minute phone
-              consultation. No commitment, no pressure — just a conversation
-              about how we can help.
+              Not sure where to start? You can schedule a free 15-minute phone
+              consultation to briefly discuss your needs and determine whether
+              working together may be a good fit. There is no obligation to
+              proceed with treatment.
             </p>
           </div>
         </div>

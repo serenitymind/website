@@ -14,6 +14,7 @@ const credentials = [
   "Adult & Adolescent Care",
   "TFCBT Certified",
   "BCBA Certified",
+  "QME Certified",
   "Telehealth Available",
 ];
 
@@ -47,27 +48,37 @@ export default function DoctorBio() {
             Dr. Eugenia Chen, M.D.
           </h2>
           <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
-            Dr. Eugenia Chen is a board-certified adult psychiatrist who completed
-            her medical degree at Baylor College of Medicine, followed by psychiatry
-            residency training with Kaiser Permanente. She went on to complete
-            specialized fellowship training in Child and Adolescent Psychiatry at
-            the University of California, Los Angeles (UCLA), where she also served
-            as Fellowship Wellness Chief. Dr. Chen has additional focus in parent
-            and infant mental health, and her clinical work includes children,
-            adolescents, young adults, and adults.
+            Dr. Eugenia Chen is a board-certified adult psychiatrist and
+            board-eligible child and adolescent psychiatrist. She completed her
+            medical degree at Baylor College of Medicine, followed by psychiatry
+            residency training at Kaiser Permanente and fellowship training in
+            Child and Adolescent Psychiatry at the University of California, Los
+            Angeles (UCLA), where she served as Fellowship Wellness Chief.
           </p>
           <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
-            Dr. Eugenia Chen takes a thoughtful and collaborative approach to care,
-            integrating evidence-based treatment, psychotherapy, and an understanding
-            of each patient&apos;s environment and life experiences to support meaningful
-            and lasting mental wellness. Her work has been shaped by research,
-            community advocacy, and trauma-informed care, with multiple publications
-            and national presentations focused on youth mental health and complex
-            psychiatric conditions. Outside of work, Dr. Chen enjoys spending time
-            with her dog, traveling, scuba diving, cooking, and exploring new
-            restaurants. She values wellness, curiosity, and connection with family
-            and community, and brings this same sense of warmth and balance into the
-            care she provides for her patients.
+            Dr. Chen is a bilingual Mandarin speaker with a focus in parent-infant
+            and maternal mental health as an area of distinction. She is certified
+            in Trauma-Focused Cognitive Behavioral Therapy (TF-CBT) and is a Board
+            Certified Behavior Analyst (BCBA). Her clinical work spans children,
+            adolescents, young adults, and adults, with an emphasis on family
+            therapy and parent guidance as part of comprehensive care.
+          </p>
+          <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
+            She has also participated in leadership and committee work with the
+            APA Workplace Committee and AACAP.
+          </p>
+          <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
+            Dr. Chen takes a thoughtful and collaborative approach to care,
+            integrating evidence-based treatment, psychotherapy, and an
+            understanding of each patient&apos;s environment and life experiences
+            to support meaningful and lasting mental wellness. Her work is shaped
+            by research, community advocacy, and trauma-informed care, with
+            publications and national presentations focused on youth mental health
+            and complex psychiatric conditions.
+          </p>
+          <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed max-w-[640px]">
+            Outside of work, Dr. Chen enjoys spending time with her family and
+            dog, traveling, scuba diving, cooking, and exploring new restaurants.
           </p>
 
           {/* Credential badges */}

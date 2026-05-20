@@ -2,133 +2,147 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
  * FAQ — accordion-style frequently asked questions.
  * Click to expand/collapse answers.
- * Covers insurance, appointments, ages, sessions, fees, and cancellation.
+ * Grouped into two subsections: Getting Started & What to Expect,
+ * and Treatment, Structure & Fees.
  */
 
-/* FAQ data — real practice questions & answers */
-const faqs = [
+/* FAQ data — grouped into subsections for clearer scanning */
+const faqSections = [
   {
-    question: "Do you accept insurance?",
-    answer: (
-      <p>At this time, I do not accept insurance. However, I am happy to provide a superbill upon request, which you may submit to your insurance company for possible reimbursement depending on your plan.</p>
-    ),
+    title: "Getting Started & What to Expect",
+    items: [
+      {
+        question: "What happens during the first appointment?",
+        answer: (
+          <p>
+            The first visit is a comprehensive evaluation focused on
+            understanding you (or your child) as a whole person—not just
+            symptoms. I take time to learn about current concerns, psychiatric
+            history, and life context. This includes a thorough psychiatric
+            interview and, when helpful, input from family or other sources.
+            Together, we review diagnostic impressions and create a thoughtful,
+            individualized treatment plan.
+          </p>
+        ),
+      },
+      {
+        question: "What is included in a child or adolescent evaluation?",
+        answer: (
+          <p>
+            A child or adolescent evaluation is a comprehensive, two-session
+            process (approximately 120 minutes total). It includes interviews
+            with the child and caregivers, a detailed developmental and
+            psychiatric history, and a careful diagnostic assessment. When
+            helpful, input from schools or other providers may also be
+            incorporated to support accurate treatment planning.
+          </p>
+        ),
+      },
+      {
+        question: "Do you offer virtual or in-person appointments?",
+        answer: (
+          <p>
+            Yes. I offer virtual appointments for patients throughout
+            California through a secure telehealth platform. I also offer
+            limited in-person appointments one day per week for those who
+            prefer face-to-face care.
+          </p>
+        ),
+      },
+      {
+        question: "Do you provide both therapy and medication management?",
+        answer: (
+          <p>
+            Yes. Treatment is individualized and may include medication
+            management, psychotherapy, or a combination of both. When
+            appropriate, I also incorporate family sessions to support care in
+            a more holistic way.
+          </p>
+        ),
+      },
+      {
+        question: "Do you work with families or schools?",
+        answer: (
+          <p>
+            Yes. With consent and when clinically appropriate, I collaborate
+            with families, schools, and other providers to support continuity
+            of care and a more complete understanding of each patient&apos;s
+            needs.
+          </p>
+        ),
+      },
+    ],
   },
   {
-    question: "Do you offer virtual or in-person appointments?",
-    answer: (
-      <>
-        <p>Yes. My practice currently offers primarily virtual appointments through a secure telehealth platform across California. Virtual care allows patients to access treatment conveniently and privately from home or another safe space.</p>
-        <p className="mt-3">I am working to offer in-person appointments in the future, and updates will be posted as those options become available.</p>
-      </>
-    ),
-  },
-  {
-    question: "What ages do you treat?",
-    answer: (
-      <>
-        <p>I work with patients across the lifespan, including:</p>
-        <ul className="mt-2 ml-4 flex flex-col gap-1 list-disc list-inside">
-          <li>Children</li>
-          <li>Adolescents</li>
-          <li>College students and young adults</li>
-          <li>Adults</li>
-        </ul>
-        <p className="mt-3">Treatment is always tailored to the developmental stage and needs of each individual.</p>
-      </>
-    ),
-  },
-  {
-    question: "What do sessions look like?",
-    answer: (
-      <>
-        <p>I provide both psychotherapy and medication management, depending on what is most helpful for each patient. Services may include:</p>
-        <ul className="mt-2 ml-4 flex flex-col gap-1 list-disc list-inside">
-          <li>Psychiatric evaluations and diagnostic assessments</li>
-          <li>Medication support</li>
-          <li>Individual psychotherapy</li>
-          <li>Family sessions</li>
-          <li>Collaborative meetings with schools or other providers when clinically appropriate</li>
-        </ul>
-        <p className="mt-3">Treatment is not just about medications. I focus on therapy, compassionate understanding of each patient&apos;s environment and stressors, and holistic care that addresses the full picture of the individual. This may include lifestyle strategies, coping skills, family support, and collaborative planning along with any pharmacologic treatment.</p>
-      </>
-    ),
-  },
-  {
-    question: "What is your approach to treatment?",
-    answer: (
-      <p>Every patient&apos;s experience is unique. My approach is collaborative and individualized, focusing on understanding the full picture of each person&apos;s life, symptoms, and goals. Treatment may involve therapy, medication, lifestyle strategies, family involvement, or a combination of approaches. I aim to support patients throughout their journey, adjusting the plan as their needs evolve.</p>
-    ),
-  },
-  {
-    question: "How often will I have appointments?",
-    answer: (
-      <p>Appointment frequency is individualized based on your needs and goals. Some patients may start with more frequent visits early in treatment, while others transition to less frequent follow-ups as symptoms improve. We will collaboratively determine the schedule that best supports your progress and adjust it over time as needed.</p>
-    ),
-  },
-  {
-    question: "What are your fees?",
-    answer: (
-      /* Fee schedule — responsive table */
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-[14px]">
-          <thead>
-            <tr className="border-b border-border">
-              <th className="py-2 pr-4 font-semibold text-text-primary">Service</th>
-              <th className="py-2 pr-4 font-semibold text-text-primary">Duration</th>
-              <th className="py-2 font-semibold text-text-primary">Fee</th>
-            </tr>
-          </thead>
-          <tbody className="text-text-secondary">
-            <tr className="border-b border-border/50">
-              <td className="py-2.5 pr-4">Adult initial consultation</td>
-              <td className="py-2.5 pr-4">60–90 min</td>
-              <td className="py-2.5">$750–850</td>
-            </tr>
-            <tr className="border-b border-border/50">
-              <td className="py-2.5 pr-4">Child/teen initial consultation (comprehensive, 2–3 sessions)</td>
-              <td className="py-2.5 pr-4">60 min each; total 120–180 min</td>
-              <td className="py-2.5">$800 per session</td>
-            </tr>
-            <tr className="border-b border-border/50">
-              <td className="py-2.5 pr-4">Medication follow-up</td>
-              <td className="py-2.5 pr-4">25 min</td>
-              <td className="py-2.5">$350</td>
-            </tr>
-            <tr className="border-b border-border/50">
-              <td className="py-2.5 pr-4">Individual therapy</td>
-              <td className="py-2.5 pr-4">50 min</td>
-              <td className="py-2.5">$500–525</td>
-            </tr>
-            <tr>
-              <td className="py-2.5 pr-4">Family therapy or parent guidance</td>
-              <td className="py-2.5 pr-4">60 min</td>
-              <td className="py-2.5">$600</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    ),
-  },
-  {
-    question: "What is your cancellation policy?",
-    answer: (
-      <p>I understand that life can be unpredictable, and sometimes you may need to reschedule or cancel an appointment. Please provide at least 48 hours notice if you need to make changes. Each situation is handled on a case-by-case basis, and late cancellations or missed appointments may incur a fee. I appreciate your understanding, which helps keep the schedule running smoothly for all patients.</p>
-    ),
+    title: "Treatment, Structure & Fees",
+    items: [
+      {
+        question: "What do follow-up visits look like?",
+        answer: (
+          <p>
+            Follow-up visits focus on supporting ongoing progress and adjusting
+            care over time. These sessions may include medication management,
+            psychotherapy, and discussion of goals, coping strategies, and
+            day-to-day functioning.
+          </p>
+        ),
+      },
+      {
+        question: "Do you accept insurance?",
+        answer: (
+          <p>
+            No. This is a private-pay practice. Superbills may be provided for
+            patients seeking out-of-network reimbursement.
+          </p>
+        ),
+      },
+      {
+        question: "How much do appointments cost?",
+        answer: (
+          <p>
+            Fees vary based on appointment type and duration. A detailed fee
+            schedule is available on the{" "}
+            <Link
+              href="/fees"
+              className="underline underline-offset-2 text-text-primary hover:text-accent transition-colors"
+            >
+              Fees page
+            </Link>
+            .
+          </p>
+        ),
+      },
+      {
+        question: "What is your cancellation policy?",
+        answer: (
+          <p>
+            I understand that unexpected situations can arise. I kindly ask for
+            at least 48 hours&apos; notice if you need to cancel or reschedule
+            an appointment. Late cancellations or missed appointments may be
+            subject to a fee. Each situation is reviewed individually, and I
+            appreciate your understanding in helping maintain access for all
+            patients.
+          </p>
+        ),
+      },
+    ],
   },
 ];
 
 export default function FAQ() {
-  /* Track which FAQ item is currently open (-1 = none) */
-  const [openIndex, setOpenIndex] = useState(-1);
+  /* Track which FAQ item is currently open — stringified "sectionIdx-itemIdx".
+     null means none open. Using a composite key so we can group by section. */
+  const [openKey, setOpenKey] = useState<string | null>(null);
   const ref = useScrollReveal();
 
-  const toggle = (i: number) => {
-    setOpenIndex(openIndex === i ? -1 : i);
+  const toggle = (key: string) => {
+    setOpenKey(openKey === key ? null : key);
   };
 
   return (
@@ -148,35 +162,58 @@ export default function FAQ() {
           </p>
         </div>
 
-        {/* Right — accordion list */}
-        <div className="scroll-reveal-child flex-1 flex flex-col">
-          {faqs.map((faq, i) => (
-            <div key={i} className="border-b border-border">
-              {/* Question — clickable toggle */}
-              <button
-                onClick={() => toggle(i)}
-                className="w-full flex items-center justify-between py-5 text-left"
-              >
-                <span className="font-heading text-[17px] font-semibold text-text-primary pr-4">
-                  {faq.question}
+        {/* Right — accordion list grouped by subsection.
+            gap-12 between sections so the two groups feel distinctly separate. */}
+        <div className="scroll-reveal-child flex-1 flex flex-col gap-12">
+          {faqSections.map((section, sIdx) => (
+            <div key={section.title} className="flex flex-col">
+              {/* Subsection header — lilac "01"/"02" number + sentence-case title.
+                  Mirrors the Process section numbering for theme consistency,
+                  and creates a clear visual gap above the question list. */}
+              <div className="flex items-baseline gap-4 mb-4">
+                <span className="font-heading text-[28px] font-bold text-[#C4B5FD] leading-none">
+                  {String(sIdx + 1).padStart(2, "0")}
                 </span>
-                <ChevronDown
-                  className={`w-5 h-5 text-text-muted shrink-0 transition-transform duration-200 ${
-                    openIndex === i ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-
-              {/* Answer — collapsible with smooth height transition */}
-              <div
-                className={`overflow-hidden transition-all duration-200 ${
-                  openIndex === i ? "max-h-[600px] pb-5" : "max-h-0"
-                }`}
-              >
-                <div className="text-[15px] text-text-secondary leading-relaxed">
-                  {faq.answer}
-                </div>
+                <h3 className="font-heading text-[22px] md:text-[24px] font-semibold text-text-primary tracking-tight">
+                  {section.title}
+                </h3>
               </div>
+
+              {/* Questions inside this subsection — medium weight (not semibold)
+                  so they read as subordinate to the subsection title above. */}
+              {section.items.map((faq, qIdx) => {
+                const key = `${sIdx}-${qIdx}`;
+                const isOpen = openKey === key;
+                return (
+                  <div key={key} className="border-b border-border">
+                    {/* Question — clickable toggle */}
+                    <button
+                      onClick={() => toggle(key)}
+                      className="w-full flex items-center justify-between py-5 text-left"
+                    >
+                      <span className="text-[16px] md:text-[17px] font-medium text-text-primary pr-4">
+                        {faq.question}
+                      </span>
+                      <ChevronDown
+                        className={`w-5 h-5 text-text-muted shrink-0 transition-transform duration-200 ${
+                          isOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {/* Answer — collapsible with smooth height transition */}
+                    <div
+                      className={`overflow-hidden transition-all duration-200 ${
+                        isOpen ? "max-h-[600px] pb-5" : "max-h-0"
+                      }`}
+                    >
+                      <div className="text-[15px] text-text-secondary leading-relaxed">
+                        {faq.answer}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           ))}
         </div>

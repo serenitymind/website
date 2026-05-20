@@ -71,8 +71,9 @@ export default function About() {
               Flexible schedule & Evening slots
             </h3>
             <p className="text-sm text-white/60 leading-relaxed">
-              Virtual appointments across California, including evening slots,
-              with minimal wait times to start care when you need it.
+              Virtual appointments across California, including evening
+              availability, with minimal wait times to begin care. In-person
+              appointments are also available on select days.
             </p>
           </div>
 

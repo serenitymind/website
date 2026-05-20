@@ -40,42 +40,42 @@ const conditions = [
   {
     title: "Anxiety Disorders",
     description:
-      "Generalized anxiety, social anxiety, panic disorder, phobias.",
+      "Generalized anxiety, social anxiety, panic disorder, phobias, and school-related anxiety.",
   },
   {
     title: "Mood Disorders",
     description:
-      "Depression, bipolar disorder, mood dysregulation.",
+      "Depression, bipolar disorder, irritability, and mood dysregulation.",
   },
   {
-    title: "Attention & Focus Disorders",
+    title: "Attention & Executive Functioning",
     description:
-      "ADHD, executive function difficulties.",
+      "ADHD, attention difficulties, executive functioning challenges, and emotional regulation concerns.",
   },
   {
     title: "Trauma & Stress-Related Disorders",
     description:
-      "PTSD, acute stress, adjustment difficulties.",
+      "PTSD, acute stress, adjustment difficulties, and trauma-related symptoms.",
   },
   {
-    title: "Behavioral & Emotional Challenges in Children",
+    title: "Child & Adolescent Behavioral Challenges",
     description:
-      "Irritability, aggression, defiance, school difficulties.",
+      "Irritability, aggression, oppositional behaviors, school difficulties, and emotional dysregulation.",
   },
   {
     title: "Developmental & Neurodiverse Conditions",
     description:
-      "Autism spectrum, learning differences, social communication challenges.",
+      "Autism spectrum disorder, learning differences, and social communication challenges.",
   },
   {
-    title: "Family & Parent Guidance Needs",
+    title: "Family Therapy & Parent Guidance",
     description:
-      "Parent support, family dynamics, relational challenges.",
+      "Parent support, family dynamics, behavioral strategies, and caregiver guidance.",
   },
   {
     title: "Maternal & Infant Mental Health",
     description:
-      "Perinatal depression, anxiety, bonding challenges.",
+      "Perinatal depression and anxiety, postpartum adjustment, bonding challenges, and early parenthood support.",
   },
 ];
 
