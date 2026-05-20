@@ -481,7 +481,7 @@ export default function ScrollStopHero() {
           <div
             key={i}
             ref={(el) => { textRefs.current[i] = el; }}
-            className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none -translate-y-[22%] md:translate-y-0"
+            className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none -translate-y-[14%] md:translate-y-0"
             style={{ opacity: i === 0 ? 1 : 0 }}
           >
             <div className="flex flex-col items-center w-full px-10 md:px-0">
