@@ -19,11 +19,16 @@ import { NextRequest, NextResponse } from "next/server";
  * BAA-signed Resend Pro plan.
  */
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 /* Tiny, non-strict email regex — enough to reject obvious garbage.
    Real validation happens when we try to reply. */
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/* NOTE: we intentionally do NOT instantiate Resend at module scope.
+   Next.js's build step ("Collecting page data") imports this module,
+   and `new Resend(undefined)` throws if RESEND_API_KEY is missing,
+   which would crash the entire production build on Vercel.
+   Instead we construct it lazily inside the request handler, AFTER
+   the env-var check below has confirmed the key is present. */
 
 export async function POST(req: NextRequest) {
   try {
@@ -81,6 +86,10 @@ export async function POST(req: NextRequest) {
         { status: 500 },
       );
     }
+
+    /* Lazy-construct the Resend client at request time — see note at top of file.
+       At this point we know RESEND_API_KEY is present, so the constructor is safe. */
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     const fullName = `${fName} ${String(lastName).trim()}`.trim();
     const subject = `New consultation inquiry — ${fullName}`;
