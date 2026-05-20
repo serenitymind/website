@@ -52,23 +52,30 @@ export default function Process() {
         className="absolute inset-0 w-full h-full object-cover z-0"
       />
 
-      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col gap-8 md:gap-12 px-5 md:px-16 py-12 md:py-20 relative z-10">
-        {/* Section header — white text over video */}
-        <div className="flex flex-col items-center gap-5 max-w-[600px] mx-auto text-center mb-4">
-          <div className="flex items-center gap-4">
-            <div className="h-px w-16 bg-text-primary/30" />
-            <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
-              HOW IT WORKS
-            </span>
-            <div className="h-px w-16 bg-text-primary/30" />
-          </div>
-          <h2 className="font-heading text-[28px] md:text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
-            Your Path to Better Mental Health
-          </h2>
+      <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto relative px-5 md:px-16 pt-12 md:pt-16 pb-16 md:pb-24 z-10">
+
+        {/* Tag — same centered "tag + horizontal rules" pattern as Conditions/Fees.
+            Uses white on this section since the background is a multi-toned
+            flower video — black gets swallowed by the lavender hues. */}
+        <div className="relative z-[3] flex items-center justify-center gap-4 mb-20 md:mb-40">
+          <div className="h-px w-16 bg-white/40" />
+          <span className="text-[13px] font-semibold text-white tracking-[2px]">
+            HOW IT WORKS
+          </span>
+          <div className="h-px w-16 bg-white/40" />
         </div>
 
-        {/* 4-step grid — dark glass cards over flower video */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Massive white h1 — sits behind the cards, gets frosted by their
+            backdrop-blur. Same clamp() sizing as Conditions/Fees/FAQ to
+            keep the visual rhythm uniform. White was chosen over black so
+            the text stays legible across the multi-colored flower video
+            and isn't swallowed by the dark glass cards. */}
+        <h1 className="absolute left-1/2 -translate-x-1/2 top-[60px] md:top-[100px] font-heading text-[clamp(72px,16vw,260px)] font-bold whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal text-white drop-shadow-[0_2px_24px_rgba(255,255,255,0.25)]">
+          Journey
+        </h1>
+
+        {/* 4-step grid — dark glass cards over flower video + giant h1 */}
+        <div className="relative z-[2] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {steps.map((step) => (
             <div
               key={step.number}
