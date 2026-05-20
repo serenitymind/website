@@ -447,8 +447,12 @@ export default function ScrollStopHero() {
             preload="auto"
             /* No autoPlay / loop — scroll drives currentTime instead.
                muted + playsInline are required so iOS Safari will load
-               and decode the video without a user-gesture restriction. */
+               and decode the video without a user-gesture restriction.
+               scale(1.2) translateY(8%): zoom in and shift the video down
+               so the Veo3 watermark in the bottom-right falls outside
+               the sticky viewport (which has overflow-hidden). */
             className="absolute inset-0 w-full h-full object-cover object-center z-0"
+            style={{ transform: "scale(1.2) translateY(8%)" }}
           />
         )}
 
@@ -469,12 +473,15 @@ export default function ScrollStopHero() {
           </div>
         )}
 
-        {/* Text overlays — GSAP controls opacity, all centered */}
+        {/* Text overlays — GSAP controls opacity, all centered.
+            Mobile: shift the centered block up so the headline + subline
+            land in the empty purple area above the subject's head. Desktop
+            keeps the original dead-center placement. */}
         {BREAKPOINTS.map((bp, i) => (
           <div
             key={i}
             ref={(el) => { textRefs.current[i] = el; }}
-            className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+            className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none -translate-y-[22%] md:translate-y-0"
             style={{ opacity: i === 0 ? 1 : 0 }}
           >
             <div className="flex flex-col items-center w-full px-10 md:px-0">
