@@ -10,12 +10,13 @@ import Link from "next/link";
  * Active link highlights based on which section is in view.
  */
 
-/* Navigation links — match actual page sections */
+/* Navigation links — match actual page sections (and their on-page order) */
 const navLinks = [
   { label: "Home", href: "#" },
   { label: "Meet the Doctor", href: "#about" },
   { label: "Expertise", href: "#expertise" },
   { label: "How It Works", href: "#process" },
+  { label: "Fees", href: "#fees" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -31,37 +32,43 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    /* Observe each section — when it enters the viewport, mark it active */
-    const observer = new IntersectionObserver(
-      (entries) => {
-        /* Find the first entry that is intersecting (top-down priority) */
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveHref(`#${entry.target.id}`);
-            return;
-          }
+    /* Scroll-position based scrollspy.
+       For each scroll event, walk sectionIds in DOM order and pick the last
+       one whose top has scrolled past the trigger line (just below the
+       fixed banner+header). Simpler and more reliable than IntersectionObserver
+       for this case — IO had a "dead zone" between sections taller than the
+       active rootMargin which left the wrong link highlighted. */
+    const TRIGGER_Y = 120; /* px from viewport top — sits just below banner+header */
+
+    const updateActive = () => {
+      /* At the very top of the page → Home */
+      if (window.scrollY < 100) {
+        setActiveHref("#");
+        return;
+      }
+
+      /* Find the last section whose top has crossed the trigger line.
+         Sections are read in DOM order, so the latest match is the section
+         the user has just scrolled into. */
+      let activeId: string | null = null;
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= TRIGGER_Y) {
+          activeId = id;
+        } else {
+          break;
         }
-      },
-      /* rootMargin: offset for fixed header (~48px), trigger at 30% visible */
-      { rootMargin: "-48px 0px -60% 0px", threshold: 0 },
-    );
+      }
 
-    /* Observe all section elements */
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    /* Fallback: if scrolled to top, set Home active */
-    const handleScroll = () => {
-      if (window.scrollY < 100) setActiveHref("#");
+      setActiveHref(activeId ? `#${activeId}` : "#");
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
 
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("scroll", handleScroll);
-    };
+    window.addEventListener("scroll", updateActive, { passive: true });
+    updateActive(); /* set initial state on mount */
+
+    return () => window.removeEventListener("scroll", updateActive);
   }, []);
 
   return (

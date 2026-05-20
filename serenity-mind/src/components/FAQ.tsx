@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import Link from "next/link";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
@@ -107,14 +106,14 @@ const faqSections = [
         answer: (
           <p>
             Fees vary based on appointment type and duration. A detailed fee
-            schedule is available on the{" "}
-            <Link
-              href="/fees"
+            schedule is available in the{" "}
+            <a
+              href="#fees"
               className="underline underline-offset-2 text-text-primary hover:text-accent transition-colors"
             >
-              Fees page
-            </Link>
-            .
+              Fees section
+            </a>{" "}
+            above.
           </p>
         ),
       },

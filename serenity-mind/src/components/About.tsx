@@ -36,12 +36,6 @@ export default function About() {
             </a>
           </div>
 
-          {/* Right: description paragraph */}
-          <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed max-w-[440px]">
-            I combine clinical expertise with compassionate care to provide
-            personalized psychiatric treatment.
-          </p>
-
           {/* Mobile-only CTA — appears at the bottom of the stack (after the description) */}
           <a
             href="#contact"
