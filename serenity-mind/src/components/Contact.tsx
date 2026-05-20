@@ -12,7 +12,7 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 /* Contact details shown on the right side */
 const contactInfo = [
   { icon: Phone, label: "(424) 226-2323" },
-  { icon: Mail, label: "hello@serenitymind.com" },
+  { icon: Mail, label: "hello@serenitymindmd.com" },
   { icon: MapPin, label: "11340 W Olympic Blvd # 203, Los Angeles, CA 90064" },
   { icon: Clock, label: "I offer structured weekday availability, including select evening appointments." },
 ];
