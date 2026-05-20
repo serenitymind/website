@@ -87,7 +87,8 @@ export default function Header() {
           <span className="font-heading text-[15px] font-semibold text-text-primary">
             Serenity Mind
           </span>
-          <span className="text-[11px] text-text-muted hidden sm:inline">
+          {/* Subtitle — visible on all sizes (was hidden below sm) */}
+          <span className="text-[10px] sm:text-[11px] text-text-muted whitespace-nowrap">
             by Eugenia Chen, M.D.
           </span>
         </Link>
