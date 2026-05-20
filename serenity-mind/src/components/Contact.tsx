@@ -67,6 +67,34 @@ export default function Contact() {
               className="w-full px-4 py-3 rounded-lg bg-bg-card border border-border text-[15px] text-text-primary placeholder:text-text-muted outline-none focus:border-text-primary transition-colors"
             />
 
+            {/* Preferred contact method — segmented radio pills.
+                Uses native radio inputs (hidden via sr-only) so no React
+                state is needed; the label styles itself via peer-checked. */}
+            <div className="flex flex-col gap-2">
+              <span className="text-[13px] text-text-secondary">
+                Preferred method of contact
+              </span>
+              <div className="grid grid-cols-3 gap-2">
+                {["Phone", "Email", "Both"].map((option, i) => (
+                  <label
+                    key={option}
+                    className="relative cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      name="contact-method"
+                      value={option.toLowerCase()}
+                      defaultChecked={i === 0}
+                      className="peer sr-only"
+                    />
+                    <span className="block w-full px-4 py-3 rounded-lg bg-bg-card border border-border text-[15px] text-text-secondary text-center transition-colors peer-checked:border-text-primary peer-checked:bg-text-primary peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-text-primary">
+                      {option}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
             <textarea
               placeholder="Briefly describe what you're looking for help with..."
               rows={4}
