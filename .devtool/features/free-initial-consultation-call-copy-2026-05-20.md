@@ -3,14 +3,14 @@ id: "free-initial-consultation-call-copy-2026-05-20"
 status: "todo"
 priority: "medium"
 assignee: null
+epic: null
 dueDate: null
 created: "2026-05-20T21:54:02.000Z"
-modified: "2026-05-20T21:54:02.000Z"
+modified: "2026-05-20T22:12:53.769Z"
 completedAt: null
 labels: ["content", "copy"]
-order: "a0"
+order: "a1V"
 ---
-
 # Add "Free Initial Consultation Call" copy
 
 Surface a short marketing blurb explaining the 15-minute phone consultation. Place where it fits best (likely near the Contact section or as a sub-card next to the existing "Free Confidential Consultation" CTA).
