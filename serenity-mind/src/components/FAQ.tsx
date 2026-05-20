@@ -145,7 +145,7 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="bg-bg-secondary scroll-mt-[88px] md:scroll-mt-0">
+    <section id="faq" className="bg-white scroll-mt-[88px] md:scroll-mt-0">
       <div ref={ref} className="scroll-reveal max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-20 px-5 md:px-16 py-12 md:py-20">
 
         {/* Left — section header (sticky on desktop) */}

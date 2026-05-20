@@ -1,15 +1,16 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 /**
- * Fees — practice fee schedule shown as a row-based price list.
- * Sits between Process and FAQ so visitors see pricing before objections.
- * Anchor #fees lets the FAQ "How much do appointments cost?" answer link here.
+ * Fees — practice fee schedule.
+ * Styled to match the Expertise section: massive lilac "Fees" h1 in the
+ * background, small gray tag at the top, and the price list inside a
+ * single backdrop-blur container that overlaps the giant text.
  */
 
-/* Fee schedule — service name, duration, and price.
-   Order roughly: initial evals → ongoing care → specialty sessions. */
+/* Fee schedule — service name, duration, and price */
 const fees = [
   {
     service: "Initial Psychiatric Evaluation (Adult)",
@@ -44,58 +45,87 @@ const fees = [
 ];
 
 export default function Fees() {
-  const ref = useScrollReveal();
+  /* Ref for the giant h1 — we shift its gradient background-position on scroll
+     so the lilac sheen drifts as the user moves. Same effect as Conditions. */
+  const h1Ref = useRef<HTMLHeadingElement>(null);
+  const revealRef = useScrollReveal();
+
+  useEffect(() => {
+    let rafId: number;
+    const tick = () => {
+      if (h1Ref.current) {
+        const rect = h1Ref.current.getBoundingClientRect();
+        const pos = ((window.innerHeight - rect.top) * 0.5) % 300;
+        h1Ref.current.style.backgroundPosition = `${pos}% 0%`;
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
 
   return (
-    <section id="fees" className="bg-white scroll-mt-[88px] md:scroll-mt-0">
+    <section id="fees" className="bg-bg-secondary overflow-hidden scroll-mt-[88px] md:scroll-mt-0">
       <div
-        ref={ref}
-        className="scroll-reveal max-w-[1440px] mx-auto flex flex-col gap-10 md:gap-12 px-5 md:px-16 py-12 md:py-20"
+        ref={revealRef}
+        className="scroll-reveal max-w-[1440px] mx-auto relative px-5 md:px-16 pt-12 md:pt-16 pb-16 md:pb-24"
       >
-        {/* Section header — matches the centered "tag + h2" pattern from Process */}
-        <div className="scroll-reveal-child flex flex-col items-center gap-5 max-w-[600px] mx-auto text-center">
-          <div className="flex items-center gap-4">
-            <div className="h-px w-16 bg-text-primary/30" />
-            <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
-              PRACTICE FEES
-            </span>
-            <div className="h-px w-16 bg-text-primary/30" />
-          </div>
-          <h2 className="font-heading text-[28px] md:text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
-            Transparent Fee Schedule
-          </h2>
-          <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed">
+        {/* Tag — small gray uppercase label with horizontal rules */}
+        <div className="relative z-[3] flex items-center justify-center gap-4 mb-20 md:mb-40">
+          <div className="h-px w-16 bg-text-muted/30" />
+          <span className="text-[13px] font-semibold text-text-muted tracking-[2px]">
+            PRACTICE FEES
+          </span>
+          <div className="h-px w-16 bg-text-muted/30" />
+        </div>
+
+        {/* Massive lilac h1 — sits behind the pricing container.
+            Same clamp() sizing + scroll-driven gradient shift as Conditions. */}
+        <h1
+          ref={h1Ref}
+          style={{
+            backgroundImage: "linear-gradient(90deg, #DDD6FE, #C4B5FD, #DDD6FE)",
+            backgroundSize: "200% 100%",
+            backgroundPosition: "0% 0%",
+          }}
+          className="absolute left-1/2 -translate-x-1/2 top-[60px] md:top-[100px] font-heading text-[clamp(72px,16vw,260px)] font-bold whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal bg-clip-text text-transparent"
+        >
+          Fees
+        </h1>
+
+        {/* Pricing container — z-[2] over the h1, with backdrop-blur so the
+            lilac text "frosts" through. Capped width keeps it centered. */}
+        <div className="relative z-[2] max-w-[800px] mx-auto rounded-2xl bg-white/40 backdrop-blur-sm border border-[#C4B5FD]/30 p-6 md:p-10 scroll-reveal-child">
+          {/* Subtitle caption — private-pay disclaimer */}
+          <p className="text-[13px] md:text-[14px] text-text-muted mb-6 leading-relaxed">
             Private-pay practice. Superbills available upon request for
             patients seeking out-of-network reimbursement.
           </p>
-        </div>
 
-        {/* Fee list — row-based layout (service+duration on the left, fee on the right).
-            Capped at max-w-[800px] so it doesn't sprawl across the full grid width. */}
-        <div className="scroll-reveal-child w-full max-w-[800px] mx-auto">
-          {fees.map((f, i) => (
-            <div
-              key={`${f.service}-${f.duration}`}
-              className={`flex items-center justify-between gap-6 py-5 ${
-                i < fees.length - 1 ? "border-b border-border" : ""
-              }`}
-            >
-              {/* Left: service name + duration in muted small text */}
-              <div className="flex flex-col gap-1 min-w-0">
-                <p className="text-[15px] md:text-[16px] font-medium text-text-primary leading-snug">
-                  {f.service}
-                </p>
-                <p className="text-[13px] md:text-[14px] text-text-muted">
-                  {f.duration}
+          {/* Pricing rows — service+duration on the left, fee on the right.
+              Dividers use a faint lilac matching the container border. */}
+          <div className="flex flex-col">
+            {fees.map((f, i) => (
+              <div
+                key={`${f.service}-${f.duration}`}
+                className={`flex items-center justify-between gap-6 py-4 md:py-5 ${
+                  i < fees.length - 1 ? "border-b border-[#C4B5FD]/30" : ""
+                }`}
+              >
+                <div className="flex flex-col gap-1 min-w-0">
+                  <p className="text-[15px] md:text-[16px] font-medium text-text-primary leading-snug">
+                    {f.service}
+                  </p>
+                  <p className="text-[13px] md:text-[14px] text-text-muted">
+                    {f.duration}
+                  </p>
+                </div>
+                <p className="font-heading text-[18px] md:text-[20px] font-bold text-text-primary whitespace-nowrap">
+                  {f.fee}
                 </p>
               </div>
-
-              {/* Right: fee in the heading font + bold for emphasis */}
-              <p className="font-heading text-[18px] md:text-[20px] font-bold text-text-primary whitespace-nowrap">
-                {f.fee}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
