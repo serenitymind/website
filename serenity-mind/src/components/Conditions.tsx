@@ -134,7 +134,7 @@ export default function Conditions() {
           {services.map((item) => (
             <div
               key={item.title}
-              className="scroll-reveal-child flex flex-col gap-3 p-5 md:p-7 rounded-2xl bg-white/40 backdrop-blur-sm border border-[#C4B5FD]/30 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(167,139,250,0.25)] hover:border-[#A78BFA]/60 hover:-translate-y-1"
+              className="scroll-reveal-child flex flex-col gap-3 p-5 md:p-7 rounded-2xl bg-white/50 backdrop-blur-md border border-[#C4B5FD]/30 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(167,139,250,0.25)] hover:border-[#A78BFA]/60 hover:-translate-y-1"
             >
               <h3 className="font-heading text-lg font-semibold text-text-primary">
                 {item.title}
@@ -160,7 +160,7 @@ export default function Conditions() {
           {conditions.map((item) => (
             <div
               key={item.title}
-              className="scroll-reveal-child flex flex-col gap-3 p-5 md:p-7 rounded-2xl bg-white/40 backdrop-blur-sm border border-[#C4B5FD]/30 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(167,139,250,0.25)] hover:border-[#A78BFA]/60 hover:-translate-y-1"
+              className="scroll-reveal-child flex flex-col gap-3 p-5 md:p-7 rounded-2xl bg-white/50 backdrop-blur-md border border-[#C4B5FD]/30 transition-all duration-300 hover:shadow-[0_4px_20px_rgba(167,139,250,0.25)] hover:border-[#A78BFA]/60 hover:-translate-y-1"
             >
               <h3 className="font-heading text-lg font-semibold text-text-primary">
                 {item.title}

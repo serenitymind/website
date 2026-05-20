@@ -95,7 +95,7 @@ export default function Fees() {
 
         {/* Pricing container — z-[2] over the h1, with backdrop-blur so the
             lilac text "frosts" through. Capped width keeps it centered. */}
-        <div className="relative z-[2] max-w-[800px] mx-auto rounded-2xl bg-white/40 backdrop-blur-sm border border-[#C4B5FD]/30 p-6 md:p-10 scroll-reveal-child">
+        <div className="relative z-[2] max-w-[800px] mx-auto rounded-2xl bg-white/50 backdrop-blur-md border border-[#C4B5FD]/30 p-6 md:p-10 scroll-reveal-child">
           {/* Subtitle caption — private-pay disclaimer */}
           <p className="text-[13px] md:text-[14px] text-text-muted mb-6 leading-relaxed">
             Private-pay practice. Superbills available upon request for
@@ -103,17 +103,20 @@ export default function Fees() {
           </p>
 
           {/* Pricing rows — service+duration on the left, fee on the right.
-              Dividers use a faint lilac matching the container border. */}
+              Each row has a group hover effect:
+                - bottom border brightens to a saturated lilac
+                - an inset upward-glowing shadow emerges from the bottom edge
+                - the service title bounces gently */}
           <div className="flex flex-col">
             {fees.map((f, i) => (
               <div
                 key={`${f.service}-${f.duration}`}
-                className={`flex items-center justify-between gap-6 py-4 md:py-5 ${
+                className={`group flex items-center justify-between gap-6 py-4 md:py-5 px-2 -mx-2 rounded-lg transition-all duration-300 hover:border-[#A78BFA]/70 hover:shadow-[inset_0_-16px_24px_-12px_rgba(167,139,250,0.35)] ${
                   i < fees.length - 1 ? "border-b border-[#C4B5FD]/30" : ""
                 }`}
               >
                 <div className="flex flex-col gap-1 min-w-0">
-                  <p className="text-[15px] md:text-[16px] font-medium text-text-primary leading-snug">
+                  <p className="text-[15px] md:text-[16px] font-medium text-text-primary leading-snug group-hover:animate-[row-title-bounce_0.6s_ease-in-out_infinite]">
                     {f.service}
                   </p>
                   <p className="text-[13px] md:text-[14px] text-text-muted">

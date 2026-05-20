@@ -126,3 +126,13 @@ html {
 .animate-accolades-marquee {
   animation: accolades-marquee 22s linear infinite;
 }
+
+/* ============================================
+   Row-title bounce — used by Fees + FAQ rows on group-hover.
+   Subtle 3px up-and-back, runs on infinite loop while hovering.
+   Triggered via `group-hover:animate-[row-title-bounce_...]`.
+   ============================================ */
+@keyframes row-title-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
