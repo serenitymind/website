@@ -10,13 +10,17 @@ gsap.registerPlugin(ScrollTrigger);
 /* ============================================
    FRAME CONFIG
    Total frames extracted from the video.
-   Frames live at /public/frames/frame-XXXX.jpg
+   Desktop frames: /public/frames/frame-XXXX.jpg     (1440x810 landscape)
+   Mobile frames:  /public/frames-mobile/frame-XXXX.jpg (720x1220 portrait)
+   Mobile uses its own sequence so the canvas-scrub mechanic that's smooth
+   on desktop also works on mobile — without the seek-lag a <video> element
+   suffers from when currentTime is written 60×/sec.
    ============================================ */
 const TOTAL_FRAMES = 192;
 
-/* Pad frame number to 4 digits for file path */
-const getFramePath = (i: number) =>
-  `/frames/frame-${String(i).padStart(4, "0")}.jpg`;
+/* Pad frame number to 4 digits and pick the right folder for the device */
+const getFramePath = (i: number, mobile: boolean) =>
+  `/${mobile ? "frames-mobile" : "frames"}/frame-${String(i).padStart(4, "0")}.jpg`;
 
 /* ============================================
    BREAKPOINTS CONFIG — EDIT THESE
@@ -59,9 +63,6 @@ const SNAP_POINTS = [0, 0.455, 0.815, 1.0];
 export default function ScrollStopHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  /* Mobile video ref — we scrub it via currentTime instead of autoplaying.
-     This mirrors the desktop frame-scrub behavior so scrolling drives playback. */
-  const videoRef = useRef<HTMLVideoElement>(null);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   /* Store preloaded images */
@@ -74,18 +75,15 @@ export default function ScrollStopHero() {
   const activeIndexRef = useRef(0);
 
   /* Mobile detection — null until mounted (SSR-safe).
-     On mobile we use a real <video> instead of the frame sequence,
-     so we skip preloading 192 JPGs and skip canvas drawing. */
+     Mobile and desktop both use canvas-based frame scrubbing; the only
+     difference is which frame sequence we load (smaller portrait frames
+     on mobile to keep the bandwidth cost reasonable on cellular). */
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   /* Wheel-based snap state */
   const currentSectionRef = useRef(0);
   const scrollTweenRef = useRef<gsap.core.Tween | null>(null);
   const cooldownRef = useRef(false);
-
-  /* Tracks the pending "pause + seek" call after a mobile video play().
-     We kill this if another snap starts before the prior one finishes. */
-  const videoPlayTimerRef = useRef<gsap.core.Tween | null>(null);
 
   /* Detect mobile after mount (matchMedia is window-only) */
   useEffect(() => {
@@ -100,26 +98,21 @@ export default function ScrollStopHero() {
   }, []);
 
   /* ============================================
-     STEP 1: Preload all frame images on mount
-     Skipped on mobile — mobile uses the <video> element,
-     so downloading 192 JPGs would be wasted bandwidth.
+     STEP 1: Preload the right frame sequence on mount
+     Desktop pulls from /frames/, mobile pulls from /frames-mobile/.
+     Same count (192), same code path — only the source folder differs.
      ============================================ */
   useEffect(() => {
-    /* Wait until mobile detection has resolved */
+    /* Wait until mobile detection has resolved (avoids loading the wrong
+       sequence and re-downloading after the matchMedia result settles) */
     if (isMobile === null) return;
-
-    /* Mobile path — no frames needed, mark as "loaded" so loader hides */
-    if (isMobile) {
-      setLoaded(true);
-      return;
-    }
 
     const images: HTMLImageElement[] = [];
     let loadedCount = 0;
 
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = getFramePath(i);
+      img.src = getFramePath(i, isMobile);
       img.onload = () => {
         loadedCount++;
         /* Update progress every 10 frames to avoid excessive re-renders */
@@ -147,68 +140,53 @@ export default function ScrollStopHero() {
     const container = containerRef.current;
     if (!container) return;
 
-    /* updateMedia maps scroll progress (0..1) onto the right output:
-       - Desktop: draws the matching JPG frame onto the canvas
-       - Mobile: seeks the <video>'s currentTime
-       Falling back to a no-op keeps the timeline safe if neither ref is ready. */
+    /* updateMedia maps scroll progress (0..1) onto a canvas-drawn frame.
+       Both desktop and mobile use the same logic — only the source frame
+       sequence differs (preloaded above based on isMobile). */
     let updateMedia: (progress: number) => void = () => {};
 
-    if (isMobile) {
-      /* Mobile path — we deliberately do NOT scrub the <video> via
-         currentTime on every scroll tick. Each currentTime write triggers
-         a seek that can take 10–50ms; doing that 60×/sec during the snap
-         tween produces the choppy frame-jumping the user reported.
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-         Instead, the snap() helper below uses video.play() with an
-         adjusted playbackRate so the browser plays naturally (smooth
-         decode) between section breakpoints. updateMedia is a no-op
-         because touch-snap blocks free-scroll, so scroll progress only
-         changes during the snap tween anyway. */
-      const video = videoRef.current;
-      if (!video) return;
-      updateMedia = () => {};
-    } else {
-      /* Desktop path — frame-by-frame canvas drawing (original behavior) */
-      const canvas = canvasRef.current;
-      if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
+    /* Set canvas size from the first frame's natural dimensions.
+       Desktop frames carry a Veo watermark in the bottom 50px that we crop
+       off here. Mobile frames are already cropped during ffmpeg extraction
+       (the watermark is gone from the source JPGs), so no canvas-side crop. */
+    const firstImg = imagesRef.current[0];
+    const WATERMARK_CROP = isMobile ? 0 : 50;
+    canvas.width = firstImg.naturalWidth;
+    canvas.height = firstImg.naturalHeight - WATERMARK_CROP;
 
-      /* Set canvas size — crop bottom 50px to hide Veo3 watermark */
-      const firstImg = imagesRef.current[0];
-      const WATERMARK_CROP = 50;
-      canvas.width = firstImg.naturalWidth;
-      canvas.height = firstImg.naturalHeight - WATERMARK_CROP;
+    /* Draw the first frame immediately so the canvas isn't blank on mount */
+    ctx.drawImage(firstImg, 0, 0);
 
-      /* Draw the first frame immediately */
-      ctx.drawImage(firstImg, 0, 0);
+    /* Track current frame to avoid redundant draws */
+    let currentFrame = 0;
 
-      /* Track current frame to avoid redundant draws */
-      let currentFrame = 0;
+    /* ============================================
+       Draw a specific frame to the canvas
+       This is the core of why it's smooth —
+       drawing a cached image is ~0.1ms vs
+       video seeking which can take 10-50ms
+       ============================================ */
+    const drawFrame = (frameIndex: number) => {
+      if (frameIndex === currentFrame) return; /* skip if same frame */
+      const img = imagesRef.current[frameIndex];
+      if (!img) return;
+      ctx.drawImage(img, 0, 0);
+      currentFrame = frameIndex;
+    };
 
-      /* ============================================
-         Draw a specific frame to the canvas
-         This is the core of why it's smooth —
-         drawing a cached image is ~0.1ms vs
-         video seeking which can take 10-50ms
-         ============================================ */
-      const drawFrame = (frameIndex: number) => {
-        if (frameIndex === currentFrame) return; /* skip if same frame */
-        const img = imagesRef.current[frameIndex];
-        if (!img) return;
-        ctx.drawImage(img, 0, 0);
-        currentFrame = frameIndex;
-      };
-
-      updateMedia = (progress: number) => {
-        const frameIndex = Math.min(
-          TOTAL_FRAMES - 1,
-          Math.floor(progress * TOTAL_FRAMES)
-        );
-        drawFrame(frameIndex);
-      };
-    }
+    updateMedia = (progress: number) => {
+      const frameIndex = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.floor(progress * TOTAL_FRAMES)
+      );
+      drawFrame(frameIndex);
+    };
 
     /* Build GSAP timeline */
     const gsapCtx = gsap.context(() => {
@@ -318,38 +296,10 @@ export default function ScrollStopHero() {
         },
       });
 
-      /* Mobile: drive the <video> to match the new section.
-         Forward = play() at adjusted rate so the browser decodes smoothly.
-         Backward = jump (browsers don't play in reverse cleanly). */
-      if (isMobile && videoRef.current) {
-        const video = videoRef.current;
-        const dur = video.duration;
-        if (dur && !isNaN(dur)) {
-          const targetTime = Math.min(SNAP_POINTS[nextIndex] * dur, dur - 0.01);
-          const delta = targetTime - video.currentTime;
-
-          /* Cancel any pending pause from a prior snap */
-          if (videoPlayTimerRef.current) videoPlayTimerRef.current.kill();
-
-          if (delta > 0.02) {
-            /* Pick a playbackRate that traverses `delta` seconds of video
-               in SNAP_DURATION seconds of real time. Clamp so we never
-               go absurdly fast (browsers cap somewhere around 16x). */
-            const rate = Math.min(Math.max(delta / SNAP_DURATION, 0.25), 4);
-            video.playbackRate = rate;
-            /* play() may reject if the gesture didn't propagate — swallow it */
-            video.play().catch(() => {});
-            videoPlayTimerRef.current = gsap.delayedCall(SNAP_DURATION, () => {
-              video.pause();
-              video.currentTime = targetTime;
-              video.playbackRate = 1;
-            });
-          } else if (delta < -0.02) {
-            /* Backwards — just seek directly */
-            video.currentTime = targetTime;
-          }
-        }
-      }
+      /* The scroll tween above updates window.scrollY → ScrollTrigger fires
+         onUpdate → updateMedia draws the matching canvas frame. So the
+         canvas, text fades, and scroll position all ride the exact same
+         power2.out curve. Same mechanic on desktop and mobile. */
       return true;
     };
 
@@ -427,32 +377,14 @@ export default function ScrollStopHero() {
       {/* Sticky viewport */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
 
-        {/* Desktop: canvas drives the frame-by-frame scroll scrub.
-            Mobile: a real <video> autoplays in a loop — simpler, lighter,
-            and avoids preloading 192 JPGs on cellular connections.
-            We branch on `isMobile` (null during SSR so neither renders until
-            mount, which keeps hydration consistent). */}
-        {isMobile === false && (
+        {/* Canvas drives the frame-by-frame scroll scrub on BOTH desktop
+            and mobile. We gate on `isMobile !== null` so the canvas only
+            mounts after we've decided which frame folder to preload from —
+            that avoids a flash of the wrong-aspect frame on first paint. */}
+        {isMobile !== null && (
           <canvas
             ref={canvasRef}
             className="absolute inset-0 w-full h-full object-cover object-center z-0"
-          />
-        )}
-        {isMobile === true && (
-          <video
-            ref={videoRef}
-            src="/hero-mobile-video.mp4"
-            muted
-            playsInline
-            preload="auto"
-            /* No autoPlay / loop — scroll drives currentTime instead.
-               muted + playsInline are required so iOS Safari will load
-               and decode the video without a user-gesture restriction.
-               scale(1.2) translateY(8%): zoom in and shift the video down
-               so the Veo3 watermark in the bottom-right falls outside
-               the sticky viewport (which has overflow-hidden). */
-            className="absolute inset-0 w-full h-full object-cover object-center z-0"
-            style={{ transform: "scale(1.2) translateY(8%)" }}
           />
         )}
 
