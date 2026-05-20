@@ -59,6 +59,9 @@ const SNAP_POINTS = [0, 0.455, 0.815, 1.0];
 export default function ScrollStopHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  /* Mobile video ref — we scrub it via currentTime instead of autoplaying.
+     This mirrors the desktop frame-scrub behavior so scrolling drives playback. */
+  const videoRef = useRef<HTMLVideoElement>(null);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   /* Store preloaded images */
@@ -70,10 +73,20 @@ export default function ScrollStopHero() {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeIndexRef = useRef(0);
 
+  /* Mobile detection — null until mounted (SSR-safe).
+     On mobile we use a real <video> instead of the frame sequence,
+     so we skip preloading 192 JPGs and skip canvas drawing. */
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
   /* Wheel-based snap state */
   const currentSectionRef = useRef(0);
   const scrollTweenRef = useRef<gsap.core.Tween | null>(null);
   const cooldownRef = useRef(false);
+
+  /* Detect mobile after mount (matchMedia is window-only) */
+  useEffect(() => {
+    setIsMobile(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
 
   const setActiveDot = useCallback((idx: number) => {
     if (idx !== activeIndexRef.current) {
@@ -84,8 +97,19 @@ export default function ScrollStopHero() {
 
   /* ============================================
      STEP 1: Preload all frame images on mount
+     Skipped on mobile — mobile uses the <video> element,
+     so downloading 192 JPGs would be wasted bandwidth.
      ============================================ */
   useEffect(() => {
+    /* Wait until mobile detection has resolved */
+    if (isMobile === null) return;
+
+    /* Mobile path — no frames needed, mark as "loaded" so loader hides */
+    if (isMobile) {
+      setLoaded(true);
+      return;
+    }
+
     const images: HTMLImageElement[] = [];
     let loadedCount = 0;
 
@@ -106,7 +130,7 @@ export default function ScrollStopHero() {
     }
 
     imagesRef.current = images;
-  }, []);
+  }, [isMobile]);
 
   /* ============================================
      STEP 2: Once loaded, set up canvas + GSAP
@@ -117,37 +141,69 @@ export default function ScrollStopHero() {
     if (!loaded) return;
 
     const container = containerRef.current;
-    const canvas = canvasRef.current;
-    if (!container || !canvas) return;
+    if (!container) return;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    /* updateMedia maps scroll progress (0..1) onto the right output:
+       - Desktop: draws the matching JPG frame onto the canvas
+       - Mobile: seeks the <video>'s currentTime
+       Falling back to a no-op keeps the timeline safe if neither ref is ready. */
+    let updateMedia: (progress: number) => void = () => {};
 
-    /* Set canvas size — crop bottom 50px to hide Veo3 watermark */
-    const firstImg = imagesRef.current[0];
-    const WATERMARK_CROP = 50;
-    canvas.width = firstImg.naturalWidth;
-    canvas.height = firstImg.naturalHeight - WATERMARK_CROP;
+    if (isMobile) {
+      /* Mobile path — scrub the <video> by setting currentTime.
+         We don't play() the video; scroll position fully drives playback. */
+      const video = videoRef.current;
+      if (!video) return;
 
-    /* Draw the first frame immediately */
-    ctx.drawImage(firstImg, 0, 0);
+      updateMedia = (progress: number) => {
+        /* video.duration is NaN until metadata loads — bail until it's ready */
+        const dur = video.duration;
+        if (!dur || isNaN(dur)) return;
+        /* Clamp slightly under duration to avoid the "ended" state flicker */
+        video.currentTime = Math.min(progress * dur, dur - 0.01);
+      };
+    } else {
+      /* Desktop path — frame-by-frame canvas drawing (original behavior) */
+      const canvas = canvasRef.current;
+      if (!canvas) return;
 
-    /* Track current frame to avoid redundant draws */
-    let currentFrame = 0;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
 
-    /* ============================================
-       Draw a specific frame to the canvas
-       This is the core of why it's smooth —
-       drawing a cached image is ~0.1ms vs
-       video seeking which can take 10-50ms
-       ============================================ */
-    const drawFrame = (frameIndex: number) => {
-      if (frameIndex === currentFrame) return; /* skip if same frame */
-      const img = imagesRef.current[frameIndex];
-      if (!img) return;
-      ctx.drawImage(img, 0, 0);
-      currentFrame = frameIndex;
-    };
+      /* Set canvas size — crop bottom 50px to hide Veo3 watermark */
+      const firstImg = imagesRef.current[0];
+      const WATERMARK_CROP = 50;
+      canvas.width = firstImg.naturalWidth;
+      canvas.height = firstImg.naturalHeight - WATERMARK_CROP;
+
+      /* Draw the first frame immediately */
+      ctx.drawImage(firstImg, 0, 0);
+
+      /* Track current frame to avoid redundant draws */
+      let currentFrame = 0;
+
+      /* ============================================
+         Draw a specific frame to the canvas
+         This is the core of why it's smooth —
+         drawing a cached image is ~0.1ms vs
+         video seeking which can take 10-50ms
+         ============================================ */
+      const drawFrame = (frameIndex: number) => {
+        if (frameIndex === currentFrame) return; /* skip if same frame */
+        const img = imagesRef.current[frameIndex];
+        if (!img) return;
+        ctx.drawImage(img, 0, 0);
+        currentFrame = frameIndex;
+      };
+
+      updateMedia = (progress: number) => {
+        const frameIndex = Math.min(
+          TOTAL_FRAMES - 1,
+          Math.floor(progress * TOTAL_FRAMES)
+        );
+        drawFrame(frameIndex);
+      };
+    }
 
     /* Build GSAP timeline */
     const gsapCtx = gsap.context(() => {
@@ -160,12 +216,8 @@ export default function ScrollStopHero() {
           onUpdate: (self) => {
             const progress = self.progress;
 
-            /* Map scroll progress to frame index */
-            const frameIndex = Math.min(
-              TOTAL_FRAMES - 1,
-              Math.floor(progress * TOTAL_FRAMES)
-            );
-            drawFrame(frameIndex);
+            /* Drive whichever medium is active (canvas frames or video) */
+            updateMedia(progress);
 
             /* Sync section tracker when not mid-animation */
             if (!cooldownRef.current) {
@@ -209,7 +261,7 @@ export default function ScrollStopHero() {
     }, container);
 
     return () => gsapCtx.revert();
-  }, [loaded, setActiveDot]);
+  }, [loaded, isMobile, setActiveDot]);
 
   /* ============================================
      STEP 3: Wheel hijack — instant section snapping
@@ -290,14 +342,27 @@ export default function ScrollStopHero() {
       {/* Sticky viewport */}
       <div className="sticky top-0 h-screen w-full overflow-hidden">
 
-        {/* Canvas — replaces the <video> element */}
-        {/* object-fit:cover behavior done via CSS on the canvas */}
-        {/* Mobile: object-position 85% — pulled in 15% from full right edge */}
-        {/* Desktop: object-center keeps the original framing */}
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full object-cover object-[85%_center] md:object-center z-0"
-        />
+        {/* Desktop: canvas drives the frame-by-frame scroll scrub.
+            Mobile: a real <video> autoplays in a loop — simpler, lighter,
+            and avoids preloading 192 JPGs on cellular connections.
+            We branch on `isMobile` (null during SSR so neither renders until
+            mount, which keeps hydration consistent). */}
+        {isMobile === false && (
+          <canvas
+            ref={canvasRef}
+            className="absolute inset-0 w-full h-full object-cover object-center z-0"
+          />
+        )}
+        {isMobile === true && (
+          <video
+            src="/hero-mobile-video.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover object-center z-0"
+          />
+        )}
 
         {/* Loading indicator — shown while frames preload */}
         {!loaded && (
