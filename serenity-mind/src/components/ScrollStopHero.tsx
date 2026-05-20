@@ -83,6 +83,10 @@ export default function ScrollStopHero() {
   const scrollTweenRef = useRef<gsap.core.Tween | null>(null);
   const cooldownRef = useRef(false);
 
+  /* Tracks the pending "pause + seek" call after a mobile video play().
+     We kill this if another snap starts before the prior one finishes. */
+  const videoPlayTimerRef = useRef<gsap.core.Tween | null>(null);
+
   /* Detect mobile after mount (matchMedia is window-only) */
   useEffect(() => {
     setIsMobile(window.matchMedia("(pointer: coarse)").matches);
@@ -150,18 +154,19 @@ export default function ScrollStopHero() {
     let updateMedia: (progress: number) => void = () => {};
 
     if (isMobile) {
-      /* Mobile path — scrub the <video> by setting currentTime.
-         We don't play() the video; scroll position fully drives playback. */
+      /* Mobile path — we deliberately do NOT scrub the <video> via
+         currentTime on every scroll tick. Each currentTime write triggers
+         a seek that can take 10–50ms; doing that 60×/sec during the snap
+         tween produces the choppy frame-jumping the user reported.
+
+         Instead, the snap() helper below uses video.play() with an
+         adjusted playbackRate so the browser plays naturally (smooth
+         decode) between section breakpoints. updateMedia is a no-op
+         because touch-snap blocks free-scroll, so scroll progress only
+         changes during the snap tween anyway. */
       const video = videoRef.current;
       if (!video) return;
-
-      updateMedia = (progress: number) => {
-        /* video.duration is NaN until metadata loads — bail until it's ready */
-        const dur = video.duration;
-        if (!dur || isNaN(dur)) return;
-        /* Clamp slightly under duration to avoid the "ended" state flicker */
-        video.currentTime = Math.min(progress * dur, dur - 0.01);
-      };
+      updateMedia = () => {};
     } else {
       /* Desktop path — frame-by-frame canvas drawing (original behavior) */
       const canvas = canvasRef.current;
@@ -297,12 +302,13 @@ export default function ScrollStopHero() {
       currentSectionRef.current = nextIndex;
       cooldownRef.current = true;
 
+      const SNAP_DURATION = 0.5;
       const targetY = containerTop + SNAP_POINTS[nextIndex] * totalScroll;
       if (scrollTweenRef.current) scrollTweenRef.current.kill();
 
       scrollTweenRef.current = gsap.to({ y: scrollY }, {
         y: targetY,
-        duration: 0.5,
+        duration: SNAP_DURATION,
         ease: "power2.out",
         onUpdate: function () {
           window.scrollTo(0, this.targets()[0].y);
@@ -311,6 +317,39 @@ export default function ScrollStopHero() {
           cooldownRef.current = false;
         },
       });
+
+      /* Mobile: drive the <video> to match the new section.
+         Forward = play() at adjusted rate so the browser decodes smoothly.
+         Backward = jump (browsers don't play in reverse cleanly). */
+      if (isMobile && videoRef.current) {
+        const video = videoRef.current;
+        const dur = video.duration;
+        if (dur && !isNaN(dur)) {
+          const targetTime = Math.min(SNAP_POINTS[nextIndex] * dur, dur - 0.01);
+          const delta = targetTime - video.currentTime;
+
+          /* Cancel any pending pause from a prior snap */
+          if (videoPlayTimerRef.current) videoPlayTimerRef.current.kill();
+
+          if (delta > 0.02) {
+            /* Pick a playbackRate that traverses `delta` seconds of video
+               in SNAP_DURATION seconds of real time. Clamp so we never
+               go absurdly fast (browsers cap somewhere around 16x). */
+            const rate = Math.min(Math.max(delta / SNAP_DURATION, 0.25), 4);
+            video.playbackRate = rate;
+            /* play() may reject if the gesture didn't propagate — swallow it */
+            video.play().catch(() => {});
+            videoPlayTimerRef.current = gsap.delayedCall(SNAP_DURATION, () => {
+              video.pause();
+              video.currentTime = targetTime;
+              video.playbackRate = 1;
+            });
+          } else if (delta < -0.02) {
+            /* Backwards — just seek directly */
+            video.currentTime = targetTime;
+          }
+        }
+      }
       return true;
     };
 
@@ -377,7 +416,7 @@ export default function ScrollStopHero() {
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [loaded]);
+  }, [loaded, isMobile]);
 
   return (
     <div
