@@ -14,17 +14,17 @@ export default function Footer() {
           {/* Logo + copyright */}
           <div className="flex items-center gap-3">
             <Brain className="w-4 h-4 text-white/40" />
-            <span className="text-xs text-white/30">
+            <span className="text-[11px] text-white/30">
               &copy; {new Date().getFullYear()} Serenity Mind Psychiatry. All rights reserved.
             </span>
           </div>
 
           {/* Legal links */}
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-white/30 hover:text-white/60 transition-colors">
+            <a href="#" className="text-[11px] text-white/30 hover:text-white/60 transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-xs text-white/30 hover:text-white/60 transition-colors">
+            <a href="#" className="text-[11px] text-white/30 hover:text-white/60 transition-colors">
               HIPAA Notice
             </a>
           </div>

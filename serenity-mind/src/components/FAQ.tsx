@@ -177,7 +177,7 @@ function AccordionItem({
         onClick={onToggle}
         className="w-full flex items-center justify-between py-5 text-left"
       >
-        <span className="text-[16px] md:text-[17px] font-medium text-text-primary pr-4 group-hover:animate-[row-title-bounce_0.6s_ease-in-out_infinite]">
+        <span className="text-[13px] md:text-[14px] font-medium text-text-primary pr-4 group-hover:animate-[row-title-bounce_0.6s_ease-in-out_infinite]">
           {question}
         </span>
         <ChevronDown
@@ -191,7 +191,7 @@ function AccordionItem({
           isOpen ? "max-h-[600px] pb-5" : "max-h-0"
         }`}
       >
-        <div className="text-[15px] text-text-secondary leading-relaxed">
+        <div className="text-[11px] md:text-[12px] text-text-secondary leading-relaxed">
           {answer}
         </div>
       </div>
@@ -241,7 +241,7 @@ export default function FAQ() {
           {/* Tag — small gray uppercase label with horizontal rules */}
           <div className="relative z-[3] flex items-center justify-center gap-4 mb-20 md:mb-40">
             <div className="h-px w-16 bg-text-muted/30" />
-            <span className="text-[13px] font-semibold text-text-muted tracking-[2px]">
+            <span className="text-[11px] font-semibold text-text-muted tracking-[2px]">
               FREQUENTLY ASKED
             </span>
             <div className="h-px w-16 bg-text-muted/30" />
@@ -311,13 +311,13 @@ export default function FAQ() {
       >
         {/* Left — section header (sticky on desktop) */}
         <div className="scroll-reveal-child flex flex-col gap-3 lg:w-[360px] shrink-0 lg:sticky lg:top-24 lg:self-start">
-          <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
+          <span className="text-[11px] font-semibold text-text-primary tracking-[2px]">
             FAQ
           </span>
           <h2 className="font-heading text-[28px] md:text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
             Frequently Asked Questions
           </h2>
-          <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed">
+          <p className="text-[11px] md:text-[12px] text-text-secondary leading-relaxed">
             Everything you need to know before your first appointment.
           </p>
         </div>

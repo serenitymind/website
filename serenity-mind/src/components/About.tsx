@@ -29,7 +29,7 @@ export default function About() {
             {/* Desktop CTA — sits under the heading like before */}
             <a
               href="#contact"
-              className="hidden md:inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-text-primary text-white text-[13px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 w-fit hover-bounce"
+              className="hidden md:inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-text-primary text-white text-[11px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 w-fit hover-bounce"
             >
               Get started
               <ArrowRight className="w-3.5 h-3.5" />
@@ -39,7 +39,7 @@ export default function About() {
           {/* Mobile-only CTA — appears at the bottom of the stack (after the description) */}
           <a
             href="#contact"
-            className="md:hidden inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-text-primary text-white text-[13px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 w-fit hover-bounce"
+            className="md:hidden inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-text-primary text-white text-[11px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 w-fit hover-bounce"
           >
             Get started
             <ArrowRight className="w-3.5 h-3.5" />
@@ -61,10 +61,10 @@ export default function About() {
 
           {/* Card 2 — standard size, dark lilac gradient */}
           <div className="rounded-2xl bg-gradient-to-br from-[#4A3560] to-[#5E4480] p-6 md:p-8 flex flex-col gap-3 md:gap-0 md:justify-between min-h-0 md:min-h-[280px] scroll-reveal-child">
-            <h3 className="font-heading text-xl font-semibold text-white">
+            <h3 className="font-heading text-lg font-semibold text-white">
               Flexible schedule & Evening slots
             </h3>
-            <p className="text-sm text-white/60 leading-relaxed">
+            <p className="text-[11px] md:text-[12px] text-white/60 leading-relaxed">
               Virtual appointments across California, including evening
               availability, with minimal wait times to begin care. In-person
               appointments are also available on select days.
@@ -73,10 +73,10 @@ export default function About() {
 
           {/* Card 3 — evidence-based, dark lilac gradient */}
           <div className="rounded-2xl bg-gradient-to-br from-[#4A3560] to-[#5E4480] p-6 md:p-8 flex flex-col gap-3 md:gap-0 md:justify-between min-h-0 md:min-h-[280px] scroll-reveal-child">
-            <h3 className="font-heading text-xl font-semibold text-white">
+            <h3 className="font-heading text-lg font-semibold text-white">
               Evidence-based, compassionate care
             </h3>
-            <p className="text-sm text-white/60 leading-relaxed">
+            <p className="text-[11px] md:text-[12px] text-white/60 leading-relaxed">
               Personalized treatment combining therapy, medication management,
               and family support, guided by the latest evidence-based practices.
             </p>

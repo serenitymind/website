@@ -74,7 +74,7 @@ export default function Header() {
   return (
     <>
     {/* Announcement banner — thin strip above the nav */}
-    <div className="fixed top-0 left-0 right-0 z-50 bg-text-primary text-white text-center text-[12px] py-1.5 font-medium tracking-wide">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-text-primary text-white text-center text-[11px] py-1.5 font-medium tracking-wide">
       Now accepting new patients — <a href="#contact" className="underline underline-offset-2 hover:text-white/80 transition-colors">book a free consultation</a>
     </div>
 
@@ -99,7 +99,7 @@ export default function Header() {
             <a
               key={link.label}
               href={link.href}
-              className={`text-[13px] transition-colors ${
+              className={`text-[11px] transition-colors ${
                 activeHref === link.href
                   ? "font-medium text-text-primary"
                   : "text-text-muted hover:text-text-primary"
@@ -113,7 +113,7 @@ export default function Header() {
         {/* CTA button — pill-shaped black */}
         <a
           href="#contact"
-          className="hidden md:inline-flex items-center px-5 py-1.5 rounded-full bg-text-primary text-white text-[12px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 hover-bounce"
+          className="hidden md:inline-flex items-center px-5 py-1.5 rounded-full bg-text-primary text-white text-[11px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 hover-bounce"
         >
           Book Appointment
         </a>

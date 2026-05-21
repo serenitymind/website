@@ -100,13 +100,13 @@ export default function Contact() {
         {/* Left — form */}
         <div className="flex-1 flex flex-col gap-8 scroll-reveal-child">
           <div className="flex flex-col gap-3">
-            <span className="text-[13px] font-semibold text-text-primary tracking-[2px]">
+            <span className="text-[11px] font-semibold text-text-primary tracking-[2px]">
               GET IN TOUCH
             </span>
             <h2 className="font-heading text-[28px] md:text-[40px] font-bold text-text-primary tracking-tight leading-[1.1]">
               Book Your Free Consultation
             </h2>
-            <p className="text-[15px] md:text-[17px] text-text-secondary leading-relaxed">
+            <p className="text-[11px] md:text-[12px] text-text-secondary leading-relaxed">
               Complete the form below to request a brief consultation and
               discuss whether the practice may be a good fit for your needs.
             </p>
@@ -121,7 +121,7 @@ export default function Contact() {
                   Thanks — your request was sent.
                 </h3>
               </div>
-              <p className="text-[15px] text-text-secondary leading-relaxed">
+              <p className="text-[11px] md:text-[12px] text-text-secondary leading-relaxed">
                 Dr. Chen will follow up by phone or email within 1–2 business
                 days. If you don&apos;t hear back, please call the number on
                 the right.
@@ -129,7 +129,7 @@ export default function Contact() {
               <button
                 type="button"
                 onClick={() => setState("idle")}
-                className="self-start text-[13px] font-medium text-text-primary underline underline-offset-2 hover:text-accent transition-colors"
+                className="self-start text-[11px] font-medium text-text-primary underline underline-offset-2 hover:text-accent transition-colors"
               >
                 Send another message
               </button>
@@ -208,7 +208,7 @@ export default function Contact() {
                   Placed below the message so the form flows: who you are →
                   what you want to say → how to reach you. */}
               <div className="flex flex-col gap-2">
-                <span className="text-[13px] text-text-secondary">
+                <span className="text-[11px] text-text-secondary">
                   Preferred method of contact
                 </span>
                 <div className="grid grid-cols-3 gap-2">
@@ -237,7 +237,7 @@ export default function Contact() {
                   "HIPAA-compliant encryption" line. Honest about what
                   this form is and isn't. Placed above the submit button
                   so users see the no-PHI guidance before sending. */}
-              <p className="text-xs text-text-muted leading-relaxed">
+              <p className="text-[11px] text-text-muted leading-relaxed">
                 This form is for initial contact only. Please do not share
                 specific clinical or health information here — we&apos;ll
                 discuss those securely by phone during your free
@@ -256,7 +256,7 @@ export default function Contact() {
 
               {/* Error message — shown only when submit fails */}
               {state === "error" && errorMsg && (
-                <p className="text-[13px] text-red-600" role="alert">
+                <p className="text-[11px] text-red-600" role="alert">
                   {errorMsg}
                 </p>
               )}
@@ -275,7 +275,7 @@ export default function Contact() {
               {contactInfo.map((item) => (
                 <div key={item.label} className="flex items-start gap-3">
                   <item.icon className="w-5 h-5 text-text-muted mt-0.5 shrink-0" />
-                  <span className="text-[15px] text-text-secondary">
+                  <span className="text-[11px] md:text-[12px] text-text-secondary">
                     {item.label}
                   </span>
                 </div>
@@ -288,7 +288,7 @@ export default function Contact() {
             <h3 className="font-heading text-lg font-semibold mb-3">
               Free Confidential Consultation
             </h3>
-            <p className="text-[15px] text-white/70 leading-relaxed">
+            <p className="text-[11px] md:text-[12px] text-white/70 leading-relaxed">
               Not sure where to start? You can schedule a free 15-minute phone
               consultation to briefly discuss your needs and determine whether
               working together may be a good fit. There is no obligation to

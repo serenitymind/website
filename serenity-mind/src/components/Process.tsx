@@ -59,7 +59,7 @@ export default function Process() {
             flower video — black gets swallowed by the lavender hues. */}
         <div className="relative z-[3] flex items-center justify-center gap-4 mb-20 md:mb-40">
           <div className="h-px w-16 bg-white/40" />
-          <span className="text-[13px] font-semibold text-white tracking-[2px]">
+          <span className="text-[11px] font-semibold text-white tracking-[2px]">
             HOW IT WORKS
           </span>
           <div className="h-px w-16 bg-white/40" />
@@ -85,10 +85,10 @@ export default function Process() {
               <span className="font-heading text-[48px] font-bold text-[#C4B5FD] leading-none">
                 {step.number}
               </span>
-              <h3 className="font-heading text-xl font-semibold text-white">
+              <h3 className="font-heading text-lg font-semibold text-white">
                 {step.title}
               </h3>
-              <p className="text-sm text-white/60 leading-relaxed">
+              <p className="text-[11px] md:text-[12px] text-white/60 leading-relaxed">
                 {step.description}
               </p>
             </div>

@@ -109,7 +109,7 @@ export default function Conditions() {
         {/* mb shrinks on mobile so the absolute h1 doesn't crash into the cards */}
         <div className="relative z-[3] flex items-center justify-center gap-4 mb-20 md:mb-40">
           <div className="h-px w-16 bg-text-muted/30" />
-          <span className="text-[13px] font-semibold text-text-muted tracking-[2px]">
+          <span className="text-[11px] font-semibold text-text-muted tracking-[2px]">
             WHAT WE OFFER
           </span>
           <div className="h-px w-16 bg-text-muted/30" />
@@ -139,7 +139,7 @@ export default function Conditions() {
               <h3 className="font-heading text-lg font-semibold text-text-primary">
                 {item.title}
               </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
+              <p className="text-[11px] md:text-[12px] text-text-secondary leading-relaxed">
                 {item.description}
               </p>
             </div>
@@ -149,7 +149,7 @@ export default function Conditions() {
         {/* Subsection divider — tag between services and conditions */}
         <div className="relative z-[3] flex items-center justify-center gap-4 my-6">
           <div className="h-px flex-1 bg-text-muted/20" />
-          <span className="text-[13px] font-semibold text-text-muted tracking-[2px]">
+          <span className="text-[11px] font-semibold text-text-muted tracking-[2px]">
             CONDITIONS WE TREAT
           </span>
           <div className="h-px flex-1 bg-text-muted/20" />
@@ -165,7 +165,7 @@ export default function Conditions() {
               <h3 className="font-heading text-lg font-semibold text-text-primary">
                 {item.title}
               </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
+              <p className="text-[11px] md:text-[12px] text-text-secondary leading-relaxed">
                 {item.description}
               </p>
             </div>

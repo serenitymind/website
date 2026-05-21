@@ -66,16 +66,16 @@ export default function Testimonials() {
               </div>
 
               {/* Quote */}
-              <p className="text-[15px] text-white/60 leading-relaxed flex-1">
+              <p className="text-[11px] md:text-[12px] text-white/60 leading-relaxed flex-1">
                 &ldquo;{t.quote}&rdquo;
               </p>
 
               {/* Attribution */}
               <div>
-                <p className="text-sm font-semibold text-white">
+                <p className="text-[13px] md:text-[14px] font-semibold text-white">
                   {t.name}
                 </p>
-                <p className="text-xs text-white/30">{t.context}</p>
+                <p className="text-[11px] text-white/30">{t.context}</p>
               </div>
             </div>
           ))}

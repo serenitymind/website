@@ -13,7 +13,7 @@ export default function Hero() {
           {/* Trust badge */}
           <div className="flex items-center gap-1.5 bg-accent-soft px-4 py-1.5 rounded-full w-fit">
             <ShieldCheck className="w-3.5 h-3.5 text-accent" />
-            <span className="text-xs font-medium text-accent">
+            <span className="text-[11px] font-medium text-accent">
               Board-Certified Psychiatrists
             </span>
           </div>

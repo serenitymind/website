@@ -49,10 +49,10 @@ export default function Services() {
               key={service.title}
               className="flex flex-col gap-4 p-8 rounded-2xl bg-black/40 backdrop-blur-md border border-white/[0.08]"
             >
-              <h3 className="font-heading text-xl font-semibold text-white">
+              <h3 className="font-heading text-lg font-semibold text-white">
                 {service.title}
               </h3>
-              <p className="text-sm text-white/50 leading-relaxed">
+              <p className="text-[11px] md:text-[12px] text-white/50 leading-relaxed">
                 {service.description}
               </p>
             </div>

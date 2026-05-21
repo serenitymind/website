@@ -73,7 +73,7 @@ export default function Fees() {
         {/* Tag — small gray uppercase label with horizontal rules */}
         <div className="relative z-[3] flex items-center justify-center gap-4 mb-20 md:mb-40">
           <div className="h-px w-16 bg-text-muted/30" />
-          <span className="text-[13px] font-semibold text-text-muted tracking-[2px]">
+          <span className="text-[11px] font-semibold text-text-muted tracking-[2px]">
             PRACTICE FEES
           </span>
           <div className="h-px w-16 bg-text-muted/30" />
@@ -97,7 +97,7 @@ export default function Fees() {
             lilac text "frosts" through. Capped width keeps it centered. */}
         <div className="relative z-[2] max-w-[800px] mx-auto rounded-2xl bg-white/50 backdrop-blur-md border border-[#C4B5FD]/30 p-6 md:p-10 scroll-reveal-child">
           {/* Subtitle caption — private-pay disclaimer */}
-          <p className="text-[13px] md:text-[14px] text-text-muted mb-6 leading-relaxed">
+          <p className="text-[11px] md:text-[14px] text-text-muted mb-6 leading-relaxed">
             Private-pay practice. Superbills available upon request for
             patients seeking out-of-network reimbursement.
           </p>
@@ -116,10 +116,10 @@ export default function Fees() {
                 }`}
               >
                 <div className="flex flex-col gap-1 min-w-0">
-                  <p className="text-[15px] md:text-[16px] font-medium text-text-primary leading-snug group-hover:animate-[row-title-bounce_0.6s_ease-in-out_infinite]">
+                  <p className="text-[13px] md:text-[14px] font-medium text-text-primary leading-snug group-hover:animate-[row-title-bounce_0.6s_ease-in-out_infinite]">
                     {f.service}
                   </p>
-                  <p className="text-[13px] md:text-[14px] text-text-muted">
+                  <p className="text-[11px] md:text-[14px] text-text-muted">
                     {f.duration}
                   </p>
                 </div>
