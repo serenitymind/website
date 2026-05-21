@@ -332,8 +332,22 @@ export default function ScrollStopHero() {
       const containerTop = container.offsetTop;
       const totalScroll = container.offsetHeight - window.innerHeight;
       const scrollY = window.scrollY;
-      touchInsideHero =
+      const insideRange =
         scrollY >= containerTop - 5 && scrollY <= containerTop + totalScroll + 5;
+
+      /* When the user is at the final snap point (= end of the hero), don't
+         hijack their swipe — they need to be able to scroll natively out
+         into the next page section. The wheel handler already has the
+         equivalent escape because it knows direction from deltaY; touch
+         only gets direction at touchend, by which point we've already
+         preventDefault'd everything. Trade-off: backward snap from the
+         last section is unavailable here — a downward swipe scrolls
+         natively (canvas still scrubs via ScrollTrigger), which is the
+         lesser annoyance vs. being trapped at the end of the hero. */
+      const atFinalSnap =
+        currentSectionRef.current >= SNAP_POINTS.length - 1;
+
+      touchInsideHero = insideRange && !atFinalSnap;
       if (touchInsideHero) {
         touchStartY = e.touches[0].clientY;
       }
