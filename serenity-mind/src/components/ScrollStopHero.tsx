@@ -60,6 +60,13 @@ const FADE_DURATION = 0.04;
 /* 0 = start, midpoints of BP1/BP2, 1.0 = exit hero into Services */
 const SNAP_POINTS = [0, 0.455, 0.815, 1.0];
 
+/* Mobile uses its own /frames-mobile sequence (portrait crop) — different
+   source from desktop's /frames. The second snap point (0.455) lands on a
+   motion-blurred frame in that mobile sequence; nudge it forward so the
+   pause holds on a sharper one. Stays inside BP2's text range (0.33–0.58)
+   so headline visibility is unaffected. */
+const MOBILE_SNAP_POINTS = [0, 0.48, 0.815, 1.0];
+
 export default function ScrollStopHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -204,9 +211,13 @@ export default function ScrollStopHero() {
 
             /* Sync section tracker when not mid-animation */
             if (!cooldownRef.current) {
+              /* Mobile uses a slightly different snap layout — keep section
+                 tracking in lockstep so the dot indicator and snap targets
+                 don't drift apart. */
+              const points = isMobile ? MOBILE_SNAP_POINTS : SNAP_POINTS;
               let nearest = 0;
               let minDist = Infinity;
-              SNAP_POINTS.forEach((p, i) => {
+              points.forEach((p, i) => {
                 const dist = Math.abs(progress - p);
                 if (dist < minDist) { minDist = dist; nearest = i; }
               });
@@ -257,6 +268,11 @@ export default function ScrollStopHero() {
     const container = containerRef.current;
     if (!container) return;
 
+    /* Pick the right snap-point table for this device. Lengths match,
+       so boundary checks are equivalent — only the target positions
+       differ between mobile and desktop. */
+    const snapPoints = isMobile ? MOBILE_SNAP_POINTS : SNAP_POINTS;
+
     /* Shared snap helper — returns true if a snap was triggered,
        false if the gesture should fall through to native scroll
        (i.e. user is past the hero boundaries). */
@@ -272,7 +288,7 @@ export default function ScrollStopHero() {
 
       const nextIndex = currentSectionRef.current + direction;
       /* Past boundaries — let native scroll take over (exit hero) */
-      if (nextIndex < 0 || nextIndex >= SNAP_POINTS.length) return false;
+      if (nextIndex < 0 || nextIndex >= snapPoints.length) return false;
 
       /* Cooldown — we consumed the gesture but don't fire a new tween */
       if (cooldownRef.current) return true;
@@ -281,7 +297,7 @@ export default function ScrollStopHero() {
       cooldownRef.current = true;
 
       const SNAP_DURATION = 0.5;
-      const targetY = containerTop + SNAP_POINTS[nextIndex] * totalScroll;
+      const targetY = containerTop + snapPoints[nextIndex] * totalScroll;
       if (scrollTweenRef.current) scrollTweenRef.current.kill();
 
       scrollTweenRef.current = gsap.to({ y: scrollY }, {
@@ -312,7 +328,7 @@ export default function ScrollStopHero() {
       const scrollY = window.scrollY;
       if (scrollY < containerTop - 5 || scrollY > containerTop + totalScroll + 5) return;
       const peekNext = currentSectionRef.current + direction;
-      if (peekNext < 0 || peekNext >= SNAP_POINTS.length) return;
+      if (peekNext < 0 || peekNext >= snapPoints.length) return;
 
       /* Block native scroll, then attempt snap (no-op if cooling down) */
       e.preventDefault();
@@ -345,7 +361,7 @@ export default function ScrollStopHero() {
          natively (canvas still scrubs via ScrollTrigger), which is the
          lesser annoyance vs. being trapped at the end of the hero. */
       const atFinalSnap =
-        currentSectionRef.current >= SNAP_POINTS.length - 1;
+        currentSectionRef.current >= snapPoints.length - 1;
 
       touchInsideHero = insideRange && !atFinalSnap;
       if (touchInsideHero) {
@@ -436,7 +452,7 @@ export default function ScrollStopHero() {
                   {bp.headline}
                 </h1>
                 {/* Subline — narrower max-w on mobile so it doesn't stretch edge-to-edge */}
-                <p className="text-[14px] md:text-lg text-text-secondary leading-relaxed max-w-[280px] md:max-w-[580px] text-center whitespace-pre-line">
+                <p className="text-[14px] md:text-lg text-text-secondary leading-relaxed max-w-[340px] md:max-w-[580px] text-center whitespace-pre-line">
                   {bp.subline}
                 </p>
                 {bp.showCTA && (
