@@ -38,7 +38,7 @@ const BREAKPOINTS = [
   {
     start: 0.33,
     end: 0.58,
-    headline: "Holistic, Individualized Care\nfor Every Stage of Life",
+    headline: "Holistic, Personal Care\nfor Every Stage of Life",
     subline: "Experienced in treating: anxiety, depression, ADHD, PTSD, trauma, and more",
     showCTA: false,
   },
