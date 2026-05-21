@@ -16,7 +16,7 @@ const navLinks = [
   { label: "Meet the Doctor", href: "#about" },
   { label: "Expertise", href: "#expertise" },
   { label: "How It Works", href: "#process" },
-  { label: "Fees", href: "#fees" },
+  { label: "Pricing", href: "#pricing" },
   { label: "FAQ", href: "#faq" },
 ];
 

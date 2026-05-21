@@ -65,7 +65,7 @@ export default function Fees() {
   }, []);
 
   return (
-    <section id="fees" className="bg-bg-secondary overflow-hidden scroll-mt-[88px] md:scroll-mt-0">
+    <section id="pricing" className="bg-bg-secondary overflow-hidden scroll-mt-[88px] md:scroll-mt-0">
       <div
         ref={revealRef}
         className="scroll-reveal max-w-[1440px] mx-auto relative px-5 md:px-16 pt-12 md:pt-16 pb-16 md:pb-24"
@@ -74,7 +74,7 @@ export default function Fees() {
         <div className="relative z-[3] flex items-center justify-center gap-4 mb-20 md:mb-40">
           <div className="h-px w-16 bg-text-muted/30" />
           <span className="text-[11px] font-semibold text-text-muted tracking-[2px]">
-            PRACTICE FEES
+            PRACTICE PRICING
           </span>
           <div className="h-px w-16 bg-text-muted/30" />
         </div>
@@ -90,7 +90,7 @@ export default function Fees() {
           }}
           className="absolute left-1/2 -translate-x-1/2 top-[60px] md:top-[100px] font-heading text-[clamp(72px,16vw,260px)] font-bold whitespace-nowrap select-none pointer-events-none z-[1] leading-none tracking-normal bg-clip-text text-transparent"
         >
-          Fees
+          Pricing
         </h1>
 
         {/* Pricing container — z-[2] over the h1, with backdrop-blur so the

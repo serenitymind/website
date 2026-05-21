@@ -118,10 +118,10 @@ const faqSections = [
             Fees vary based on appointment type and duration. A detailed fee
             schedule is available in the{" "}
             <a
-              href="#fees"
+              href="#pricing"
               className="underline underline-offset-2 text-text-primary hover:text-accent transition-colors"
             >
-              Fees section
+              Pricing section
             </a>{" "}
             above.
           </p>
