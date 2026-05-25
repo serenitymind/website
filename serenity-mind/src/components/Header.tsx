@@ -115,7 +115,7 @@ export default function Header() {
           href="#contact"
           className="hidden md:inline-flex items-center px-5 py-1.5 rounded-full bg-text-primary text-white text-[11px] font-medium hover-purple hover:shadow-[0_8px_25px_rgba(124,58,237,0.4)] transition-all duration-200 hover-bounce"
         >
-          Book Appointment
+          Contact Office
         </a>
 
         {/* Mobile hamburger button — visible below md breakpoint */}
@@ -159,7 +159,7 @@ export default function Header() {
             onClick={() => setMobileOpen(false)}
             className="mt-2 inline-flex items-center justify-center px-5 py-3 rounded-full bg-text-primary text-white text-[14px] font-medium"
           >
-            Book Appointment
+            Contact Office
           </a>
         </nav>
       </div>

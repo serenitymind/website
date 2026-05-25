@@ -11,11 +11,14 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 /* Credentials shown as badges below the bio */
 const credentials = [
   "Board Certified Psychiatrist",
-  "Adult & Adolescent Care",
-  "TFCBT Certified",
+  "Child & Adolescent Psych",
+  "Reproductive Psychiatry",
+  "College Mental Health",
+  "Family-Focused Therapy",
+  "Qualified Medical Evaluator (QME)",
+  "TF-CBT Certified",
   "BCBA Certified",
-  "QME Certified",
-  "Telehealth Available",
+  "Telehealth",
 ];
 
 export default function DoctorBio() {

@@ -38,8 +38,8 @@ const BREAKPOINTS = [
   {
     start: 0.33,
     end: 0.58,
-    headline: "Holistic, Personal Care\nfor Every Stage of Life",
-    subline: "Experienced in treating: anxiety, depression, ADHD, PTSD, trauma, and more",
+    headline: "Holistic, individualized psychiatric care\nacross the lifespan",
+    subline: "Anxiety, depression, ADHD, PTSD, trauma, and related conditions",
     showCTA: false,
   },
   {
@@ -447,7 +447,7 @@ export default function ScrollStopHero() {
             style={{ opacity: i === 0 ? 1 : 0 }}
           >
             <div className="flex flex-col items-center w-full px-10 md:px-0">
-              <div className="max-w-[720px] flex flex-col gap-4 md:gap-5 items-center text-center">
+              <div className="max-w-[720px] lg:max-w-[1100px] flex flex-col gap-4 md:gap-5 items-center text-center">
                 <h1 className="font-heading text-[32px] md:text-[44px] lg:text-[52px] font-bold text-text-primary leading-[1.1] tracking-[-1px] md:tracking-[-1.5px] whitespace-pre-line text-center">
                   {bp.headline}
                 </h1>

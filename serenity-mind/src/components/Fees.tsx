@@ -10,12 +10,25 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
  * single backdrop-blur container that overlaps the giant text.
  */
 
-/* Fee schedule — service name, duration, and price */
-const fees = [
+/* Fee schedule — service name, duration, and price.
+   A row is either a simple {duration, fee} OR a grouped row with a `tiers`
+   array of {duration, fee} sub-entries (used to consolidate multiple
+   variants of the same service under one heading, e.g. Follow-Up Visits). */
+type FeeRow = {
+  service: string;
+  duration?: string;
+  fee?: string;
+  tiers?: { duration: string; fee: string }[];
+};
+
+const fees: FeeRow[] = [
   {
+    /* Grouped row — split the 60–90 min range into two tiered sub-entries */
     service: "Initial Psychiatric Evaluation (Adult)",
-    duration: "60–90 min",
-    fee: "$650–850",
+    tiers: [
+      { duration: "60 min", fee: "$650" },
+      { duration: "90 min", fee: "$850" },
+    ],
   },
   {
     service: "Child & Adolescent Comprehensive Evaluation",
@@ -23,19 +36,13 @@ const fees = [
     fee: "$1,300",
   },
   {
-    service: "Follow-Up Med Management",
-    duration: "30 min",
-    fee: "$300",
-  },
-  {
-    service: "Follow-Up Med Management",
-    duration: "45 min",
-    fee: "$425",
-  },
-  {
-    service: "Extended Follow-Up — Psychotherapy + Med Management",
-    duration: "60 min",
-    fee: "$550",
+    /* Grouped row — three follow-up variants stacked under one service heading */
+    service: "Follow-Up Visits",
+    tiers: [
+      { duration: "30 min", fee: "$300" },
+      { duration: "45 min", fee: "$425" },
+      { duration: "60 min (therapy + medication management)", fee: "$550" },
+    ],
   },
   {
     service: "Family Therapy / Parent Guidance (complex cases)",
@@ -110,22 +117,50 @@ export default function Fees() {
           <div className="flex flex-col">
             {fees.map((f, i) => (
               <div
-                key={`${f.service}-${f.duration}`}
-                className={`group flex items-center justify-between gap-6 py-4 md:py-5 px-2 -mx-2 rounded-lg transition-all duration-300 hover:border-[#A78BFA]/70 hover:shadow-[inset_0_-16px_24px_-12px_rgba(167,139,250,0.35)] ${
+                key={`${f.service}-${f.duration ?? "grouped"}`}
+                className={`group py-4 md:py-5 px-2 -mx-2 rounded-lg transition-all duration-300 hover:border-[#A78BFA]/70 hover:shadow-[inset_0_-16px_24px_-12px_rgba(167,139,250,0.35)] ${
                   i < fees.length - 1 ? "border-b border-[#C4B5FD]/30" : ""
                 }`}
               >
-                <div className="flex flex-col gap-1 min-w-0">
-                  <p className="text-[13px] md:text-[14px] font-medium text-text-primary leading-snug group-hover:animate-[row-title-bounce_0.6s_ease-in-out_infinite]">
-                    {f.service}
-                  </p>
-                  <p className="text-[11px] md:text-[14px] text-text-muted">
-                    {f.duration}
-                  </p>
-                </div>
-                <p className="font-heading text-[18px] md:text-[20px] font-bold text-text-primary whitespace-nowrap">
-                  {f.fee}
-                </p>
+                {f.tiers ? (
+                  /* Grouped row — service heading on its own line, then
+                     each tier's duration/fee aligned in a sub-row below. */
+                  <div className="flex flex-col gap-2">
+                    <p className="text-[13px] md:text-[14px] font-medium text-text-primary leading-snug group-hover:animate-[row-title-bounce_0.6s_ease-in-out_infinite]">
+                      {f.service}
+                    </p>
+                    <div className="flex flex-col gap-1.5 pl-3 border-l-2 border-[#C4B5FD]/40">
+                      {f.tiers.map((t) => (
+                        <div
+                          key={t.duration}
+                          className="flex items-center justify-between gap-4"
+                        >
+                          <p className="text-[11px] md:text-[14px] text-text-muted">
+                            {t.duration}
+                          </p>
+                          <p className="font-heading text-[15px] md:text-[17px] font-bold text-text-primary whitespace-nowrap">
+                            {t.fee}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  /* Simple row — original side-by-side layout */
+                  <div className="flex items-center justify-between gap-6">
+                    <div className="flex flex-col gap-1 min-w-0">
+                      <p className="text-[13px] md:text-[14px] font-medium text-text-primary leading-snug group-hover:animate-[row-title-bounce_0.6s_ease-in-out_infinite]">
+                        {f.service}
+                      </p>
+                      <p className="text-[11px] md:text-[14px] text-text-muted">
+                        {f.duration}
+                      </p>
+                    </div>
+                    <p className="font-heading text-[18px] md:text-[20px] font-bold text-text-primary whitespace-nowrap">
+                      {f.fee}
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
           </div>

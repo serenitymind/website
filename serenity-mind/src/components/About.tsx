@@ -81,6 +81,44 @@ export default function About() {
               and family support, guided by the latest evidence-based practices.
             </p>
           </div>
+
+          {/* === Row 2 — office images + wider content card ===
+              Mirrors row 1 visually: row 1 has wide IMAGE on the left and
+              smaller cards on the right; row 2 inverts to small IMAGES on
+              the left and a wide content CARD on the right. */}
+
+          {/* Office image 1 — standard 1-col card */}
+          <div className="rounded-2xl overflow-hidden min-h-[280px] relative scroll-reveal-child">
+            <img
+              src="/office-1.jpeg"
+              alt="Serenity Mind office interior"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Office image 2 — standard 1-col card */}
+          <div className="rounded-2xl overflow-hidden min-h-[280px] relative scroll-reveal-child">
+            <img
+              src="/office-2.jpeg"
+              alt="Serenity Mind office waiting area"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Featured content card — spans 2 columns to balance row 1's wide image.
+              Uses the same dark lilac gradient as the other content cards so the
+              section reads as one cohesive grid rather than two separate rows. */}
+          <div className="lg:col-span-2 rounded-2xl bg-gradient-to-br from-[#4A3560] to-[#5E4480] p-6 md:p-10 flex flex-col gap-3 md:gap-0 md:justify-between min-h-0 md:min-h-[280px] scroll-reveal-child">
+            <h3 className="font-heading text-lg md:text-2xl font-semibold text-white">
+              A calming in-person space
+            </h3>
+            <p className="text-[11px] md:text-[13px] text-white/60 leading-relaxed max-w-[520px]">
+              When face-to-face care is the right fit, our office offers a
+              quiet, private setting for evaluations, family sessions, and
+              continuing visits — designed so every patient feels at ease from
+              the moment they walk in.
+            </p>
+          </div>
         </div>
       </div>
     </section>
