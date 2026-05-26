@@ -23,12 +23,9 @@ type FeeRow = {
 
 const fees: FeeRow[] = [
   {
-    /* Grouped row — split the 60–90 min range into two tiered sub-entries */
     service: "Initial Psychiatric Evaluation (Adult)",
-    tiers: [
-      { duration: "60 min", fee: "$650" },
-      { duration: "90 min", fee: "$850" },
-    ],
+    duration: "60–90 min",
+    fee: "$650–850",
   },
   {
     service: "Child & Adolescent Comprehensive Evaluation",
@@ -118,7 +115,10 @@ export default function Fees() {
             {fees.map((f, i) => (
               <div
                 key={`${f.service}-${f.duration ?? "grouped"}`}
-                className={`group py-4 md:py-5 px-2 -mx-2 rounded-lg transition-all duration-300 hover:border-[#A78BFA]/70 hover:shadow-[inset_0_-16px_24px_-12px_rgba(167,139,250,0.35)] ${
+                /* Tight rows — let each one shrink to its natural content
+                   height. The grouped Follow-Up row will be visibly taller
+                   because it has more content; that's the desired hierarchy. */
+                className={`group py-2 md:py-2.5 px-2 -mx-2 rounded-lg transition-all duration-300 hover:border-[#A78BFA]/70 hover:shadow-[inset_0_-16px_24px_-12px_rgba(167,139,250,0.35)] ${
                   i < fees.length - 1 ? "border-b border-[#C4B5FD]/30" : ""
                 }`}
               >
@@ -138,7 +138,7 @@ export default function Fees() {
                           <p className="text-[11px] md:text-[14px] text-text-muted">
                             {t.duration}
                           </p>
-                          <p className="font-heading text-[15px] md:text-[17px] font-bold text-text-primary whitespace-nowrap">
+                          <p className="font-heading text-[18px] md:text-[20px] font-bold text-text-primary whitespace-nowrap">
                             {t.fee}
                           </p>
                         </div>

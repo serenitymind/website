@@ -36,6 +36,7 @@ const initialForm = {
   lastName: "",
   email: "",
   phone: "",
+  referredBy: "", /* optional — provider name if referred by another clinician */
   contactMethod: "phone", /* default matches the i===0 selection */
   message: "",
   website: "", /* honeypot — must stay empty for real users */
@@ -193,9 +194,22 @@ export default function Contact() {
                 className={inputCls}
               />
 
+              {/* Optional referral field — name of the referring provider
+                  if the visitor was referred. Helps Dr. Chen close the loop
+                  with the referring clinician when relevant. */}
+              <input
+                type="text"
+                name="referredBy"
+                placeholder="Referred by (optional) — name of provider"
+                value={form.referredBy}
+                onChange={onChange}
+                maxLength={120}
+                className={inputCls}
+              />
+
               <textarea
                 name="message"
-                placeholder="Optional — scheduling preferences or general questions. Please do NOT include specific clinical or health details; we'll discuss those by phone."
+                placeholder="Optional — scheduling preferences or general questions."
                 value={form.message}
                 onChange={onChange}
                 rows={4}

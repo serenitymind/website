@@ -38,6 +38,8 @@ export async function POST(req: NextRequest) {
       lastName = "",
       email = "",
       phone = "",
+      /* Optional — name of the referring provider, if any */
+      referredBy = "",
       contactMethod = "",
       message = "",
       /* Honeypot — real users never fill this hidden field.
@@ -71,6 +73,8 @@ export async function POST(req: NextRequest) {
     if (fName.length > 100 || String(lastName).length > 100 || phn.length > 40) {
       return NextResponse.json({ error: "Field too long." }, { status: 400 });
     }
+    /* Optional referral — trimmed and hard-capped at 120 chars */
+    const referral = String(referredBy).trim().slice(0, 120);
     const note = String(message).slice(0, 1000); /* hard cap any message */
 
     /* Resolve env config */
@@ -110,6 +114,7 @@ export async function POST(req: NextRequest) {
       `Email:              ${mail}`,
       `Phone:              ${phn}`,
       `Preferred contact:  ${method || "(not specified)"}`,
+      `Referred by:        ${referral || "(not provided)"}`,
       "",
       note ? `Note:\n${note}` : "(no note provided)",
       "",

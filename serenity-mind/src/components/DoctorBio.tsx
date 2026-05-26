@@ -13,12 +13,10 @@ const credentials = [
   "Board Certified Psychiatrist",
   "Child & Adolescent Psych",
   "Reproductive Psychiatry",
-  "College Mental Health",
   "Family-Focused Therapy",
   "Qualified Medical Evaluator (QME)",
   "TF-CBT Certified",
   "BCBA Certified",
-  "Telehealth",
 ];
 
 export default function DoctorBio() {

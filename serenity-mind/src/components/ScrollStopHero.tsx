@@ -9,18 +9,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* ============================================
    FRAME CONFIG
-   Total frames extracted from the video.
-   Desktop frames: /public/frames/frame-XXXX.jpg     (1440x810 landscape)
-   Mobile frames:  /public/frames-mobile/frame-XXXX.jpg (720x1220 portrait)
-   Mobile uses its own sequence so the canvas-scrub mechanic that's smooth
-   on desktop also works on mobile — without the seek-lag a <video> element
-   suffers from when currentTime is written 60×/sec.
+   Both desktop and mobile load from /public/frames/ (1440x810 landscape).
+   On mobile we used to have a separate /public/frames-mobile/ portrait
+   sequence, but the landscape frames give a much richer horizontal pan
+   range on mobile (the canvas naturally overshoots the portrait viewport
+   by hundreds of pixels, no zoom required). The portrait frames are kept
+   on disk in case we want to switch back.
    ============================================ */
 const TOTAL_FRAMES = 192;
 
-/* Pad frame number to 4 digits and pick the right folder for the device */
-const getFramePath = (i: number, mobile: boolean) =>
-  `/${mobile ? "frames-mobile" : "frames"}/frame-${String(i).padStart(4, "0")}.jpg`;
+/* Pad frame number to 4 digits — same source folder for desktop and mobile */
+const getFramePath = (i: number) =>
+  `/frames/frame-${String(i).padStart(4, "0")}.jpg`;
 
 /* ============================================
    BREAKPOINTS CONFIG — EDIT THESE
@@ -60,12 +60,34 @@ const FADE_DURATION = 0.04;
 /* 0 = start, midpoints of BP1/BP2, 1.0 = exit hero into Services */
 const SNAP_POINTS = [0, 0.455, 0.815, 1.0];
 
-/* Mobile uses its own /frames-mobile sequence (portrait crop) — different
-   source from desktop's /frames. The second snap point (0.455) lands on a
-   motion-blurred frame in that mobile sequence; nudge it forward so the
-   pause holds on a sharper one. Stays inside BP2's text range (0.33–0.58)
-   so headline visibility is unaffected. */
+/* Mobile uses a slightly nudged second snap point to land on a sharper
+   frame for the BP2 pause. Stays inside BP2's text range (0.33–0.58) so
+   headline visibility is unaffected. */
 const MOBILE_SNAP_POINTS = [0, 0.48, 0.815, 1.0];
+
+/* ============================================
+   MOBILE HORIZONTAL PAN — right→left traversal
+   At progress=0 the canvas's RIGHT edge is flush with the viewport's
+   right edge (doctor side visible). At progress=1 the canvas's LEFT
+   edge is flush with the viewport's left edge (patient side visible).
+
+   Because the source frames are landscape (1440×810 → 1440×760 after
+   watermark crop, aspect ~1.89), height-fitting them to a portrait
+   mobile viewport produces a canvas that's ~2× viewport width — plenty
+   of natural horizontal overshoot. No zoom needed.
+
+   Why transform instead of object-position? object-position is flaky on
+   <canvas> in practice — Chrome won't always repaint when it changes
+   dynamically. transform always works.
+
+   MOBILE_PAN_ZOOM:
+   - 1.0 (default) = canvas at natural height-fit, no vertical cropping
+     beyond the source aspect. Pan range = full overshoot (~1100px on
+     a typical mobile viewport).
+   - >1.0 zooms in vertically, increasing horizontal overshoot at the
+     cost of cropping the top/bottom of the source.
+   ============================================ */
+const MOBILE_PAN_ZOOM = 1.0;
 
 export default function ScrollStopHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -92,9 +114,16 @@ export default function ScrollStopHero() {
   const scrollTweenRef = useRef<gsap.core.Tween | null>(null);
   const cooldownRef = useRef(false);
 
-  /* Detect mobile after mount (matchMedia is window-only) */
+  /* Detect mobile after mount. We treat the canvas as "mobile" if EITHER
+     the primary pointer is coarse (real touch device) OR the viewport is
+     narrow (≤767px). The viewport check is important because devs often
+     test mobile by resizing a desktop browser window — in that case
+     `pointer: coarse` is false (mouse), but the layout is still mobile
+     and we want the mobile pan behavior to engage. */
   useEffect(() => {
-    setIsMobile(window.matchMedia("(pointer: coarse)").matches);
+    const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+    const isNarrow = window.matchMedia("(max-width: 767px)").matches;
+    setIsMobile(isCoarse || isNarrow);
   }, []);
 
   const setActiveDot = useCallback((idx: number) => {
@@ -105,9 +134,9 @@ export default function ScrollStopHero() {
   }, []);
 
   /* ============================================
-     STEP 1: Preload the right frame sequence on mount
-     Desktop pulls from /frames/, mobile pulls from /frames-mobile/.
-     Same count (192), same code path — only the source folder differs.
+     STEP 1: Preload the frame sequence on mount.
+     Desktop and mobile both pull from /frames/ now — same 192 landscape
+     JPGs. The mobile experience differs in layout/pan, not in source.
      ============================================ */
   useEffect(() => {
     /* Wait until mobile detection has resolved (avoids loading the wrong
@@ -119,7 +148,7 @@ export default function ScrollStopHero() {
 
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = getFramePath(i, isMobile);
+      img.src = getFramePath(i);
       img.onload = () => {
         loadedCount++;
         /* Update progress every 10 frames to avoid excessive re-renders */
@@ -159,16 +188,59 @@ export default function ScrollStopHero() {
     if (!ctx) return;
 
     /* Set canvas size from the first frame's natural dimensions.
-       Desktop frames carry a Veo watermark in the bottom 50px that we crop
-       off here. Mobile frames are already cropped during ffmpeg extraction
-       (the watermark is gone from the source JPGs), so no canvas-side crop. */
+       Frames carry a Veo watermark in the bottom 50px that we crop off here.
+       Same handling for desktop and mobile since both load /frames/ now. */
     const firstImg = imagesRef.current[0];
-    const WATERMARK_CROP = isMobile ? 0 : 50;
+    const WATERMARK_CROP = 50;
     canvas.width = firstImg.naturalWidth;
     canvas.height = firstImg.naturalHeight - WATERMARK_CROP;
 
     /* Draw the first frame immediately so the canvas isn't blank on mount */
     ctx.drawImage(firstImg, 0, 0);
+
+    /* ============================================
+       Mobile sizing + initial pan
+       Compute canvas display size from the parent's height so the canvas
+       physically overshoots the viewport horizontally. Apply centered
+       transform on first paint, and re-run on window resize (handles
+       phone rotation). Desktop is untouched — Tailwind handles its sizing.
+       ============================================ */
+    let resizeHandler: (() => void) | null = null;
+    if (isMobile) {
+      const layoutCanvas = () => {
+        const parentEl = canvas.parentElement;
+        if (!parentEl) return;
+        const parentH = parentEl.offsetHeight;
+        const parentW = parentEl.offsetWidth;
+        /* Display height = parentH × ZOOM, display width follows the source
+           aspect ratio (read from the canvas drawing buffer — 1440×760 for
+           landscape frames after the watermark crop, which gives a width of
+           ~2× the parent height). The wider-than-viewport overshoot is what
+           we pan through horizontally. */
+        const sourceAspect = canvas.width / canvas.height;
+        const displayH = parentH * MOBILE_PAN_ZOOM;
+        const displayW = displayH * sourceAspect;
+        canvas.style.height = `${displayH}px`;
+        canvas.style.width = `${displayW}px`;
+        /* Vertically center: shift canvas up by half the vertical overshoot */
+        canvas.style.top = `${-(displayH - parentH) / 2}px`;
+        canvas.style.left = "0px";
+        /* Horizontal start position = RIGHT edge of canvas aligned with
+           viewport right edge → translateX = -(canvasW - viewportW).
+           That's the progress=0 starting state (doctor side). */
+        const overhang = displayW - parentW;
+        if (overhang > 0) {
+          canvas.style.transform = `translateX(${-overhang}px)`;
+        } else {
+          canvas.style.transform = "translateX(0px)";
+        }
+      };
+      /* First layout pass after the canvas mounts. rAF ensures the parent
+         has its final dimensions before we measure. */
+      requestAnimationFrame(layoutCanvas);
+      resizeHandler = layoutCanvas;
+      window.addEventListener("resize", resizeHandler);
+    }
 
     /* Track current frame to avoid redundant draws */
     let currentFrame = 0;
@@ -208,6 +280,29 @@ export default function ScrollStopHero() {
 
             /* Drive whichever medium is active (canvas frames or video) */
             updateMedia(progress);
+
+            /* Mobile-only: extreme right→left horizontal pan.
+               Canvas is sized larger than viewport (see layoutCanvas).
+               At progress=0 the canvas's RIGHT edge is aligned with the
+               viewport's right edge (translateX = -overhang, showing
+               the right side / doctor). At progress=1 the canvas's
+               LEFT edge is aligned with the viewport's left edge
+               (translateX = 0, showing the left side / patient).
+               Since the snap tween animates scroll with a power2.out
+               ease, this lerp inherits that easing for free — pan,
+               frame scrub and text fades all stay in lockstep. */
+            if (isMobile) {
+              const parentEl = canvas.parentElement;
+              const viewportW = parentEl ? parentEl.offsetWidth : 0;
+              const canvasW = canvas.offsetWidth;
+              const overhang = canvasW - viewportW;
+              if (overhang > 0) {
+                /* Lerp: progress=0 → -overhang (right-aligned)
+                          progress=1 → 0          (left-aligned) */
+                const tx = -overhang * (1 - progress);
+                canvas.style.transform = `translateX(${tx}px)`;
+              }
+            }
 
             /* Sync section tracker when not mid-animation */
             if (!cooldownRef.current) {
@@ -254,7 +349,12 @@ export default function ScrollStopHero() {
       });
     }, container);
 
-    return () => gsapCtx.revert();
+    return () => {
+      gsapCtx.revert();
+      /* Clean up the mobile resize listener so it doesn't leak when the
+         component remounts (e.g. fast-refresh in dev, or route change). */
+      if (resizeHandler) window.removeEventListener("resize", resizeHandler);
+    };
   }, [loaded, isMobile, setActiveDot]);
 
   /* ============================================
@@ -411,10 +511,19 @@ export default function ScrollStopHero() {
             and mobile. We gate on `isMobile !== null` so the canvas only
             mounts after we've decided which frame folder to preload from —
             that avoids a flash of the wrong-aspect frame on first paint. */}
+        {/* Canvas — desktop uses object-cover to fit the viewport. Mobile
+            sets explicit pixel width/height in JS (avoids CSS aspect-ratio
+            quirks on <canvas>) so the element physically overshoots the
+            viewport horizontally; JS then translates it to pan. The sticky
+            parent's overflow-hidden clips the overshoot. */}
         {isMobile !== null && (
           <canvas
             ref={canvasRef}
-            className="absolute inset-0 w-full h-full object-cover object-center z-0"
+            className={
+              isMobile
+                ? "absolute top-0 left-0 z-0 will-change-transform"
+                : "absolute inset-0 w-full h-full object-cover object-center z-0"
+            }
           />
         )}
 
