@@ -86,8 +86,24 @@ const MOBILE_SNAP_POINTS = [0, 0.48, 0.815, 1.0];
      a typical mobile viewport).
    - >1.0 zooms in vertically, increasing horizontal overshoot at the
      cost of cropping the top/bottom of the source.
+
+   MOBILE_PAN_START / MOBILE_PAN_MIDDLE / MOBILE_PAN_END:
+   Where the visible window sits at the three mobile snap points.
+   Values are FRACTIONS of the canvas's natural overhang, where:
+     1.0 = canvas's RIGHT edge flush with viewport's right edge (rightmost view)
+     0.5 = canvas centered on viewport
+     0.0 = canvas's LEFT edge flush with viewport's left edge (leftmost view)
+   The pan does a piecewise lerp: START → MIDDLE between scroll progress
+   0 and MOBILE_SNAP_POINTS[1] (the BP2 snap), then MIDDLE → END between
+   that point and 1.0. So if you set START=0.5, MIDDLE=0.25, END=0.5 the
+   image starts centered, dips left during BP2, then returns to center.
+   Values outside 0..1 are allowed but will push the canvas past the
+   viewport edge (you'll see the background bleed through).
    ============================================ */
 const MOBILE_PAN_ZOOM = 1.0;
+const MOBILE_PAN_START = 0.85; /* fraction at BP1 (progress=0)    */
+const MOBILE_PAN_MIDDLE = 0.75;/* fraction at BP2 snap point      */
+const MOBILE_PAN_END = 0.5;    /* fraction at BP3 (progress=1)    */
 
 export default function ScrollStopHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -225,12 +241,12 @@ export default function ScrollStopHero() {
         /* Vertically center: shift canvas up by half the vertical overshoot */
         canvas.style.top = `${-(displayH - parentH) / 2}px`;
         canvas.style.left = "0px";
-        /* Horizontal start position = RIGHT edge of canvas aligned with
-           viewport right edge → translateX = -(canvasW - viewportW).
-           That's the progress=0 starting state (doctor side). */
+        /* Horizontal start position based on MOBILE_PAN_START (fraction of
+           overhang). 1.0 = full right-edge view (translateX = -overhang),
+           0.0 = full left-edge view (translateX = 0). */
         const overhang = displayW - parentW;
         if (overhang > 0) {
-          canvas.style.transform = `translateX(${-overhang}px)`;
+          canvas.style.transform = `translateX(${-overhang * MOBILE_PAN_START}px)`;
         } else {
           canvas.style.transform = "translateX(0px)";
         }
@@ -297,9 +313,21 @@ export default function ScrollStopHero() {
               const canvasW = canvas.offsetWidth;
               const overhang = canvasW - viewportW;
               if (overhang > 0) {
-                /* Lerp: progress=0 → -overhang (right-aligned)
-                          progress=1 → 0          (left-aligned) */
-                const tx = -overhang * (1 - progress);
+                /* Piecewise lerp: START → MIDDLE on the first leg
+                   (progress 0 → BP2 snap), then MIDDLE → END on the
+                   second leg (BP2 snap → 1.0). Anchoring MIDDLE to the
+                   actual snap point means the dip settles exactly when
+                   the user pauses on BP2. */
+                const middleAt = MOBILE_SNAP_POINTS[1];
+                let panFraction: number;
+                if (progress <= middleAt) {
+                  const t = middleAt > 0 ? progress / middleAt : 0;
+                  panFraction = MOBILE_PAN_START + (MOBILE_PAN_MIDDLE - MOBILE_PAN_START) * t;
+                } else {
+                  const t = (progress - middleAt) / (1 - middleAt);
+                  panFraction = MOBILE_PAN_MIDDLE + (MOBILE_PAN_END - MOBILE_PAN_MIDDLE) * t;
+                }
+                const tx = -overhang * panFraction;
                 canvas.style.transform = `translateX(${tx}px)`;
               }
             }
