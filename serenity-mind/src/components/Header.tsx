@@ -80,7 +80,9 @@ export default function Header() {
 
     {/* Fixed header — sits below the announcement banner */}
     <header className="fixed top-[28px] left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-border">
-      <div className="flex items-center justify-between px-4 md:px-8 py-2.5">
+      {/* relative so the centered nav (absolute-positioned below) anchors
+          to this container regardless of how wide the logo or CTA become. */}
+      <div className="relative flex items-center justify-between px-4 md:px-8 py-2.5">
         {/* Logo — brain icon + name */}
         <Link href="/" className="flex items-center gap-2">
           <Brain className="w-5 h-5 text-text-primary" />
@@ -93,8 +95,10 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Navigation links — active link shown in bold black */}
-        <nav className="hidden md:flex items-center gap-6">
+        {/* Navigation links — active link shown in bold black.
+            Absolutely centered so it sits at the page midline rather than
+            being pushed off-center by the asymmetric logo/CTA widths. */}
+        <nav className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => (
             <a
               key={link.label}
