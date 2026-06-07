@@ -15,8 +15,9 @@ const navLinks = [
   { label: "Home", href: "#" },
   { label: "Meet the Doctor", href: "#about" },
   { label: "Expertise", href: "#expertise" },
-  { label: "How It Works", href: "#process" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Journey", href: "#process" },
+  /* "Pricing" nav link intentionally removed — pricing now lives as a subtle
+     dropdown inside Expertise, so we don't draw attention to cost up front. */
   { label: "FAQ", href: "#faq" },
 ];
 

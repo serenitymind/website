@@ -5,7 +5,6 @@ import Conditions from "@/components/Conditions";
 import Process from "@/components/Process";
 import DoctorBio from "@/components/DoctorBio";
 import Accolades from "@/components/Accolades";
-import Fees from "@/components/Fees";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -18,11 +17,11 @@ import Footer from "@/components/Footer";
  * 2. Doctor Bio — face + trust early
  * 3. About / Why Us — differentiator
  * 4. Expertise (services + conditions merged) — what we offer + treat
+ *    (pricing tucked here as a subtle, collapsed-by-default dropdown)
  * 5. How It Works — reduce anxiety with clear steps
- * 6. Fees — transparent pricing before FAQ
- * 7. FAQ — objection handling
- * 8. Contact — convert
- * 9. Footer
+ * 6. FAQ — objection handling
+ * 7. Contact — convert
+ * 8. Footer
  */
 export default function Home() {
   return (
@@ -48,8 +47,9 @@ export default function Home() {
       {/* How to get started — reduces friction */}
       <Process />
 
-      {/* Practice fee schedule — transparent pricing before objections */}
-      <Fees />
+      {/* Note: pricing now lives as a subtle collapsible dropdown inside the
+          Expertise section (Conditions.tsx), not its own section — so cost
+          doesn't greet visitors up front. */}
 
       {/* Frequently asked questions — handle objections */}
       <FAQ />

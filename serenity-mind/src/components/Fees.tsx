@@ -33,16 +33,20 @@ const fees: FeeRow[] = [
     fee: "$1,300",
   },
   {
-    /* Grouped row — three follow-up variants stacked under one service heading */
-    service: "Follow-Up Visits",
-    tiers: [
-      { duration: "30 min", fee: "$300" },
-      { duration: "45 min", fee: "$425" },
-      { duration: "60 min (therapy + medication management)", fee: "$550" },
-    ],
+    /* Standard medication-management follow-up */
+    service: "Follow-Up Medication Management",
+    duration: "25 min",
+    fee: "$300",
   },
   {
-    service: "Family Therapy / Parent Guidance (complex cases)",
+    /* Longer combined therapy + medication-management follow-up */
+    service:
+      "Extended Follow-Up Visit (Individual Therapy / Medication Management + Therapy)",
+    duration: "50 min",
+    fee: "$450",
+  },
+  {
+    service: "Family Therapy / Parent Guidance",
     duration: "60 min",
     fee: "$550",
   },
@@ -138,7 +142,7 @@ export default function Fees() {
                           <p className="text-[11px] md:text-[14px] text-text-muted">
                             {t.duration}
                           </p>
-                          <p className="font-heading text-[18px] md:text-[20px] font-bold text-text-primary whitespace-nowrap">
+                          <p className="font-heading text-[15px] md:text-[16px] font-bold text-text-primary whitespace-nowrap">
                             {t.fee}
                           </p>
                         </div>
@@ -156,7 +160,7 @@ export default function Fees() {
                         {f.duration}
                       </p>
                     </div>
-                    <p className="font-heading text-[18px] md:text-[20px] font-bold text-text-primary whitespace-nowrap">
+                    <p className="font-heading text-[15px] md:text-[16px] font-bold text-text-primary whitespace-nowrap">
                       {f.fee}
                     </p>
                   </div>

@@ -116,14 +116,14 @@ const faqSections = [
         answer: (
           <p>
             Fees vary based on appointment type and duration. A detailed fee
-            schedule is available in the{" "}
+            schedule is available under the{" "}
             <a
-              href="#pricing"
+              href="#expertise"
               className="underline underline-offset-2 text-text-primary hover:text-accent transition-colors"
             >
-              Pricing section
+              Expertise section
             </a>{" "}
-            above.
+            above — expand the &ldquo;Pricing&rdquo; dropdown.
           </p>
         ),
       },
