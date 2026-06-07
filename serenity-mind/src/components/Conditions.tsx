@@ -214,13 +214,11 @@ export default function Conditions() {
             <div className="h-px flex-1 bg-text-muted/20" />
           </div>
 
-          {/* Anchor line — surfaces one number without dumping the full list */}
-          <p className="text-[13px] md:text-[14px] text-text-secondary">
-            Follow-up sessions starting at{" "}
-            <span className="font-heading font-semibold text-text-primary">
-              $300
-            </span>{" "}
-            · private-pay practice
+          {/* Always-visible line — private-pay disclaimer (was inside the
+              expanded panel; surfaced here so it's seen without expanding). */}
+          <p className="text-[13px] md:text-[14px] text-text-secondary leading-relaxed">
+            Private-pay practice. Superbills available upon request for patients
+            seeking out-of-network reimbursement.
           </p>
 
           {/* Expander — subtle accent text link reveals the full fee schedule.
@@ -251,11 +249,8 @@ export default function Conditions() {
             {/* Expanded panel — compact fee list inside a frosted card.
               Type is smaller/muted vs. the old standalone section to stay subtle. */}
           <div className="mt-5 rounded-2xl bg-white/50 backdrop-blur-md border border-[#C4B5FD]/30 p-5 md:p-7">
-            {/* Private-pay disclaimer */}
-            <p className="text-[11px] text-text-muted mb-4 leading-relaxed">
-              Private-pay practice. Superbills available upon request for
-              patients seeking out-of-network reimbursement.
-            </p>
+            {/* Disclaimer now lives in the always-visible line above, so the
+                panel jumps straight to the fee rows. */}
             <div className="flex flex-col">
               {fees.map((f, i) => (
                 <div
