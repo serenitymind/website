@@ -96,15 +96,15 @@ const fees = [
   {
     service: "Follow-Up Medication Management",
     duration: "25 min",
-    fee: "$300",
+    fee: "$350",
   },
   {
     service:
       "Extended Follow-Up Visit (Individual Therapy / Medication Management + Therapy)",
     duration: "50 min",
-    fee: "$450",
+    fee: "$550",
   },
-  { service: "Family Therapy / Parent Guidance", duration: "60 min", fee: "$550" },
+  { service: "Family Therapy / Parent Guidance", duration: "50 min", fee: "$550" },
 ];
 
 export default function Conditions() {
